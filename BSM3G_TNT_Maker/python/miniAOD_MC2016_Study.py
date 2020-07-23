@@ -183,7 +183,7 @@ process.TFileService = cms.Service("TFileService",
 #####
 ##   Analysis parameters
 #####
-process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",
+process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",#{{{
   #### Running options
   # Choose which trigger you want (do NOT need to put * as it will consider all the versions by default)
   ifevtriggers      = cms.bool(False), # True means you want to require the triggers
@@ -358,7 +358,7 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",
   genCHadFlavour            = cms.InputTag("matchGenCHadron", "genCHadFlavour"),
   genCHadFromTopWeakDecay   = cms.InputTag("matchGenCHadron", "genCHadFromTopWeakDecay"),
   genCHadBHadronId          = cms.InputTag("matchGenCHadron", "genCHadBHadronId"),
-)
+)#}}}
 
 
 

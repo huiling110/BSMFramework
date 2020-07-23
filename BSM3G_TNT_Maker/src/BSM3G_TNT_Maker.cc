@@ -16,6 +16,7 @@ BSM3G_TNT_Maker::BSM3G_TNT_Maker(const edm::ParameterSet& iConfig):
   electron_pat_(consumes<edm::View<pat::Electron> >(iConfig.getParameter<edm::InputTag>("patElectrons"))),
   //now do what ever initialization is needed
   MaxN(200)
+    //?what is MaxN?
 {
   _Muon_pt_min        = iConfig.getParameter<double>("Muon_pt_min");
   _Muon_eta_max       = iConfig.getParameter<double>("Muon_eta_max");
@@ -23,6 +24,7 @@ BSM3G_TNT_Maker::BSM3G_TNT_Maker(const edm::ParameterSet& iConfig):
   _patElectron_eta_max = iConfig.getParameter<double>("patElectron_eta_max");
   PUInfo_          = consumesCollector().consumes<std::vector< PileupSummaryInfo> >(edm::InputTag("slimmedAddPileupInfo"));
   genEvtInfo_    = consumesCollector().consumes<GenEventInfoProduct>(edm::InputTag("generator"));
+  //?
   debug_                 = iConfig.getParameter<bool>("debug_");
   bjetnessselfilter      = iConfig.getParameter<bool>("bjetnessselfilter");
   _is_data               = iConfig.getParameter<bool>("is_data");
