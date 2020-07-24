@@ -11,7 +11,7 @@
 #include <iostream>     // std::cout
 #include <sstream>      // std::stringstream, std::stringbuf
 BSM3G_TNT_Maker::BSM3G_TNT_Maker(const edm::ParameterSet& iConfig):
-  triggerBits_(consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("bits"))),
+  triggerBits_(consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("bits"))),//bits = cms.InputTag("TriggerResults","","HLT")
   muon_h_(consumes<edm::View<pat::Muon> >(iConfig.getParameter<edm::InputTag>("muons"))),
   electron_pat_(consumes<edm::View<pat::Electron> >(iConfig.getParameter<edm::InputTag>("patElectrons"))),
   //now do what ever initialization is needed
@@ -24,7 +24,7 @@ BSM3G_TNT_Maker::BSM3G_TNT_Maker(const edm::ParameterSet& iConfig):
   _patElectron_eta_max = iConfig.getParameter<double>("patElectron_eta_max");
   PUInfo_          = consumesCollector().consumes<std::vector< PileupSummaryInfo> >(edm::InputTag("slimmedAddPileupInfo"));
   genEvtInfo_    = consumesCollector().consumes<GenEventInfoProduct>(edm::InputTag("generator"));
-  //?
+  //?why not just consumes?
   debug_                 = iConfig.getParameter<bool>("debug_");
   bjetnessselfilter      = iConfig.getParameter<bool>("bjetnessselfilter");
   _is_data               = iConfig.getParameter<bool>("is_data");
@@ -59,6 +59,7 @@ BSM3G_TNT_Maker::BSM3G_TNT_Maker(const edm::ParameterSet& iConfig):
   evtree_->Branch("TrueInteractions",&TrueInteractions,"TrueInteractions/D");
   tree_   = fs->make<TTree>("BOOM","BOOM");
   if(_fillgeninfo)           genselector        = new GenParticleSelector("miniAOD", tree_, debug_, iConfig, consumesCollector());
+  //?where is the declaration of genselector?
   if(_fillgenHFCategoryinfo) genhfselector      = new GenHFHadrMatchSelector("miniAOD", tree_, debug_, iConfig, consumesCollector());
   if(_filleventinfo)         eventinfoselector  = new EventInfoSelector("miniAOD", tree_, debug_, iConfig, consumesCollector());
   if(_filltriggerinfo)       trselector         = new TriggerSelector("miniAOD", tree_, debug_, iConfig);
@@ -87,7 +88,7 @@ BSM3G_TNT_Maker::~BSM3G_TNT_Maker()
 //   Member functions
 /////
 // ------------ method called for each event  ------------
-void BSM3G_TNT_Maker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
+void BSM3G_TNT_Maker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)/*{{{*/
 {
   //Namespace
   using namespace edm;
@@ -100,43 +101,49 @@ void BSM3G_TNT_Maker::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   iEvent.getByToken(electron_pat_, electron_pat);
   eventnum = -1;
   eventnum = iEvent.id().event();
+  //?what is this eventnum?
   eventnumnegative = 1;
+  //?where is the declaration of eventnum and eventnumnegtive?
   nPUVertices = 0;
   TrueInteractions = 0;
   std::vector<PileupSummaryInfo>::const_iterator PVI;
+  //?where is the instuction for this way of getting pileup information?
   if(!_is_data){
-    edm::Handle<GenEventInfoProduct> genEvtInfo;
-    iEvent.getByToken(genEvtInfo_,genEvtInfo);
-    //iEvent.getByLabel("generator",genEvtInfo);
-    eventnumnegative = (genEvtInfo->weight())/abs(genEvtInfo->weight());
-    Handle<std::vector< PileupSummaryInfo > >  PUInfo;
-    iEvent.getByToken(PUInfo_, PUInfo); 
-    for(PVI = PUInfo->begin(); PVI != PUInfo->end(); ++PVI){
-      if(PVI->getBunchCrossing() == 0){
-        nPUVertices += PVI->getPU_NumInteractions();
-        TrueInteractions = PVI->getTrueNumInteractions();
-      }
+      edm::Handle<GenEventInfoProduct> genEvtInfo;
+      iEvent.getByToken(genEvtInfo_,genEvtInfo);//25
+      //iEvent.getByLabel("generator",genEvtInfo);
+      eventnumnegative = (genEvtInfo->weight())/abs(genEvtInfo->weight());
+      //?
+      Handle<std::vector< PileupSummaryInfo > >  PUInfo;
+      iEvent.getByToken(PUInfo_, PUInfo); //24  PUInfo_    = consumesCollector().consumes<std::vector< PileupSummaryInfo> >(edm::InputTag("slimmedAddPileupInfo"));
+      for(PVI = PUInfo->begin(); PVI != PUInfo->end(); ++PVI){
+         if(PVI->getBunchCrossing() == 0){
+         nPUVertices += PVI->getPU_NumInteractions();
+         TrueInteractions = PVI->getTrueNumInteractions();
+        }
       if(debug_)std::cout << " Pileup Information: bunchXing, nvtx,true nvtx: " << PVI->getBunchCrossing() << " " << PVI->getPU_NumInteractions()<< " "<< PVI->getTrueNumInteractions()<< std::endl;
-    }//loop over pileup info
+      }//loop over pileup info
   }
   evtree_->Fill();
   //Require trigger on the event
-  bool evtriggered = false;
+  bool evtriggered = false;//171
   if(_ifevtriggers){
     edm::Handle<edm::TriggerResults> triggerBits;
-    iEvent.getByToken(triggerBits_, triggerBits);
+    iEvent.getByToken(triggerBits_, triggerBits);//bits = cms.InputTag("TriggerResults","","HLT")
     const edm::TriggerNames &trigNames = iEvent.triggerNames(*triggerBits);
     for(uint tb = 0; tb<triggerBits->size(); tb++){
       for(uint tn = 0; tn<_evtriggers.size(); tn++){
         if(strstr(trigNames.triggerName(tb).c_str(),_evtriggers[tn].c_str()) && triggerBits->accept(tb)){
+            //strstr:Returns a pointer to the first occurrence of str2 in str1, or a null pointer if str2 is not part of str1.
+            //?where is the accept()method?
           evtriggered = true;
-          break;
+          break;//When break is used with nested loops, break terminates the inner loop
         } 
       }
     }
   }
   //Require at least two leptons on the event
-  Bool_t pass_nlep = false;
+  Bool_t pass_nlep = false;//173
   if(_lepfilter > 0){
     Int_t n_lep = 0;
     for(edm::View<pat::Muon>::const_iterator mu = muon_h->begin(); mu != muon_h->end(); mu++){
@@ -189,7 +196,7 @@ void BSM3G_TNT_Maker::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       tree_->Fill();
     }
   }
-}
+}/*}}}*/
 // ------------ method called once each job just before starting event loop  ------------
 void BSM3G_TNT_Maker::beginJob()
 {

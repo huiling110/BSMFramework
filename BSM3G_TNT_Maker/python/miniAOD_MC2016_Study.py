@@ -409,6 +409,7 @@ for mod in process.filters_().itervalues():
 #####
 process.p = cms.Path(
 process.ecalBadCalibReducedMINIAODFilter*
+#?ecalBadCalibReducedMINIAODFilter is a filter,is'nt it included in the task?
 #process.patJetCorrFactorsUpdatedJEC * process.updatedPatJetsUpdatedJEC *
 process.prefiringweight *
 #process.regressionApplication *
