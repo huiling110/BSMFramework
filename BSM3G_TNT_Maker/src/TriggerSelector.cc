@@ -3,7 +3,7 @@
 #include <iostream>     // std::cout
 #include <sstream>      // std::stringstream, std::stringbuf
 TriggerSelector::TriggerSelector(std::string name, TTree* tree, bool debug, const pset& iConfig):baseTree(name,tree,debug){
-  triggerBits_       = iConfig.getParameter<edm::InputTag>("bits");
+  triggerBits_       = iConfig.getParameter<edm::InputTag>("bits");// bits  = cms.InputTag("TriggerResults","","HLT"),
   _maxtriggerversion = iConfig.getParameter<double>("maxtriggerversion");
   _is_data = iConfig.getParameter<bool>("is_data");
   _reHLT   = iConfig.getParameter<bool>("reHLT");
@@ -16,7 +16,8 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
   if(debug_)    std::cout<<"getting met info"<<std::endl;
   Clear();
   if(_reHLT || _is_data){
-    //Trigget paths  
+    //Trigget paths 
+    //?what is the point of resetHL
     edm::Handle<edm::TriggerResults> triggerBits;
     iEvent.getByLabel(triggerBits_, triggerBits);
     const edm::TriggerNames &trigNames = iEvent.triggerNames(*triggerBits);
@@ -155,7 +156,8 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
       uint HLT_Ele27_WP85_Gsf_v(trigNames.triggerIndex(("HLT_Ele27_WP85_Gsf_v"+string(buffer)).c_str()));
       if(HLT_Ele27_WP85_Gsf_v<triggerBits->size()) HLT_Ele27_WP85_Gsf = triggerBits->accept(HLT_Ele27_WP85_Gsf_v);
     }
-  } else {
+  }
+  else {
     HLT_PFHT650_WideJetMJJ900DEtaJJ1p5 = 1;
     HLT_PFHT650_WideJetMJJ950DEtaJJ1p5 = 1;
     HLT_PFHT800 = 1;

@@ -76,6 +76,8 @@ jetsNameAK4="selectedUpdatedPatJetsNewDFTraining"
 
 
 ##### L1 Prefire
+#instruction for this?https://twiki.cern.ch/twiki/bin/viewauth/CMS/L1ECALPrefiringWeightRecipe
+#EDProducer 
 from PhysicsTools.PatUtils.l1ECALPrefiringWeightProducer_cfi import l1ECALPrefiringWeightProducer
 process.prefiringweight = l1ECALPrefiringWeightProducer.clone(
     DataEra = cms.string("2016BtoH"), # 2017BtoF
@@ -176,8 +178,8 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 ##   Output file
 #####
 process.TFileService = cms.Service("TFileService",
-  #fileName = cms.string("OutTree_2016.root")
-  fileName = cms.string("OutTree.root")
+  fileName = cms.string("OutTree_2016.root")
+  #fileName = cms.string("OutTree.root")
 )
 
 #####
@@ -209,12 +211,15 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",#{{{
   filltauinfo           = cms.bool(True),#FF
   filljetinfo           = cms.bool(True), #T
   filltthjetinfo        = cms.bool(False), #F
-  fillBoostedJetinfo    = cms.bool(False),
+ # fillBoostedJetinfo    = cms.bool(False),
+  fillBoostedJetinfo    = cms.bool(True),
   fillTopSubJetinfo     = cms.bool(False), #F
+#  fillTauJetnessinfo    = cms.bool(True),
   fillTauJetnessinfo    = cms.bool(False),
   fillBJetnessinfo      = cms.bool(False),
   fillBJetnessFVinfo    = cms.bool(False),
-  fillBTagReweight      = cms.bool(False),
+#  fillBTagReweight      = cms.bool(False),
+  fillBTagReweight      = cms.bool(True),
   fillPileupReweight    = cms.bool(True),
   fillMETinfo           = cms.bool(True),
   fillphotoninfo        = cms.bool(False), #F   
