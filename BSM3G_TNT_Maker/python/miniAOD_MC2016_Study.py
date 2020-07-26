@@ -4,7 +4,7 @@ import copy
 from PhysicsTools.PatAlgos.patEventContent_cff import patEventContent
 options = VarParsing.VarParsing('analysis')
 # ===== Register new variables =====
-options.register('optionlepfilt',
+options.register('optionlepfilt',#231
 0,
 VarParsing.VarParsing.multiplicity.singleton,
 VarParsing.VarParsing.varType.int,
