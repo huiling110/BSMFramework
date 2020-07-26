@@ -42,6 +42,7 @@ process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 #####
 process.source = cms.Source("PoolSource",
   fileNames = cms.untracked.vstring(
+#    '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/20000/CACFB972-44F1-E811-98CF-001E67A3E8CC.root',
     # ttH run II 2016 sync file
     '/store/mc/RunIISummer16MiniAODv3/ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/120000/F24F2D5E-DDEC-E811-AF50-90B11C08AD7D.root',
     # HH file
@@ -219,7 +220,7 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",#{{{
   fillBJetnessinfo      = cms.bool(False),
   fillBJetnessFVinfo    = cms.bool(False),
   fillBTagReweight      = cms.bool(False),
- # fillBTagReweight      = cms.bool(True),
+#  fillBTagReweight      = cms.bool(True),
   fillPileupReweight    = cms.bool(True),
   fillMETinfo           = cms.bool(True),
   fillphotoninfo        = cms.bool(False), #F   
