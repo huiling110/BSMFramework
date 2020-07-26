@@ -42,9 +42,9 @@ process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 #####
 process.source = cms.Source("PoolSource",
   fileNames = cms.untracked.vstring(
-#    '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/20000/CACFB972-44F1-E811-98CF-001E67A3E8CC.root',
+    '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/20000/CACFB972-44F1-E811-98CF-001E67A3E8CC.root',
     # ttH run II 2016 sync file
-    '/store/mc/RunIISummer16MiniAODv3/ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/120000/F24F2D5E-DDEC-E811-AF50-90B11C08AD7D.root',
+#    '/store/mc/RunIISummer16MiniAODv3/ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/120000/F24F2D5E-DDEC-E811-AF50-90B11C08AD7D.root',
     # HH file
     #'/store/mc/RunIISummer16MiniAODv3/GluGluToHHTo2B2VTo2L2Nu_node_SM_13TeV-madgraph-v2/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/70000/EA8037E4-803F-E911-A440-0CC47A7C34D0.root',
   ),
@@ -180,7 +180,8 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 #####
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
-  fileName = cms.string("OutTree_Study.root")
+#  fileName = cms.string("OutTree_Study.root")
+  fileName = cms.string("OutTree_Study_Tau.root")
 )
 
 #####
@@ -212,8 +213,8 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",#{{{
   filltauinfo           = cms.bool(True),#FF
   filljetinfo           = cms.bool(True), #T
   filltthjetinfo        = cms.bool(False), #F
-  fillBoostedJetinfo    = cms.bool(False),
- # fillBoostedJetinfo    = cms.bool(True),
+ # fillBoostedJetinfo    = cms.bool(False),
+  fillBoostedJetinfo    = cms.bool(True),
   fillTopSubJetinfo     = cms.bool(False), #F
 #  fillTauJetnessinfo    = cms.bool(True),
   fillTauJetnessinfo    = cms.bool(False),
