@@ -24,7 +24,9 @@ if __name__ == '__main__':
  #####
  datasetnames  = [#{{{
 # signal
-'Legacy16V2_TTTT', 
+'Legacy16v2_TTTT_TuneCUETP8M2T4_PSweights_13TeV',
+'Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8', 
+'Legacy16V2_TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8', 
 #'Legacy16V2_TTHnobb', #0
 # TH
 'Legacy16V2_THQ_TuneCP5_ctcvcp',
@@ -155,7 +157,10 @@ if __name__ == '__main__':
                  ]
  datasetinputs = [
 # signal#{{{
-'/TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+'/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8_correctnPartonsInBorn/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+#background
 #'/ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM', #0
 # TH
 '/THQ_ctcvcp_HIncl_M125_TuneCP5_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
@@ -296,9 +301,9 @@ tWLists = [
 baseDir = "/workfs/cms/huahuil/BSM/CMSSW_10_2_16/src/BSMFramework/"
 
 #for d in range(0,len(datasetnames)):
-for d in range(0,2):
+#for d in range(0,2):
+for d in range(0,1):
     print 'multicrab.py: Running datasetname: ', datasetnames[d]
-
 #    lepFilt = 2
     lepFilt = 0
     if datasetnames[d] in tWLists:

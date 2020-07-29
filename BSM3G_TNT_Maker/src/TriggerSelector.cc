@@ -4,7 +4,7 @@
 #include <sstream>      // std::stringstream, std::stringbuf
 TriggerSelector::TriggerSelector(std::string name, TTree* tree, bool debug, const pset& iConfig):baseTree(name,tree,debug){
   triggerBits_       = iConfig.getParameter<edm::InputTag>("bits");// bits  = cms.InputTag("TriggerResults","","HLT"),
-  _maxtriggerversion = iConfig.getParameter<double>("maxtriggerversion");
+  _maxtriggerversion = iConfig.getParameter<double>("maxtriggerversion");//20
   _is_data = iConfig.getParameter<bool>("is_data");
   _reHLT   = iConfig.getParameter<bool>("reHLT");
   SetBranches();
@@ -15,15 +15,17 @@ TriggerSelector::~TriggerSelector(){
 void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
   if(debug_)    std::cout<<"getting met info"<<std::endl;
   Clear();
+  //?call TriggerSelector::Clear()300?
   if(_reHLT || _is_data){
     //Trigget paths 
     //?what is the point of resetHL
     edm::Handle<edm::TriggerResults> triggerBits;
     iEvent.getByLabel(triggerBits_, triggerBits);
     const edm::TriggerNames &trigNames = iEvent.triggerNames(*triggerBits);
-    for(double tv=0.; tv<=_maxtriggerversion; tv++){ 
+    for(double tv=0.; tv<=_maxtriggerversion; tv++){
+        //?what is maxtriggerversion doing?
       char buffer[20]; sprintf(buffer,"%g",tv);
-      uint HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v(trigNames.triggerIndex(("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v"+string(buffer)).c_str()));
+      uint HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v(trigNames.triggerIndex(("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v"+string(buffer)).c_str()));/*{{{*/
       if(HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v<triggerBits->size()) HLT_PFHT650_WideJetMJJ900DEtaJJ1p5 = triggerBits->accept(HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v);
       uint HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v(trigNames.triggerIndex(("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v"+string(buffer)).c_str()));
       if(HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v<triggerBits->size()) HLT_PFHT650_WideJetMJJ950DEtaJJ1p5 = triggerBits->accept(HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v);
@@ -154,11 +156,11 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
       uint HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v(trigNames.triggerIndex(("HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v"+string(buffer)).c_str()));
       if(HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v<triggerBits->size()) HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50 = triggerBits->accept(HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v);
       uint HLT_Ele27_WP85_Gsf_v(trigNames.triggerIndex(("HLT_Ele27_WP85_Gsf_v"+string(buffer)).c_str()));
-      if(HLT_Ele27_WP85_Gsf_v<triggerBits->size()) HLT_Ele27_WP85_Gsf = triggerBits->accept(HLT_Ele27_WP85_Gsf_v);
+      if(HLT_Ele27_WP85_Gsf_v<triggerBits->size()) HLT_Ele27_WP85_Gsf = triggerBits->accept(HLT_Ele27_WP85_Gsf_v);/*}}}*/
     }
   }
   else {
-    HLT_PFHT650_WideJetMJJ900DEtaJJ1p5 = 1;
+    HLT_PFHT650_WideJetMJJ900DEtaJJ1p5 = 1;/*{{{*/
     HLT_PFHT650_WideJetMJJ950DEtaJJ1p5 = 1;
     HLT_PFHT800 = 1;
     HLT_PFHT900 = 1;
@@ -222,13 +224,13 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
     HLT_Photon175 = 1;
     HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165 = 1;
     HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50 = 1;
-    HLT_Ele27_WP85_Gsf = 1;
+    HLT_Ele27_WP85_Gsf = 1;/*}}}*/
   }
 }
 
 void TriggerSelector::SetBranches(){
   if(debug_)    std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;
-  AddBranch(&HLT_PFHT650_WideJetMJJ900DEtaJJ1p5       ,"HLT_PFHT650_WideJetMJJ900DEtaJJ1p5");
+  AddBranch(&HLT_PFHT650_WideJetMJJ900DEtaJJ1p5       ,"HLT_PFHT650_WideJetMJJ900DEtaJJ1p5");/*{{{*/
   AddBranch(&HLT_PFHT650_WideJetMJJ950DEtaJJ1p5       ,"HLT_PFHT650_WideJetMJJ950DEtaJJ1p5");
   AddBranch(&HLT_PFHT800                              ,"HLT_PFHT800");
   AddBranch(&HLT_PFHT900                              ,"HLT_PFHT900");
@@ -294,10 +296,10 @@ void TriggerSelector::SetBranches(){
   AddBranch(&HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50				      ,"HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50");
   AddBranch(&HLT_Ele27_WP85_Gsf				      ,"HLT_Ele27_WP85_Gsf");
   if(debug_)    std::cout<<"set branches"<<std::endl;
-}
+}/*}}}*/
 
 void TriggerSelector::Clear(){
-  HLT_PFHT650_WideJetMJJ900DEtaJJ1p5 = -9999;
+  HLT_PFHT650_WideJetMJJ900DEtaJJ1p5 = -9999;/*{{{*/
   HLT_PFHT650_WideJetMJJ950DEtaJJ1p5 = -9999;
   HLT_PFHT800 = -9999;
   HLT_PFHT900 = -9999;
@@ -361,7 +363,7 @@ void TriggerSelector::Clear(){
   HLT_Photon200 = -9999;
   HLT_Photon175 = -9999;
   HLT_Ele27_WP85_Gsf = -9999;
-}
+}/*}}}*/
 
 void TriggerSelector::startTrigger(edm::EventSetup const& iSetup, edm::Run const & iRun){
   bool changed(true);
