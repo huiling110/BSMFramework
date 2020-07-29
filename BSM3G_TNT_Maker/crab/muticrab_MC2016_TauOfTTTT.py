@@ -1,10 +1,11 @@
+import CRABClient
 if __name__ == '__main__':
  #####
  ##   Multicrab configuration
  #####
  import sys
  from multiprocessing import Process
- from CRABClient.UserUtilities import config, getUsernameFromSiteDB
+ from CRABClient.UserUtilities import config #, getUsernameFromSiteDB
  config = config()
  from CRABAPI.RawCommand import crabCommand
  from CRABClient.ClientExceptions import ClientException
@@ -308,11 +309,11 @@ for d in range(0,2):
         lepFilt = 0
         print 'multicrab_MC2016.py: Run ', datasetnames[d], ' lepFilt 0 for ctcvcp samples '
     
-    nameLepFilt = 'optionlepfilt={}'.format(lepFilt) 
+    nameLepFilt = 'optionlepfilt={}'.format(lepFilt) #The format() method formats the specified value(s) and insert them inside the string's placeholder.
     
     config.section_('General')
-    config.General.requestName = datasetnames[d]
-    config.General.workArea    = datasetnames[d]
+    config.General.requestName = datasetnames[d]#it is used by CRAB to create a project directory (named crab_<requestName>) where files corresponding to this particular task will be stored.
+    config.General.workArea    = datasetnames[d]#The area (full or relative path) where to create the CRAB project directory
     config.General.transferLogs = True  #Whether or not to copy the jobs log files to the storage site
 
     config.section_('JobType')
@@ -336,7 +337,8 @@ for d in range(0,2):
     #config.Data.splitting      = 'Automatic'
     config.Data.totalUnits     = 40000 #With 'FileBased' splitting tells how many files to analyse
     config.Data.unitsPerJob    = 1
-    config.Data.outLFNDirBase = '/store/user/binghuan/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
+#    config.Data.outLFNDirBase = '/store/user/binghuan/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
+    config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outputDatasetTag = datasetnames[d]
 
 #    print 'multicrab.py: outLFNDirBase = /store/user/binghuan/'
@@ -348,5 +350,6 @@ for d in range(0,2):
     print 'multicrab.py: Submitting Jobs'
     #submit(config)
     p = Process(target=submit, args=(config,))
+    #?
     p.start()
     p.join()
