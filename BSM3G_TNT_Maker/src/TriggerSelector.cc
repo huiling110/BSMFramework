@@ -370,4 +370,5 @@ void TriggerSelector::startTrigger(edm::EventSetup const& iSetup, edm::Run const
   //if(_is_data) hltConfig_.init(iRun,iSetup,"HLT",changed);
   //else         hltConfig_.init(iRun,iSetup,"HLT2",changed);
   hltConfig_.init(iRun,iSetup,"HLT",changed);
+  //?what is  hltConfig_?
 }

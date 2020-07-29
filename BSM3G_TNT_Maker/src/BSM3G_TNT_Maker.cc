@@ -128,7 +128,7 @@ void BSM3G_TNT_Maker::analyze(const edm::Event& iEvent, const edm::EventSetup& i
   //Require trigger on the event
   bool evtriggered = false;//171
   if(_ifevtriggers){
-    edm::Handle<edm::TriggerResults> triggerBits;
+    edm::Handle<edm::TriggerResults> triggerBits;//I think it holds all the trigger of the event.
     iEvent.getByToken(triggerBits_, triggerBits);//bits = cms.InputTag("TriggerResults","","HLT")
     const edm::TriggerNames &trigNames = iEvent.triggerNames(*triggerBits);
     for(uint tb = 0; tb<triggerBits->size(); tb++){
@@ -179,7 +179,7 @@ void BSM3G_TNT_Maker::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       if(_fillgeninfo)           genselector->Fill(iEvent); 
       if(_fillgenHFCategoryinfo) genhfselector->Fill(iEvent);
       if(_filleventinfo)         eventinfoselector->Fill(iEvent);
-      if(_filltriggerinfo)       trselector->Fill(iEvent,iSetup);
+      if(_filltriggerinfo)       trselector->Fill(iEvent,iSetup);//missing a i in both declaration and call here.
       if(_fillPVinfo)            pvselector->Fill(iEvent); 
       if(_fillmuoninfo)          muselector->Fill(iEvent,iSetup);
       if(_fillelectronpatinfo)   elpatselector->Fill(iEvent,iSetup); 
@@ -209,6 +209,7 @@ void BSM3G_TNT_Maker::endJob()
 void BSM3G_TNT_Maker::beginRun(edm::Run const & iRun, edm::EventSetup const& iSetup)
 {
   if( _filltriggerinfo) trselector->startTrigger(iSetup, iRun);
+  //?why startTrigger first?
 }
 // ------------ method called when ending the processing of a run  ------------
 //void BSM3G_TNT_Maker::endRun(edm::Run const&, edm::EventSetup const&)
