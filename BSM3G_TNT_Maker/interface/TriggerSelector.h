@@ -126,5 +126,7 @@ class TriggerSelector : public baseTree{
   int HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165;
   int HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50;
   int HLT_Ele27_WP85_Gsf;
+  //add for TTTT
+  int HLT_Ele32_eta2p1_WPTight_Gsf;
 };
 #endif

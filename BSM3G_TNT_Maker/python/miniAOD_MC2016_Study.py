@@ -42,6 +42,8 @@ process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 #####
 process.source = cms.Source("PoolSource",
   fileNames = cms.untracked.vstring(
+#    '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v1/230000/F61E4EE9-127E-E911-8FF5-549F3525CD78.root',
+  #  '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v1/00000/54BD7E92-8477-E911-AE3A-0CC47A6C115A.root',
     '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/20000/CACFB972-44F1-E811-98CF-001E67A3E8CC.root',
     # ttH run II 2016 sync file
 #    '/store/mc/RunIISummer16MiniAODv3/ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/120000/F24F2D5E-DDEC-E811-AF50-90B11C08AD7D.root',
@@ -50,7 +52,7 @@ process.source = cms.Source("PoolSource",
   ),
   skipEvents = cms.untracked.uint32(0)
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 ##### JEC
 from PhysicsTools.PatAlgos.tools.jetTools import updateJetCollection
@@ -181,7 +183,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
 #  fileName = cms.string("OutTree_Study.root")
-  fileName = cms.string("OutTree_Study_Tau.root")
+  fileName = cms.string("OutTree_Study_TauAddHLT.root")
 )
 
 #####

@@ -14,7 +14,7 @@ TriggerSelector::~TriggerSelector(){
 }
 void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
   if(debug_)    std::cout<<"getting met info"<<std::endl;
-  Clear();
+  Clear();//if the HLT is not contained then it is set to -9999 I think
   //?call TriggerSelector::Clear()300?
   if(_reHLT || _is_data){
     //Trigget paths 
@@ -24,7 +24,9 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
     const edm::TriggerNames &trigNames = iEvent.triggerNames(*triggerBits);
     for(double tv=0.; tv<=_maxtriggerversion; tv++){
         //?what is maxtriggerversion doing?
-      char buffer[20]; sprintf(buffer,"%g",tv);
+        //try for different versions of HLT I think.
+      char buffer[20]; sprintf(buffer,"%g",tv);//Write formatted data to string.g:  Use the shortest representation: %e or %f
+      //jet
       uint HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v(trigNames.triggerIndex(("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v"+string(buffer)).c_str()));/*{{{*/
       if(HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v<triggerBits->size()) HLT_PFHT650_WideJetMJJ900DEtaJJ1p5 = triggerBits->accept(HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v);
       uint HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v(trigNames.triggerIndex(("HLT_PFHT650_WideJetMJJ950DEtaJJ1p5_v"+string(buffer)).c_str()));
@@ -156,10 +158,14 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
       uint HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v(trigNames.triggerIndex(("HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v"+string(buffer)).c_str()));
       if(HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v<triggerBits->size()) HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50 = triggerBits->accept(HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50_v);
       uint HLT_Ele27_WP85_Gsf_v(trigNames.triggerIndex(("HLT_Ele27_WP85_Gsf_v"+string(buffer)).c_str()));
-      if(HLT_Ele27_WP85_Gsf_v<triggerBits->size()) HLT_Ele27_WP85_Gsf = triggerBits->accept(HLT_Ele27_WP85_Gsf_v);/*}}}*/
+      if(HLT_Ele27_WP85_Gsf_v<triggerBits->size()) HLT_Ele27_WP85_Gsf = triggerBits->accept(HLT_Ele27_WP85_Gsf_v);
+      //add
+      uint HLT_Ele32_eta2p1_WPTight_Gsf_v(trigNames.triggerIndex(("HLT_Ele32_eta2p1_WPTight_Gsf_v"+string(buffer)).c_str()));
+      if(HLT_Ele32_eta2p1_WPTight_Gsf_v<triggerBits->size()) HLT_Ele32_eta2p1_WPTight_Gsf = triggerBits->accept(HLT_Ele32_eta2p1_WPTight_Gsf_v);/*}}}*/
     }
   }
   else {
+    //?why set HLT to 1 here? kind of dangerous? 
     HLT_PFHT650_WideJetMJJ900DEtaJJ1p5 = 1;/*{{{*/
     HLT_PFHT650_WideJetMJJ950DEtaJJ1p5 = 1;
     HLT_PFHT800 = 1;
@@ -224,7 +230,10 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
     HLT_Photon175 = 1;
     HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165 = 1;
     HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50 = 1;
-    HLT_Ele27_WP85_Gsf = 1;/*}}}*/
+    HLT_Ele27_WP85_Gsf = 1;
+    //add
+    HLT_Ele32_eta2p1_WPTight_Gsf = 1;
+    /*}}}*/
   }
 }
 
@@ -295,6 +304,8 @@ void TriggerSelector::SetBranches(){
   AddBranch(&HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165				      ,"HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165");
   AddBranch(&HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50				      ,"HLT_Ele45_CaloIdVT_GsfTrkIdT_PFJet200_PFJet50");
   AddBranch(&HLT_Ele27_WP85_Gsf				      ,"HLT_Ele27_WP85_Gsf");
+  //add
+  AddBranch(&HLT_Ele32_eta2p1_WPTight_Gsf				      ,"HLT_Ele32_eta2p1_WPTight_Gsf");
   if(debug_)    std::cout<<"set branches"<<std::endl;
 }/*}}}*/
 
@@ -363,6 +374,8 @@ void TriggerSelector::Clear(){
   HLT_Photon200 = -9999;
   HLT_Photon175 = -9999;
   HLT_Ele27_WP85_Gsf = -9999;
+  //add for TTTT
+  HLT_Ele32_eta2p1_WPTight_Gsf = -9999;//for single lepton
 }/*}}}*/
 
 void TriggerSelector::startTrigger(edm::EventSetup const& iSetup, edm::Run const & iRun){
