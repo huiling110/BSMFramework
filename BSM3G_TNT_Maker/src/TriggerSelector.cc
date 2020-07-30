@@ -161,7 +161,18 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
       if(HLT_Ele27_WP85_Gsf_v<triggerBits->size()) HLT_Ele27_WP85_Gsf = triggerBits->accept(HLT_Ele27_WP85_Gsf_v);
       //add
       uint HLT_Ele32_eta2p1_WPTight_Gsf_v(trigNames.triggerIndex(("HLT_Ele32_eta2p1_WPTight_Gsf_v"+string(buffer)).c_str()));
-      if(HLT_Ele32_eta2p1_WPTight_Gsf_v<triggerBits->size()) HLT_Ele32_eta2p1_WPTight_Gsf = triggerBits->accept(HLT_Ele32_eta2p1_WPTight_Gsf_v);/*}}}*/
+      if(HLT_Ele32_eta2p1_WPTight_Gsf_v<triggerBits->size()) HLT_Ele32_eta2p1_WPTight_Gsf = triggerBits->accept(HLT_Ele32_eta2p1_WPTight_Gsf_v);
+      uint HLT_Ele27_WPTigh_Gsf_v(trigNames.triggerIndex(("HLT_Ele27_WPTigh_Gsf_v"+string(buffer)).c_str()));
+      if(HLT_Ele27_WPTigh_Gsf_v<triggerBits->size()) HLT_Ele27_WPTigh_Gsf = triggerBits->accept(HLT_Ele27_WP85_Gsf_v);
+      uint HLT_DoubleMu8_Mass8_PFHT300_v(trigNames.triggerIndex(("HLT_DoubleMu8_Mass8_PFHT300_v"+string(buffer)).c_str()));
+      if(HLT_DoubleMu8_Mass8_PFHT300_v<triggerBits->size()) HLT_DoubleMu8_Mass8_PFHT300 = triggerBits->accept(HLT_Ele27_WP85_Gsf_v);
+      uint HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v(trigNames.triggerIndex(("HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v"+string(buffer)).c_str()));
+      if(HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v<triggerBits->size())  HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300 = triggerBits->accept(HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v);
+      
+//      uint _v(trigNames.triggerIndex(("_v"+string(buffer)).c_str()));
+//      if(_v<triggerBits->size())  = triggerBits->accept(_v);
+      
+      /*}}}*/
     }
   }
   else {
@@ -233,6 +244,9 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
     HLT_Ele27_WP85_Gsf = 1;
     //add
     HLT_Ele32_eta2p1_WPTight_Gsf = 1;
+    HLT_Ele27_WPTigh_Gsf = 1;
+    HLT_DoubleMu8_Mass8_PFHT300 = 1;
+    HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300 = 1;
     /*}}}*/
   }
 }
@@ -306,6 +320,11 @@ void TriggerSelector::SetBranches(){
   AddBranch(&HLT_Ele27_WP85_Gsf				      ,"HLT_Ele27_WP85_Gsf");
   //add
   AddBranch(&HLT_Ele32_eta2p1_WPTight_Gsf				      ,"HLT_Ele32_eta2p1_WPTight_Gsf");
+  AddBranch(&HLT_Ele27_WPTigh_Gsf				      ,"HLT_Ele27_WPTigh_Gsf");
+  AddBranch(&HLT_DoubleMu8_Mass8_PFHT300				      ,"HLT_DoubleMu8_Mass8_PFHT300");
+  AddBranch(&HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300				      ,"HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300");
+//  AddBranch(&				      ,"");
+
   if(debug_)    std::cout<<"set branches"<<std::endl;
 }/*}}}*/
 
@@ -376,6 +395,9 @@ void TriggerSelector::Clear(){
   HLT_Ele27_WP85_Gsf = -9999;
   //add for TTTT
   HLT_Ele32_eta2p1_WPTight_Gsf = -9999;//for single lepton
+  HLT_Ele27_WPTigh_Gsf = -9999;
+  HLT_DoubleMu8_Mass8_PFHT300 = -9999;
+  HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300 = -9999;
 }/*}}}*/
 
 void TriggerSelector::startTrigger(edm::EventSetup const& iSetup, edm::Run const & iRun){
