@@ -163,9 +163,9 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
       uint HLT_Ele32_eta2p1_WPTight_Gsf_v(trigNames.triggerIndex(("HLT_Ele32_eta2p1_WPTight_Gsf_v"+string(buffer)).c_str()));
       if(HLT_Ele32_eta2p1_WPTight_Gsf_v<triggerBits->size()) HLT_Ele32_eta2p1_WPTight_Gsf = triggerBits->accept(HLT_Ele32_eta2p1_WPTight_Gsf_v);
       uint HLT_Ele27_WPTigh_Gsf_v(trigNames.triggerIndex(("HLT_Ele27_WPTigh_Gsf_v"+string(buffer)).c_str()));
-      if(HLT_Ele27_WPTigh_Gsf_v<triggerBits->size()) HLT_Ele27_WPTigh_Gsf = triggerBits->accept(HLT_Ele27_WP85_Gsf_v);
+      if(HLT_Ele27_WPTigh_Gsf_v<triggerBits->size()) HLT_Ele27_WPTigh_Gsf = triggerBits->accept(HLT_Ele27_WPTigh_Gsf_v);
       uint HLT_DoubleMu8_Mass8_PFHT300_v(trigNames.triggerIndex(("HLT_DoubleMu8_Mass8_PFHT300_v"+string(buffer)).c_str()));
-      if(HLT_DoubleMu8_Mass8_PFHT300_v<triggerBits->size()) HLT_DoubleMu8_Mass8_PFHT300 = triggerBits->accept(HLT_Ele27_WP85_Gsf_v);
+      if(HLT_DoubleMu8_Mass8_PFHT300_v<triggerBits->size()) HLT_DoubleMu8_Mass8_PFHT300 = triggerBits->accept(HLT_DoubleMu8_Mass8_PFHT300_v);
       uint HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v(trigNames.triggerIndex(("HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v"+string(buffer)).c_str()));
       if(HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v<triggerBits->size())  HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300 = triggerBits->accept(HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300_v);
       

@@ -6,6 +6,7 @@ if __name__ == '__main__':
  import sys
  from multiprocessing import Process
  from CRABClient.UserUtilities import config #, getUsernameFromSiteDB
+ #?
  config = config()
  from CRABAPI.RawCommand import crabCommand
  from CRABClient.ClientExceptions import ClientException
@@ -302,7 +303,7 @@ baseDir = "/workfs/cms/huahuil/BSM/CMSSW_10_2_16/src/BSMFramework/"
 
 #for d in range(0,len(datasetnames)):
 #for d in range(0,2):
-for d in range(0,1):
+for d in range(0,3):
     print 'multicrab.py: Running datasetname: ', datasetnames[d]
 #    lepFilt = 2
     lepFilt = 0
@@ -344,7 +345,7 @@ for d in range(0,1):
     config.Data.unitsPerJob    = 1
 #    config.Data.outLFNDirBase = '/store/user/binghuan/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
-    config.Data.outputDatasetTag = datasetnames[d]
+    config.Data.outputDatasetTag = datasetnames[d]+"AddHLT"
 
 #    print 'multicrab.py: outLFNDirBase = /store/user/binghuan/'
     print 'multicrab.py: outLFNDirBase = /store/user/hhua/'
