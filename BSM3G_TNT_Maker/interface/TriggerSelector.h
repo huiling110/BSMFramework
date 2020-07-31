@@ -131,5 +131,7 @@ class TriggerSelector : public baseTree{
   int HLT_Ele27_WPTigh_Gsf;
   int HLT_DoubleMu8_Mass8_PFHT300;
   int HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300;
+  int  HLT_PFHT300_SixJet30_DoubleBTagCSV_p056;
+  int HLT_PFHT450_SixJet40_BTagCSV_p056;
 };
 #endif

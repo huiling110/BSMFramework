@@ -184,7 +184,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
 #  fileName = cms.string("OutTree_Study.root")
-  fileName = cms.string("OutTree_Study_TauAdd4HLT.root")
+  fileName = cms.string("OutTree_Study_TauAdd6HLT.root")
 )
 
 #####
