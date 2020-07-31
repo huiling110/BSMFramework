@@ -2,7 +2,7 @@
 JetSelector::JetSelector(std::string name, TTree* tree, bool debug, const pset& iConfig, edm::ConsumesCollector && ic):
   baseTree(name,tree,debug)
 {
-  vtx_h_        = ic.consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("vertices"));
+  vtx_h_        = ic.consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("vertices"));/*{{{*/
   jets_         = ic.consumes<pat::JetCollection >(iConfig.getParameter<edm::InputTag>("jets"));
   muon_h_             = ic.consumes<edm::View<pat::Muon> >(iConfig.getParameter<edm::InputTag>("muons"));
   electron_pat_        = ic.consumes<edm::View<pat::Electron> >(iConfig.getParameter<edm::InputTag>("patElectrons"));
@@ -49,7 +49,7 @@ JetSelector::JetSelector(std::string name, TTree* tree, bool debug, const pset& 
   _qglVar             = iConfig.getParameter<bool>("qglVar");
   _dataEra             = iConfig.getParameter<int>("dataEra");
   JECInitialization();
-  SetBranches();
+  SetBranches();/*}}}*/
 }
 JetSelector::~JetSelector(){
   delete tree_;
@@ -64,6 +64,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
   edm::Handle<pat::JetCollection> jets; 
   iEvent.getByToken(jets_, jets);                                         
   edm::Handle<edm::View<pat::Muon> > muon_h;
+  //Using a View brings the polymorphism back
   iEvent.getByToken(muon_h_, muon_h);
   edm::Handle<edm::View<pat::Electron> > electron_pat;
   iEvent.getByToken(electron_pat_, electron_pat);
@@ -73,15 +74,16 @@ void JetSelector::Fill(const edm::Event& iEvent){
   edm::Handle<pat::JetCollection> puppijets;                                       
   iEvent.getByToken(puppijets_, puppijets); 
   edm::Handle<edm::ValueMap<float>> qgHandle;
-  iEvent.getByToken(qgToken_, qgHandle);
+  iEvent.getByToken(qgToken_, qgHandle);//11edm::InputTag("QGTagger", "qgLikelihood")
   edm::Handle<edm::ValueMap<float>> axis2Handle;
   iEvent.getByToken(axis2Token_, axis2Handle);
   edm::Handle<edm::ValueMap<float>> ptDHandle;
-  iEvent.getByToken(ptDToken_, ptDHandle);
+  iEvent.getByToken(ptDToken_, ptDHandle);//"QGTagger", "ptD"
   edm::Handle<edm::ValueMap<int>> multHandle;
-  iEvent.getByToken(multToken_, multHandle);
+  iEvent.getByToken(multToken_, multHandle);//edm::InputTag("QGTagger", "mult")
   edm::Handle<double> rhoHandle;
-  iEvent.getByToken(rhopogHandle_,rhoHandle);
+  iEvent.getByToken(rhopogHandle_,rhoHandle);//edm::InputTag("fixedGridRhoFastjetAll"))
+  //?what are these?
   double rho = *rhoHandle;
   //edm::Handle<double> rhoJERHandle;
   //iEvent.getByToken(rhoJERHandle_,rhoJERHandle);

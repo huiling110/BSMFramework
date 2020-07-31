@@ -382,7 +382,8 @@ process.printGenParticleList = cms.EDAnalyzer("ParticleListDrawer",
   src = cms.InputTag("prunedGenParticles")
 )
 
-#QG likelihood
+#QG likelihood  #Quark-gluon likelihood
+## discriminate between (light) Quark and Gluon jets. https://twiki.cern.ch/twiki/bin/view/CMS/QuarkGluonLikelihood
 #https://github.com/cms-nanoAOD/cmssw/pull/271#
 #load db explicitly
 from CondCore.DBCommon.CondDBSetup_cfi import *
@@ -399,7 +400,7 @@ process.QGPoolDBESSource = cms.ESSource("PoolDBESSource",
      )
 
 process.es_prefer_qg = cms.ESPrefer('PoolDBESSource','QGPoolDBESSource')
-
+#step1
 process.load('RecoJets.JetProducers.QGTagger_cfi')
 #process.QGTagger.srcJets       = cms.InputTag('slimmedJets')
 process.QGTagger.srcJets       = cms.InputTag(jetsNameAK4)
