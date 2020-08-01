@@ -25,8 +25,8 @@ if __name__ == '__main__':
  #####
  datasetnames  = [#{{{
 # signal
-'Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8', 
-'Legacy16v2_TTTT_TuneCUETP8M2T4_PSweights_13TeV',
+#'Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8', 
+'Legacy16V2_TTTT_TuneCUETP8M2T4_PSweights_13TeV',
 'Legacy16V2_TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8', 
 #'Legacy16V2_TTHnobb', #0
 # TH
@@ -158,7 +158,7 @@ if __name__ == '__main__':
                  ]
  datasetinputs = [
 # signal#{{{
-'/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+#'/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 '/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 '/TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8_correctnPartonsInBorn/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #background

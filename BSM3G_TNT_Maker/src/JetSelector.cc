@@ -1076,7 +1076,7 @@ void JetSelector::SetBranches(){
   if(debug_) std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;
   ////slimmedJets
   //Kinematics
-  AddBranch(&Jet_pt        ,"Jet_pt");
+  AddBranch(&Jet_pt        ,"Jet_pt");/*{{{*/
   AddBranch(&Jet_eta       ,"Jet_eta");
   AddBranch(&Jet_phi       ,"Jet_phi");
   AddBranch(&Jet_energy    ,"Jet_energy");
@@ -1288,7 +1288,7 @@ void JetSelector::SetBranches(){
       AddBranch(&Jet_puppi_hadronFlavour        ,"Jet_puppi_hadronFlavour");
     }
   }
-  if(debug_) std::cout<<"set branches"<<std::endl;
+  if(debug_) std::cout<<"set branches"<<std::endl;/*}}}*/
 }
 void JetSelector::Clear(){
   ////slimmedJets
