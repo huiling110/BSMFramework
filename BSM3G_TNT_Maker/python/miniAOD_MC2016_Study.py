@@ -56,6 +56,7 @@ process.source = cms.Source("PoolSource",
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 
 ##### JEC
+#update the JEC in the MiniAOD
 from PhysicsTools.PatAlgos.tools.jetTools import updateJetCollection
 updateJetCollection(
   process,
@@ -72,7 +73,7 @@ updateJetCollection(
      'pfDeepFlavourJetTags:probuds',
      'pfDeepFlavourJetTags:probg'
   ],
-  postfix='NewDFTraining'
+  postfix='NewDFTraining'# the final updated jet collection will be called updatedPatJets+labelName+postfix, with labelName and postfix 
 )
 
 
