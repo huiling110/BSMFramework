@@ -128,10 +128,10 @@ class TriggerSelector : public baseTree{
   int HLT_Ele27_WP85_Gsf;
   //add for TTTT
   int HLT_Ele32_eta2p1_WPTight_Gsf;
-  int HLT_Ele27_WPTigh_Gsf;
+  //int HLT_Ele27_WPTight_Gsf;
   int HLT_DoubleMu8_Mass8_PFHT300;
   int HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300;
-  int  HLT_PFHT300_SixJet30_DoubleBTagCSV_p056;
+  int  HLT_PFHT400_SixJet30_DoubleBTagCSV_p056;
   int HLT_PFHT450_SixJet40_BTagCSV_p056;
 };
 #endif

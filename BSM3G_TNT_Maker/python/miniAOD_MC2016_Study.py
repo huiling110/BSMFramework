@@ -42,10 +42,10 @@ process.load('SimGeneral.HepPDTESSource.pythiapdt_cfi')
 #####
 process.source = cms.Source("PoolSource",
   fileNames = cms.untracked.vstring(
-#    '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v1/230000/F61E4EE9-127E-E911-8FF5-549F3525CD78.root',
+    '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v1/230000/F61E4EE9-127E-E911-8FF5-549F3525CD78.root',
   #  '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v1/00000/54BD7E92-8477-E911-AE3A-0CC47A6C115A.root',
   # ? don't know why the above 2 files can not be open.
-    '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/20000/CACFB972-44F1-E811-98CF-001E67A3E8CC.root',
+#    '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/20000/CACFB972-44F1-E811-98CF-001E67A3E8CC.root',
     # ttH run II 2016 sync file
 #    '/store/mc/RunIISummer16MiniAODv3/ttHToNonbb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/120000/F24F2D5E-DDEC-E811-AF50-90B11C08AD7D.root',
     # HH file
@@ -184,7 +184,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
 #  fileName = cms.string("OutTree_Study.root")
-  fileName = cms.string("OutTree_Study_TauAdd6HLT.root")
+  fileName = cms.string("OutTree_Study_Tau_Corrected2HLT.root")
 )
 
 #####
@@ -386,6 +386,7 @@ process.printGenParticleList = cms.EDAnalyzer("ParticleListDrawer",
 ## discriminate between (light) Quark and Gluon jets. https://twiki.cern.ch/twiki/bin/view/CMS/QuarkGluonLikelihood
 #https://github.com/cms-nanoAOD/cmssw/pull/271#
 #load db explicitly
+#step0 This step can be skipped if you use the training from the GT
 from CondCore.DBCommon.CondDBSetup_cfi import *
 process.QGPoolDBESSource = cms.ESSource("PoolDBESSource",
       CondDBSetup,
@@ -394,6 +395,7 @@ process.QGPoolDBESSource = cms.ESSource("PoolDBESSource",
          record = cms.string('QGLikelihoodRcd'),
          tag    = cms.string('QGLikelihoodObject_v1_AK4'),
          label  = cms.untracked.string('QGL_AK4PFchs')
+         #inconsitence in AK4PFchs and AK4，which are type
          ),
       ),
       connect = cms.string('sqlite:QGL_AK4chs_94X.db')
