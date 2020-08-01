@@ -402,12 +402,14 @@ process.QGPoolDBESSource = cms.ESSource("PoolDBESSource",
      )
 
 process.es_prefer_qg = cms.ESPrefer('PoolDBESSource','QGPoolDBESSource')
+#?
 #step1
 process.load('RecoJets.JetProducers.QGTagger_cfi')
 #process.QGTagger.srcJets       = cms.InputTag('slimmedJets')
-process.QGTagger.srcJets       = cms.InputTag(jetsNameAK4)
+process.QGTagger.srcJets       = cms.InputTag(jetsNameAK4)#jetsNameAK4="selectedUpdatedPatJetsNewDFTraining"
 process.QGTagger.jetsLabel     = cms.string('QGL_AK4PFchs')
-
+#?what does this step in python config do?
+#In addition to the qgLikelihood, the QGTagger plugin will also produce the three veriables axis2, mult and ptD. 
 
 
 ## tasks ##
