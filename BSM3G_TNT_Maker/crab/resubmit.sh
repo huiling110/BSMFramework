@@ -29,15 +29,16 @@
 #crab resubmit -d Fall17V2_ttHnobb/crab_Fall17V2_ttHnobb
 #crab resubmit -d Fall17V2_ttWJets/crab_Fall17V2_ttWJets
 #crab resubmit -d Fall17V2_ttW_ext_Jets/crab_Fall17V2_ttW_ext_Jets
-crab resubmit -d Fall17V2_TTHnobb/crab_Fall17V2_TTHnobb
+#crab resubmit -d Fall17V2_TTHnobb/crab_Fall17V2_TTHnobb
 
-crab resubmit -d Summer16V1_SEleBlockB/crab_Summer16V1_SEleBlockB
-crab resubmit -d Summer16V1_SEleBlockC/crab_Summer16V1_SEleBlockC
-crab resubmit -d Summer16V1_SEleBlockD/crab_Summer16V1_SEleBlockD
-crab resubmit -d Summer16V1_SEleBlockE/crab_Summer16V1_SEleBlockE
-crab resubmit -d Summer16V1_SEleBlockF/crab_Summer16V1_SEleBlockF
-crab resubmit -d Summer16V1_SEleBlockG/crab_Summer16V1_SEleBlockG
-crab resubmit -d Summer16V1_SEleBlockH/crab_Summer16V1_SEleBlockH
-
-
-crab resubmit -d Summer16V1_ttHnobb/crab_Summer16V1_ttHnobb
+#crab resubmit -d Summer16V1_SEleBlockB/crab_Summer16V1_SEleBlockB
+#crab resubmit -d Summer16V1_SEleBlockC/crab_Summer16V1_SEleBlockC
+#crab resubmit -d Summer16V1_SEleBlockD/crab_Summer16V1_SEleBlockD
+#crab resubmit -d Summer16V1_SEleBlockE/crab_Summer16V1_SEleBlockE
+#crab resubmit -d Summer16V1_SEleBlockF/crab_Summer16V1_SEleBlockF
+#crab resubmit -d Summer16V1_SEleBlockG/crab_Summer16V1_SEleBlockG
+#crab resubmit -d Summer16V1_SEleBlockH/crab_Summer16V1_SEleBlockH
+#
+#
+#crab resubmit -d Summer16V1_ttHnobb/crab_Summer16V1_ttHnobb
+crab resubmit -d Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/crab_Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8 
