@@ -24,7 +24,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
   //   Recall collections
   /////
   edm::Handle<reco::VertexCollection> vtx_h;
-  iEvent.getByToken(vtx_h_, vtx_h);
+  iEvent.getByToken(vtx_h_, vtx_h);"offlineSlimmedPrimaryVertices")
   reco::BeamSpot beamSpot;
   edm::Handle<reco::BeamSpot> beamSpotHandle;
   iEvent.getByToken(beamSpot_, beamSpotHandle);
@@ -329,7 +329,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
 void TauSelector::SetBranches(){
   if(debug_) std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;
   //Kinematic
-  AddBranch(&Tau_pt                           ,"Tau_pt");
+  AddBranch(&Tau_pt                           ,"Tau_pt");/*{{{*/
   AddBranch(&Tau_eta                          ,"Tau_eta");
   AddBranch(&Tau_phi                          ,"Tau_phi");
   AddBranch(&Tau_energy                       ,"Tau_energy");
@@ -507,11 +507,11 @@ void TauSelector::SetBranches(){
   AddBranch(&Tau_leadChargedCandTrackFitErrorMatrix_11 ,"Tau_leadChargedCandTrackFitErrorMatrix_11");
   AddBranch(&Tau_leadChargedCandTrackFitErrorMatrix_12 ,"Tau_leadChargedCandTrackFitErrorMatrix_12");
   AddBranch(&Tau_leadChargedCandTrackFitErrorMatrix_22 ,"Tau_leadChargedCandTrackFitErrorMatrix_22");
-}
+}/*}}}*/
 
-void TauSelector::Clear(){
+void TauSelector::Clear(){/*{{{*/
   //Kinematic
-  Tau_pt.clear();
+  Tau_pt.clear();//removing all elements from the vector and sets size of vector to zero.
   Tau_eta.clear();
   Tau_phi.clear();
   Tau_energy.clear();
@@ -688,7 +688,7 @@ void TauSelector::Clear(){
   Tau_leadChargedCandTrackFitErrorMatrix_11.clear();
   Tau_leadChargedCandTrackFitErrorMatrix_12.clear();
   Tau_leadChargedCandTrackFitErrorMatrix_22.clear();
-}
+}/*}}}*/
 bool TauSelector::isGoodVertex(const reco::Vertex& vtxxx) {
   if (vtxxx.isFake()) return false;
   if (vtxxx.ndof() < _Tau_vtx_ndof_min) return false;
