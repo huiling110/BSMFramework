@@ -24,14 +24,14 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
   //   Recall collections
   /////
   edm::Handle<reco::VertexCollection> vtx_h;
-  iEvent.getByToken(vtx_h_, vtx_h);
+  iEvent.getByToken(vtx_h_, vtx_h);"offlineSlimmedPrimaryVertices")
   reco::BeamSpot beamSpot;
   edm::Handle<reco::BeamSpot> beamSpotHandle;
   iEvent.getByToken(beamSpot_, beamSpotHandle);
   edm::Handle<edm::View<pat::Tau> > taus;
-  iEvent.getByToken(taus_, taus);
+  iEvent.getByToken(taus_, taus);//"slimmedTausNewID"
   edm::Handle<pat::PackedCandidateCollection> pfs;
-  iEvent.getByToken(pfToken_, pfs);
+  iEvent.getByToken(pfToken_, pfs);"packedPFCandidates"
   edm::ESHandle<TransientTrackBuilder> theB;
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
   /////
@@ -46,10 +46,12 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
   //}
   //if(firstGoodVertex == vtx->end()) return; // skip event if there are no good PVs
   //if(vtx_h->empty()) return; // skip the event if no PV found
+  //?why to find instructions? what are we doing?
   const reco::Vertex &firstGoodVertex = vtx_h->front();
   //bool isgoodvtx = isGoodVertex(firstGoodVertex);
   //if(!isgoodvtx) return;
   GlobalPoint thepv(firstGoodVertex.position().x(),firstGoodVertex.position().y(),firstGoodVertex.position().z());
+  //?what is GlobalPoint?
   /////
   //   Get tau information 
   /////
@@ -77,20 +79,21 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
       Tau_leadChargedCandPhi.push_back(hadTauLeadChargedCand.isNonnull() ? hadTauLeadChargedCand->phi()    : -999);
       Tau_leadChargedCandE.push_back(hadTauLeadChargedCand.isNonnull()   ? hadTauLeadChargedCand->energy() : -999);
       //loop over packed PF candidates and find the one which matches the embedded packed candidate within the pat::Tau
-      for(unsigned int iPF = 0, nPF = pfs->size(); iPF < nPF; ++iPF){
+      for(unsigned int iPF = 0, nPF = pfs->size(); iPF < nPF; ++iPF){//"packedPFCandidates"
         const pat::PackedCandidate &pfCandidate = (*pfs)[iPF];
         if((hadTauLeadChargedCand->pt()  == pfCandidate.pt())  &&
            (hadTauLeadChargedCand->eta() == pfCandidate.eta()) && 
            (hadTauLeadChargedCand->phi() == pfCandidate.phi())){ // the packed PF candidate and embedded lead candidate within the pat::Tau should be the same
           leadPackedCandidateExists = true; // if there is a match between the packed PF candidate and embedded lead candidate within the pat::Tau
           if(pfCandidate.bestTrack() != NULL){isBestTrackNonNull = true; leadTrack = pfCandidate.bestTrack();} // grab the associated CTF track (if it exists)
+          //bestTrack:return a pointer to the track if present. otherwise, return a null pointer
         }
         if(leadPackedCandidateExists && isBestTrackNonNull) break;
       }
       //if(!(leadPackedCandidateExists)) continue; // throw away the tau if there was no matching packed PF candidate to the embedded lead candidate within the pat::Tau
       //if(!(isBestTrackNonNull)) continue; // throw away the tau if it's lead charged hadron has no associated CTF track
       if(isBestTrackNonNull && leadPackedCandidateExists){  
-        Tau_leadChargedCandTrack_pt.push_back(leadTrack->pt());
+        Tau_leadChargedCandTrack_pt.push_back(leadTrack->pt());//number of degrees of freedom of the fit
         Tau_leadChargedCandTrack_ptError.push_back(leadTrack->ptError());
       }else{
         Tau_leadChargedCandTrack_pt.push_back(-998);
@@ -109,10 +112,12 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     Tau_leadChargedCandCharge.push_back(tau->leadChargedHadrCand().isNonnull() ? tau->leadChargedHadrCand()->charge() : -999);   
     //Decay mode finding
     //Tau_decayModeFindingOldDMs.push_back(tau->tauID("decayModeFindingOldDMs"));
-    Tau_decayModeFinding.push_back(tau->tauID("decayModeFinding"));
+    Tau_decayModeFinding.push_back(tau->tauID("decayModeFinding"));//a branch
+    //?pat::Tau::decayMode(),
+    //?decay mode for ID "dR0p32017v2"?For MVA2017v2 decayModeFindingOldDMs is recommended.
     Tau_decayModeFindingNewDMs.push_back(tau->tauID("decayModeFindingNewDMs"));
     //Against Muon
-    if(!_MiniAODv2){
+    if(!_MiniAODv2){//true
       Tau_againstMuonLoose2.push_back(tau->tauID("againstMuonLoose2"));
       Tau_againstMuonTight2.push_back(tau->tauID("againstMuonTight2"));
     }
@@ -189,10 +194,12 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     //Tau_byLooseCombinedIsolationDeltaBetaCorr3HitsdR03.push_back(tau->tauID("byLooseCombinedIsolationDeltaBetaCorr3HitsdR03"));
     //Tau_byMediumCombinedIsolationDeltaBetaCorr3HitsdR03.push_back(tau->tauID("byMediumCombinedIsolationDeltaBetaCorr3HitsdR03"));
     //Tau_byTightCombinedIsolationDeltaBetaCorr3HitsdR03.push_back(tau->tauID("byTightCombinedIsolationDeltaBetaCorr3HitsdR03"));
+    //http://cmsdoxygen.web.cern.ch/cmsdoxygen/CMSSW_10_2_16/doc/html/db/dab/namespacetauProducer__cfi.html#a41e5830401952acd45e79c52fa6af2b2
     Tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT.push_back(tau->tauID("byLooseIsolationMVArun2v1DBdR03oldDMwLT"));
     Tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT.push_back(tau->tauID("byMediumIsolationMVArun2v1DBdR03oldDMwLT"));
     //Tau_byTightIsolationMVArun2v1DBdR03oldDMwLT.push_back(tau->tauID("byTightIsolationMVArun2v1DBdR03oldDMwLT"));
     //Tau_byVTightIsolationMVArun2v1DBdR03oldDMwLT.push_back(tau->tauID("byVTightIsolationMVArun2v1DBdR03oldDMwLT"));
+    // DeepTau IDs
     Tau_byIsolationMVArun2017v2DBoldDMdR0p3wLTraw2017.push_back(tau->tauID("byIsolationMVArun2017v2DBoldDMdR0p3wLTraw2017"));
     Tau_byVVLooseIsolationMVArun2017v2DBoldDMdR0p3wLT2017.push_back(tau->tauID("byVVLooseIsolationMVArun2017v2DBoldDMdR0p3wLT2017"));
     Tau_byVLooseIsolationMVArun2017v2DBoldDMdR0p3wLT2017.push_back(tau->tauID("byVLooseIsolationMVArun2017v2DBoldDMdR0p3wLT2017"));
@@ -256,17 +263,17 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     Tau_defaultFlightLengthX.push_back(tau->flightLength().x());
     Tau_defaultFlightLengthY.push_back(tau->flightLength().y());
     Tau_defaultFlightLengthZ.push_back(tau->flightLength().z());
-    Tau_defaultFlightLengthSig.push_back(tau->flightLengthSig());
-    Tau_default_PCAx_pv.push_back(tau->dxy_PCA().x());
-    Tau_default_PCAy_pv.push_back(tau->dxy_PCA().y());
-    Tau_default_PCAz_pv.push_back(tau->dxy_PCA().z());
+    Tau_defaultFlightLengthSig.push_back(tau->flightLengthSig());//?
+    Tau_default_PCAx_pv.push_back(tau->dxy_PCA().x());//?
+    Tau_default_PCAy_pv.push_back(tau->dxy_PCA().y());//?
+    Tau_default_PCAz_pv.push_back(tau->dxy_PCA().z());//?
     //tau lead track point of closest approach (PCA) to the beamspot and primary vertex
     //AJ vars
     if(beamSpotHandle.isValid() && isBestTrackNonNull && leadPackedCandidateExists){
       TransientTrack tauTransTkPtr = theB->build(leadTrack);
-      beamSpot = *beamSpotHandle;
+      beamSpot = *beamSpotHandle;//"offlineBeamSpot"
       math::XYZPoint point(beamSpot.x0(),beamSpot.y0(), beamSpot.z0());
-      GlobalPoint thebs(beamSpot.x0(),beamSpot.y0(),beamSpot.z0());
+      GlobalPoint thebs(beamSpot.x0(),beamSpot.y0(),beamSpot.z0());//point in global coordinate system
       GlobalPoint tauLeadTrack_pca_bs = tauTransTkPtr.trajectoryStateClosestToPoint(thebs).position();
       GlobalPoint tauLeadTrack_pca_pv = tauTransTkPtr.trajectoryStateClosestToPoint(thepv).position();
       Tau_leadChargedCandDz_bs.push_back(leadTrack->dz(point));
@@ -329,7 +336,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
 void TauSelector::SetBranches(){
   if(debug_) std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;
   //Kinematic
-  AddBranch(&Tau_pt                           ,"Tau_pt");
+  AddBranch(&Tau_pt                           ,"Tau_pt");/*{{{*/
   AddBranch(&Tau_eta                          ,"Tau_eta");
   AddBranch(&Tau_phi                          ,"Tau_phi");
   AddBranch(&Tau_energy                       ,"Tau_energy");
@@ -507,11 +514,11 @@ void TauSelector::SetBranches(){
   AddBranch(&Tau_leadChargedCandTrackFitErrorMatrix_11 ,"Tau_leadChargedCandTrackFitErrorMatrix_11");
   AddBranch(&Tau_leadChargedCandTrackFitErrorMatrix_12 ,"Tau_leadChargedCandTrackFitErrorMatrix_12");
   AddBranch(&Tau_leadChargedCandTrackFitErrorMatrix_22 ,"Tau_leadChargedCandTrackFitErrorMatrix_22");
-}
+}/*}}}*/
 
-void TauSelector::Clear(){
+void TauSelector::Clear(){/*{{{*/
   //Kinematic
-  Tau_pt.clear();
+  Tau_pt.clear();//removing all elements from the vector and sets size of vector to zero.
   Tau_eta.clear();
   Tau_phi.clear();
   Tau_energy.clear();
@@ -688,7 +695,7 @@ void TauSelector::Clear(){
   Tau_leadChargedCandTrackFitErrorMatrix_11.clear();
   Tau_leadChargedCandTrackFitErrorMatrix_12.clear();
   Tau_leadChargedCandTrackFitErrorMatrix_22.clear();
-}
+}/*}}}*/
 bool TauSelector::isGoodVertex(const reco::Vertex& vtxxx) {
   if (vtxxx.isFake()) return false;
   if (vtxxx.ndof() < _Tau_vtx_ndof_min) return false;
