@@ -25,7 +25,7 @@ if __name__ == '__main__':
  #####
  datasetnames  = [#{{{
 # signal
-#'Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8', 
+'Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8', 
 'Legacy16V2_TTTT_TuneCUETP8M2T4_PSweights_13TeV',
 'Legacy16V2_TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8', 
 #'Legacy16V2_TTHnobb', #0
@@ -158,7 +158,7 @@ if __name__ == '__main__':
                  ]
  datasetinputs = [
 # signal#{{{
-#'/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 '/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 '/TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8_correctnPartonsInBorn/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #background
@@ -303,7 +303,7 @@ baseDir = "/workfs/cms/huahuil/BSM/CMSSW_10_2_16/src/BSMFramework/"
 
 #for d in range(0,len(datasetnames)):
 #for d in range(0,2):
-for d in range(0,1):
+for d in range(0,2):
     print 'multicrab.py: Running datasetname: ', datasetnames[d]
 #    lepFilt = 2
     lepFilt = 0
@@ -339,13 +339,13 @@ for d in range(0,1):
     config.Data.allowNonValidInputDataset = True
     config.Data.inputDataset   = datasetinputs[d]
     config.Data.inputDBS       = 'global'
-    config.Data.splitting      = 'FileBased'
-    #config.Data.splitting      = 'Automatic'
-    config.Data.totalUnits     = 40000 #With 'FileBased' splitting tells how many files to analyse
-    config.Data.unitsPerJob    = 1
+  #  config.Data.splitting      = 'FileBased'
+    config.Data.splitting      = 'Automatic'
+   # config.Data.totalUnits     = 40000 #With 'FileBased' splitting tells how many files to analyse
+    config.Data.unitsPerJob    = 2000 
 #    config.Data.outLFNDirBase = '/store/user/binghuan/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
-    config.Data.outputDatasetTag = datasetnames[d]+"AddHLT"
+    config.Data.outputDatasetTag = datasetnames[d]+"AddHLT_v2"
 
 #    print 'multicrab.py: outLFNDirBase = /store/user/binghuan/'
     print 'multicrab.py: outLFNDirBase = /store/user/hhua/'

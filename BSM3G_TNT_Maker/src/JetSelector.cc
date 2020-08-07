@@ -15,10 +15,11 @@ JetSelector::JetSelector(std::string name, TTree* tree, bool debug, const pset& 
   rhopogHandle_ = ic.consumes<double>(edm::InputTag("fixedGridRhoFastjetAll"));
   //?
   //rhoJERHandle_ = ic.consumes<double>(edm::InputTag("fixedGridRhoAll"));
+  //?already do JEC in python script. why do it here agian?
   jecPayloadNamesAK4PFchsMC1_   = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsMC1");//= cms.FileInPath("BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/Summer16_07Aug2017_V11_MC_L1FastJet_AK4PFchs.txt")
   jecPayloadNamesAK4PFchsMC2_   = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsMC2");
   jecPayloadNamesAK4PFchsMC3_   = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsMC3");
-  jecPayloadNamesAK4PFchsMCUnc_ = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsMCUnc");
+  jecPayloadNamesAK4PFchsMCUnc_ = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsMCUnc");//"BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/Summer16_07Aug2017_V11_MC_UncertaintySources_AK4PFchs.txt"
   jecPayloadNamesAK4PFchsDATA1_   = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsDATA1");
   jecPayloadNamesAK4PFchsDATA2_   = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsDATA2");
   jecPayloadNamesAK4PFchsDATA3_   = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsDATA3");
@@ -66,7 +67,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
   iEvent.getByToken(jets_, jets);                                         
   edm::Handle<edm::View<pat::Muon> > muon_h;
   //Using a View brings the polymorphism back
-  iEvent.getByToken(muon_h_, muon_h);
+  iEvent.getByToken(muon_h_, muon_h);//"slimmedMuons"
   edm::Handle<edm::View<pat::Electron> > electron_pat;
   iEvent.getByToken(electron_pat_, electron_pat);
   edm::Handle<edm::View<pat::Tau> > taus;
@@ -97,6 +98,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
   int ij = 0;
   int nEvent = iEvent.id().event();
   // random seed for stochastic method
+  // ?what is this doing?
   std::uint32_t m_nomVar = 1;
   unsigned int runNum_uint = static_cast<unsigned int>(iEvent.id().run());
   unsigned int lumiNum_uint = static_cast<unsigned int>(iEvent.id().luminosityBlock());
@@ -105,11 +107,11 @@ void JetSelector::Fill(const edm::Event& iEvent){
   std::uint32_t seed = m_nomVar + jet0eta + (lumiNum_uint << 10) + (runNum_uint << 20) + evNum_uint;
   m_random_generator.seed(seed);
  
-  for(const pat::Jet &j : *jets){ 
+  for(const pat::Jet &j : *jets){ //="selectedUpdatedPatJetsNewDFTraining"
     //Acceptance
     if(j.pt()<_Jet_pt_min){ij++; continue;}
     //Kinematics
-    Jet_pt.push_back(j.pt());  
+    Jet_pt.push_back(j.pt());  //a branch   vector<double> 
     Jet_eta.push_back(j.eta());       
     Jet_phi.push_back(j.phi());       
     Jet_energy.push_back(j.energy());
@@ -145,13 +147,15 @@ void JetSelector::Fill(const edm::Event& iEvent){
     Jet_isPFJet.push_back(j.isPFJet());
     Jet_isCaloJet.push_back(j.isCaloJet());
     if(_qglVar){
-        edm::Ref<pat::JetCollection> jetRef(jets, ij);
+        edm::Ref<pat::JetCollection> jetRef(jets, ij);//ij is the number of jet that are < Jet_pt_min
+        //?what is ij doing here?
         Jet_qg.push_back((*qgHandle)[jetRef]);
         double axis1 = -1;
         double axis2 = -1;
         double ptD = -1;
         double mult = -1;
         computeQG(j, ptD, mult, axis1, axis2, false);
+        //?you have the ptD and mult when you implement QGtagger. why recalculate here?
         Jet_axis1.push_back(axis1);
         Jet_axis2.push_back(axis2);
         Jet_ptD.push_back(ptD);
@@ -165,15 +169,16 @@ void JetSelector::Fill(const edm::Event& iEvent){
     }
     //Match Indices
     //match muons
-    int currmupos = 0;
+    int currmupos = 0;/*{{{*/
     int mu_number = 0;
     for(edm::View<pat::Muon>::const_iterator mu = muon_h->begin(); mu != muon_h->end(); mu++){
         //Acceptance 
         if(mu->pt() < _Muon_pt_min)         continue;
         if(fabs(mu->eta()) > _Muon_eta_max) continue; 
-        bool isMatch = false; 
+        bool isMatch = false;
+        //?what is this doing?
         for(unsigned int i1 = 0 ; i1 < mu->numberOfSourceCandidatePtrs();i1++){
-            const reco::CandidatePtr  &c1s=mu->sourceCandidatePtr(i1);
+            const reco::CandidatePtr  &c1s=mu->sourceCandidatePtr(i1);//get the candidate pointer with index i
             for(unsigned int i2 = 0 ; i2 < j.numberOfSourceCandidatePtrs();i2++) {
                 const reco::CandidatePtr  &c2s=j.sourceCandidatePtr(i2);
                 if(c2s== c1s){
@@ -192,6 +197,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
     }
     //std::cout << " mu_number outside the Muon match loop " << mu_number << std::endl;
     Jet_mu_number.push_back(mu_number);
+    //?
     //match electrons
     int currelepos = 0;
     int ele_number = 0;
@@ -243,11 +249,11 @@ void JetSelector::Fill(const edm::Event& iEvent){
         }
         currtaupos++;
     }
-    Jet_tau_number.push_back(tau_number);
+    Jet_tau_number.push_back(tau_number);/*}}}*/
     //
     //Energy
     if(j.isPFJet() || j.isJPTJet()){
-        Jet_neutralHadEnergyFraction.push_back(j.neutralHadronEnergyFraction());                               
+        Jet_neutralHadEnergyFraction.push_back(j.neutralHadronEnergyFraction());                               /*{{{*/
         Jet_neutralEmEnergyFraction.push_back(j.neutralEmEnergyFraction());                                   
         Jet_chargedHadronEnergyFraction.push_back(j.chargedHadronEnergyFraction());                               
         Jet_chargedEmEnergyFraction.push_back(j.chargedEmEnergyFraction());                              
@@ -273,7 +279,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
     Jet_vtxMass.push_back(-99);//j.userFloat("vtxMass"));
     Jet_vtxNtracks.push_back(-99);//j.userFloat("vtxNtracks"));
     Jet_vtx3DVal.push_back(-99);//j.userFloat("vtx3DVal"));
-    Jet_vtx3DSig.push_back(-99);//j.userFloat("vtx3DSig"));
+    Jet_vtx3DSig.push_back(-99);//j.userFloat("vtx3DSig"));/*}}}*/
     //Jet Energy Corrections and Uncertainties
     double corrAK4PFchs     = 1;
     double corrUpAK4PFchs   = 1;
@@ -367,12 +373,13 @@ void JetSelector::Fill(const edm::Event& iEvent){
     double corrDownAK4PFchs_FlavorPureBottom_down = 1;
     //===========================================================================
     
-    reco::Candidate::LorentzVector uncorrJetAK4PFchs = j.correctedP4(0);
+    reco::Candidate::LorentzVector uncorrJetAK4PFchs = j.correctedP4(0);//p4 of the jet corrected up to the given level for the set of jet energy correction factors, which is currently in use, level 0.
     if(!_is_data){
-      jecAK4PFchsMC_->setJetEta( uncorrJetAK4PFchs.eta()    );
+      jecAK4PFchsMC_->setJetEta( uncorrJetAK4PFchs.eta()    );/*{{{*/
       jecAK4PFchsMC_->setJetPt ( uncorrJetAK4PFchs.pt()     );
       jecAK4PFchsMC_->setJetE  ( uncorrJetAK4PFchs.energy() );
       jecAK4PFchsMC_->setRho	( rho  );
+      //?what is Pho
       jecAK4PFchsMC_->setNPV	( vertices->size()  );
       jecAK4PFchsMC_->setJetA  ( j.jetArea()	     );
       corrAK4PFchs = jecAK4PFchsMC_->getCorrection();
@@ -740,14 +747,14 @@ void JetSelector::Fill(const edm::Event& iEvent){
       jecAK4PFchsDATAUnc_->setJetEta( uncorrJetAK4PFchs.eta() );
       jecAK4PFchsDATAUnc_->setJetPt( corrAK4PFchs * uncorrJetAK4PFchs.pt() );
       corrDownAK4PFchs = corrAK4PFchs * ( 1 - fabs(jecAK4PFchsDATAUnc_->getUncertainty(-1)) );
-    }
+    }/*}}}*/
     //std::cout<<iEvent.id()<<" "<< j.pt() << " "  << j.correctedP4(1).pt()  <<" JesSF "<< corrAK4PFchs << " JesSFup "<< corrUpAK4PFchs << " JesSFdown "<< corrDownAK4PFchs<< std::endl;
     Jet_JesSF.push_back(corrAK4PFchs);
     Jet_JesSFup.push_back(corrUpAK4PFchs);
     Jet_JesSFdown.push_back(corrDownAK4PFchs);
     
     //================================== Store Factorised JEC info =============================================
-    Jet_JesSF_AbsoluteStat_up.push_back(corrUpAK4PFchs_AbsoluteStat_up);
+    Jet_JesSF_AbsoluteStat_up.push_back(corrUpAK4PFchs_AbsoluteStat_up);/*{{{*/
     Jet_JesSF_AbsoluteStat_down.push_back(corrDownAK4PFchs_AbsoluteStat_down);
     Jet_JesSF_AbsoluteScale_up.push_back(corrUpAK4PFchs_AbsoluteScale_up);
     Jet_JesSF_AbsoluteScale_down.push_back(corrDownAK4PFchs_AbsoluteScale_down);
@@ -832,7 +839,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
     Jet_JesSF_FlavorPureCharm_up.push_back(corrUpAK4PFchs_FlavorPureCharm_up);
     Jet_JesSF_FlavorPureCharm_down.push_back(corrDownAK4PFchs_FlavorPureCharm_down);
     Jet_JesSF_FlavorPureBottom_up.push_back(corrUpAK4PFchs_FlavorPureBottom_up);
-    Jet_JesSF_FlavorPureBottom_down.push_back(corrDownAK4PFchs_FlavorPureBottom_down);
+    Jet_JesSF_FlavorPureBottom_down.push_back(corrDownAK4PFchs_FlavorPureBottom_down);/*}}}*/
     //===============================================================================
     //JER scale factor and uncertainties
     float JERScaleFactor     = 1; 
@@ -971,22 +978,25 @@ void JetSelector::JECInitialization(){
   //AK4chs - MC: Get the factorized jet corrector parameters. 
   //std::cout<< " JEC Initialize  " << std::endl;
   std::vector<std::string> jecPayloadNamesAK4PFchsMC_;
-  jecPayloadNamesAK4PFchsMC_.push_back(jecPayloadNamesAK4PFchsMC1_.fullPath());
+  jecPayloadNamesAK4PFchsMC_.push_back(jecPayloadNamesAK4PFchsMC1_.fullPath());//"BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/Summer16_07Aug2017_V11_MC_L1FastJet_AK4PFchs.txt"
+  //?
   jecPayloadNamesAK4PFchsMC_.push_back(jecPayloadNamesAK4PFchsMC2_.fullPath());
   jecPayloadNamesAK4PFchsMC_.push_back(jecPayloadNamesAK4PFchsMC3_.fullPath());
-  std::vector<JetCorrectorParameters> vParAK4PFchsMC;
+  std::vector<JetCorrectorParameters> vParAK4PFchsMC;//// Create the JetCorrectorParameter objects, the order does not matter.
   for ( std::vector<std::string>::const_iterator payloadBegin = jecPayloadNamesAK4PFchsMC_.begin(),
 	  payloadEnd = jecPayloadNamesAK4PFchsMC_.end(), ipayload = payloadBegin; ipayload != payloadEnd; ++ipayload ) {
     JetCorrectorParameters pars(*ipayload);
     vParAK4PFchsMC.push_back(pars);
   }
+  //???
   //std::cout<< " JEC Initialize jecAK4PFchsMC_ " << std::endl;
+  //?where can we find instructions for factorizedJetCorrector?
   jecAK4PFchsMC_    = boost::shared_ptr<FactorizedJetCorrector>  ( new FactorizedJetCorrector(vParAK4PFchsMC) );
   //jecAK4PFchsMCUnc_ = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadNamesAK4PFchsMCUnc_.fullPath()) );
   jecAK4PFchsMCUnc_   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "Total"))));
   //std::cout<< " JEC Initialize Start Components " << std::endl;
   
-  jecAK4PFchsMCUnc_AbsoluteStat   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "AbsoluteStat"))));
+  jecAK4PFchsMCUnc_AbsoluteStat   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "AbsoluteStat"))));/*{{{*/
   jecAK4PFchsMCUnc_AbsoluteScale   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "AbsoluteScale"))));
   jecAK4PFchsMCUnc_AbsoluteFlavMap   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "AbsoluteFlavMap"))));
   jecAK4PFchsMCUnc_AbsoluteMPFBias   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "AbsoluteMPFBias"))));
@@ -1028,10 +1038,10 @@ void JetSelector::JECInitialization(){
   jecAK4PFchsMCUnc_FlavorPureGluon   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "FlavorPureGluon"))));
   jecAK4PFchsMCUnc_FlavorPureQuark   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "FlavorPureQuark"))));
   jecAK4PFchsMCUnc_FlavorPureCharm   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "FlavorPureCharm"))));
-  jecAK4PFchsMCUnc_FlavorPureBottom   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "FlavorPureBottom"))));
+  jecAK4PFchsMCUnc_FlavorPureBottom   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "FlavorPureBottom"))));/*}}}*/
   
   //AK4chs - DATA: Get the factorized jet corrector parameters. 
-  std::vector<std::string> jecPayloadNamesAK4PFchsDATA_;
+  std::vector<std::string> jecPayloadNamesAK4PFchsDATA_;/*{{{*/
   jecPayloadNamesAK4PFchsDATA_.push_back(jecPayloadNamesAK4PFchsDATA1_.fullPath());
   jecPayloadNamesAK4PFchsDATA_.push_back(jecPayloadNamesAK4PFchsDATA2_.fullPath());
   jecPayloadNamesAK4PFchsDATA_.push_back(jecPayloadNamesAK4PFchsDATA3_.fullPath());
@@ -1070,7 +1080,7 @@ void JetSelector::JECInitialization(){
     vParAK4PFPuppiDATA.push_back(pars);
   }
   jecAK4PFPuppiDATA_    = boost::shared_ptr<FactorizedJetCorrector>  ( new FactorizedJetCorrector(vParAK4PFPuppiDATA) );
-  jecAK4PFPuppiDATAUnc_ = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadNamesAK4PFPuppiDATAUnc_.fullPath()) );
+  jecAK4PFPuppiDATAUnc_ = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadNamesAK4PFPuppiDATAUnc_.fullPath()) );/*}}}*/
 }
 void JetSelector::SetBranches(){
   if(debug_) std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;
@@ -1293,7 +1303,7 @@ void JetSelector::SetBranches(){
 void JetSelector::Clear(){
   ////slimmedJets
   //Kinematics
-  Jet_pt.clear();
+  Jet_pt.clear();/*{{{*/
   Jet_eta.clear();
   Jet_phi.clear();
   Jet_energy.clear();
@@ -1505,10 +1515,10 @@ void JetSelector::Clear(){
       Jet_puppi_hadronFlavour.clear();
     }
   }
-}
+}/*}}}*/
 
 void JetSelector::Getjer(pat::Jet jet, float JesSF, float rhoJER, bool AK4PFchs, float &JERScaleFactor, float &JERScaleFactorUP, float &JERScaleFactorDOWN, int nEvent){
-  double cFactorJER = 1.0; 
+  double cFactorJER = 1.0; /*{{{*/
   double cFactorJERdown = 1.0;
   double cFactorJERup = 1.0;
   //https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution#JER_Scaling_factors_and_Unce_AN1
@@ -1575,10 +1585,10 @@ void JetSelector::Getjer(pat::Jet jet, float JesSF, float rhoJER, bool AK4PFchs,
         JERScaleFactorDOWN = 1.;
     }
   }
-}
+}/*}}}*/
 
 void JetSelector::GetJER(pat::Jet jet, float JesSF, float rhoJER, bool AK4PFchs, float &JERScaleFactor, float &JERScaleFactorUP, float &JERScaleFactorDOWN){
-  if(!jet.genJet()) return;
+  if(!jet.genJet()) return;/*{{{*/
   double jetEta=fabs(jet.eta());
   double cFactorJER = 1.0; 
   double cFactorJERdown = 1.0;
@@ -1783,15 +1793,16 @@ void JetSelector::GetJER(pat::Jet jet, float JesSF, float rhoJER, bool AK4PFchs,
     JERScaleFactorUP   = 1.;
     JERScaleFactorDOWN = 1.;
   } 
-}
+}/*}}}*/
 void JetSelector::computeQG(const pat::Jet& jet, double& ptD_, double& mult_, double& axis1_, double& axis2_, bool useQualityCut){
-  float sum_weight = 0., sum_deta = 0., sum_dphi = 0., sum_deta2 = 0., sum_dphi2 = 0., sum_detadphi = 0., sum_pt = 0.;
+  float sum_weight = 0., sum_deta = 0., sum_dphi = 0., sum_deta2 = 0., sum_dphi2 = 0., sum_detadphi = 0., sum_pt = 0.;/*{{{*/
   int mult = 0;
   //Access jet daughters
   std::vector<const pat::PackedCandidate*> daughters_;
   // get all constituents
   for (unsigned idau=0; idau<jet.numberOfDaughters(); ++idau){
     daughters_.push_back(dynamic_cast<const pat::PackedCandidate*>(jet.daughter(idau)));
+    //?
   }
   for(const auto *daughter : daughters_){
     auto part = static_cast<const pat::PackedCandidate*>(daughter);
@@ -1837,4 +1848,4 @@ void JetSelector::computeQG(const pat::Jet& jet, double& ptD_, double& mult_, do
   axis2_ = (a+b-delta > 0 ?  sqrt(0.5*(a+b-delta)) : 0);
   ptD_   = (sum_weight > 0 ? sqrt(sum_weight)/sum_pt : 0);
   mult_ = mult;
-};
+};/*}}}*/

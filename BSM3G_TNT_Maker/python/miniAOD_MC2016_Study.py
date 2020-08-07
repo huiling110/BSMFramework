@@ -1,3 +1,9 @@
+#!/usr/bin/python
+# coding=utf-8
+
+
+
+
 import FWCore.ParameterSet.Config as cms
 import FWCore.ParameterSet.VarParsing as VarParsing
 import copy
@@ -57,6 +63,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 
 ##### JEC
 #update the JEC in the MiniAOD
+#reverts these corrections and applies the new ones, producing as output an new collection of pat::Jets which have the same content as the input jet, but new jet energy corrections applied. 
 from PhysicsTools.PatAlgos.tools.jetTools import updateJetCollection
 updateJetCollection(
   process,
@@ -65,7 +72,7 @@ updateJetCollection(
   svSource = cms.InputTag('slimmedSecondaryVertices'),
   #labelName = 'UpdatedJEC',
   jetCorrections = ('AK4PFchs', cms.vstring(['L1FastJet','L2Relative','L3Absolute']), 'None'),
-  btagDiscriminators = [
+  btagDiscriminators = [#for The DeepFlavour discriminator, https://twiki.cern.ch/twiki/bin/view/CMS/DeepJet
      'pfDeepFlavourJetTags:probb',
      'pfDeepFlavourJetTags:probbb',
      'pfDeepFlavourJetTags:problepb',
@@ -294,6 +301,7 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",#{{{
   jerAK8PFPuppi   =  cms.FileInPath("BSMFramework/BSM3G_TNT_Maker/data/JER/Summer16_25nsV1_MC_PtResolution_AK8PFPuppi.txt"),
   jerAK8PFPuppiSF =  cms.FileInPath("BSMFramework/BSM3G_TNT_Maker/data/JER/Summer16_25nsV1_MC_SF_AK8PFPuppi.txt"),
   # JEC - CORRECTIONS ON FLY
+  #apply the correction jet by jet
   jecPayloadNamesAK4PFchsMC1   = cms.FileInPath("BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/Summer16_07Aug2017_V11_MC_L1FastJet_AK4PFchs.txt"),
   jecPayloadNamesAK4PFchsMC2   = cms.FileInPath("BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/Summer16_07Aug2017_V11_MC_L2Relative_AK4PFchs.txt"),
   jecPayloadNamesAK4PFchsMC3   = cms.FileInPath("BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/Summer16_07Aug2017_V11_MC_L3Absolute_AK4PFchs.txt"),
@@ -407,7 +415,8 @@ process.es_prefer_qg = cms.ESPrefer('PoolDBESSource','QGPoolDBESSource')
 #step1
 process.load('RecoJets.JetProducers.QGTagger_cfi')
 #process.QGTagger.srcJets       = cms.InputTag('slimmedJets')
-process.QGTagger.srcJets       = cms.InputTag(jetsNameAK4)#jetsNameAK4="selectedUpdatedPatJetsNewDFTraining"
+process.QGTagger.srcJets       = cms.InputTag(jetsNameAK4)
+#jetsNameAK4="selectedUpdatedPatJetsNewDFTraining"
 process.QGTagger.jetsLabel     = cms.string('QGL_AK4PFchs')
 #?what does this step in python config do?
 #In addition to the qgLikelihood, the QGTagger plugin will also produce the three veriables axis2, mult and ptD. 
