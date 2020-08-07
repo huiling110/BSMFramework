@@ -144,11 +144,13 @@ na = TauIDEmbedder(process, cms,
         )
 na.runTauID()
 '''
+#re-running DeepTauv2p1 on MiniAOD https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuidePFTauID#Running_of_the_DeepTauIDs_ver_20
 updatedTauName = "slimmedTausNewID" #name of pat::Tau collection with new tau-Ids
 import RecoTauTag.RecoTau.tools.runTauIdMVA as tauIdConfig
 tauIdEmbedder = tauIdConfig.TauIDEmbedder(process, cms, debug = False,
                 updatedTauName = updatedTauName,
-                toKeep = ["deepTau2017v2p1","dR0p32017v2"]) # pick the one you need: ["2017v1", "2017v2", "newDM2017v2", "dR0p32017v2", "2016v1", "newDM2016v1","deepTau2017v2"]
+                toKeep = ["deepTau2017v2p1",#deepTau TauIDs
+                    "dR0p32017v2"]) #classic MVAIso tau-Ids # pick the one you need: ["2017v1", "2017v2", "newDM2017v2", "dR0p32017v2", "2016v1", "newDM2016v1","deepTau2017v2"]
 tauIdEmbedder.runTauID()
 
 
@@ -354,8 +356,8 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",#{{{
   patElectron_pt_min  = cms.double(5.),
   patElectron_eta_max = cms.double(50),
   # Tau cuts
-  Tau_pt_min          = cms.double(15.),
-  Tau_eta_max         = cms.double(50.),
+  Tau_pt_min          = cms.double(18.),
+  Tau_eta_max         = cms.double(5.),
   # Jet cuts
   Jet_pt_min = cms.double(15.),
   # Photon cuts 
