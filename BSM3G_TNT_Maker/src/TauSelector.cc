@@ -93,7 +93,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
       //if(!(leadPackedCandidateExists)) continue; // throw away the tau if there was no matching packed PF candidate to the embedded lead candidate within the pat::Tau
       //if(!(isBestTrackNonNull)) continue; // throw away the tau if it's lead charged hadron has no associated CTF track
       if(isBestTrackNonNull && leadPackedCandidateExists){  
-        Tau_leadChargedCandTrack_pt.push_back(leadTrack->pt());
+        Tau_leadChargedCandTrack_pt.push_back(leadTrack->pt());//number of degrees of freedom of the fit
         Tau_leadChargedCandTrack_ptError.push_back(leadTrack->ptError());
       }else{
         Tau_leadChargedCandTrack_pt.push_back(-998);
@@ -113,6 +113,8 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     //Decay mode finding
     //Tau_decayModeFindingOldDMs.push_back(tau->tauID("decayModeFindingOldDMs"));
     Tau_decayModeFinding.push_back(tau->tauID("decayModeFinding"));//a branch
+    //?pat::Tau::decayMode(),
+    //?decay mode for ID "dR0p32017v2"?For MVA2017v2 decayModeFindingOldDMs is recommended.
     Tau_decayModeFindingNewDMs.push_back(tau->tauID("decayModeFindingNewDMs"));
     //Against Muon
     if(!_MiniAODv2){//true
@@ -192,10 +194,12 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     //Tau_byLooseCombinedIsolationDeltaBetaCorr3HitsdR03.push_back(tau->tauID("byLooseCombinedIsolationDeltaBetaCorr3HitsdR03"));
     //Tau_byMediumCombinedIsolationDeltaBetaCorr3HitsdR03.push_back(tau->tauID("byMediumCombinedIsolationDeltaBetaCorr3HitsdR03"));
     //Tau_byTightCombinedIsolationDeltaBetaCorr3HitsdR03.push_back(tau->tauID("byTightCombinedIsolationDeltaBetaCorr3HitsdR03"));
+    //http://cmsdoxygen.web.cern.ch/cmsdoxygen/CMSSW_10_2_16/doc/html/db/dab/namespacetauProducer__cfi.html#a41e5830401952acd45e79c52fa6af2b2
     Tau_byLooseIsolationMVArun2v1DBdR03oldDMwLT.push_back(tau->tauID("byLooseIsolationMVArun2v1DBdR03oldDMwLT"));
     Tau_byMediumIsolationMVArun2v1DBdR03oldDMwLT.push_back(tau->tauID("byMediumIsolationMVArun2v1DBdR03oldDMwLT"));
     //Tau_byTightIsolationMVArun2v1DBdR03oldDMwLT.push_back(tau->tauID("byTightIsolationMVArun2v1DBdR03oldDMwLT"));
     //Tau_byVTightIsolationMVArun2v1DBdR03oldDMwLT.push_back(tau->tauID("byVTightIsolationMVArun2v1DBdR03oldDMwLT"));
+    // DeepTau IDs
     Tau_byIsolationMVArun2017v2DBoldDMdR0p3wLTraw2017.push_back(tau->tauID("byIsolationMVArun2017v2DBoldDMdR0p3wLTraw2017"));
     Tau_byVVLooseIsolationMVArun2017v2DBoldDMdR0p3wLT2017.push_back(tau->tauID("byVVLooseIsolationMVArun2017v2DBoldDMdR0p3wLT2017"));
     Tau_byVLooseIsolationMVArun2017v2DBoldDMdR0p3wLT2017.push_back(tau->tauID("byVLooseIsolationMVArun2017v2DBoldDMdR0p3wLT2017"));
@@ -259,17 +263,17 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     Tau_defaultFlightLengthX.push_back(tau->flightLength().x());
     Tau_defaultFlightLengthY.push_back(tau->flightLength().y());
     Tau_defaultFlightLengthZ.push_back(tau->flightLength().z());
-    Tau_defaultFlightLengthSig.push_back(tau->flightLengthSig());
-    Tau_default_PCAx_pv.push_back(tau->dxy_PCA().x());
-    Tau_default_PCAy_pv.push_back(tau->dxy_PCA().y());
-    Tau_default_PCAz_pv.push_back(tau->dxy_PCA().z());
+    Tau_defaultFlightLengthSig.push_back(tau->flightLengthSig());//?
+    Tau_default_PCAx_pv.push_back(tau->dxy_PCA().x());//?
+    Tau_default_PCAy_pv.push_back(tau->dxy_PCA().y());//?
+    Tau_default_PCAz_pv.push_back(tau->dxy_PCA().z());//?
     //tau lead track point of closest approach (PCA) to the beamspot and primary vertex
     //AJ vars
     if(beamSpotHandle.isValid() && isBestTrackNonNull && leadPackedCandidateExists){
       TransientTrack tauTransTkPtr = theB->build(leadTrack);
-      beamSpot = *beamSpotHandle;
+      beamSpot = *beamSpotHandle;//"offlineBeamSpot"
       math::XYZPoint point(beamSpot.x0(),beamSpot.y0(), beamSpot.z0());
-      GlobalPoint thebs(beamSpot.x0(),beamSpot.y0(),beamSpot.z0());
+      GlobalPoint thebs(beamSpot.x0(),beamSpot.y0(),beamSpot.z0());//point in global coordinate system
       GlobalPoint tauLeadTrack_pca_bs = tauTransTkPtr.trajectoryStateClosestToPoint(thebs).position();
       GlobalPoint tauLeadTrack_pca_pv = tauTransTkPtr.trajectoryStateClosestToPoint(thepv).position();
       Tau_leadChargedCandDz_bs.push_back(leadTrack->dz(point));
