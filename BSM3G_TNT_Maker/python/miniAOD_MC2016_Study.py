@@ -346,6 +346,7 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",#{{{
   Pvtx_vtx_max    = cms.double(24.),
   Pvtx_vtxdxy_max = cms.double(2.),
   # Obj primary vertex cuts
+  #used in TauSelector
   vtx_ndof_min        = cms.int32(4),
   vtx_rho_max         = cms.int32(2),
   vtx_position_z_max  = cms.double(24.),

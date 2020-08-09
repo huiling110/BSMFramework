@@ -9,7 +9,7 @@ TauSelector::TauSelector(std::string name, TTree* tree, bool debug, const pset& 
   _Tau_pt_min     	  = iConfig.getParameter<double>("Tau_pt_min");
   _Tau_eta_max    	  = iConfig.getParameter<double>("Tau_eta_max");
   _Tau_vtx_ndof_min       = iConfig.getParameter<int>("vtx_ndof_min");
-  _Tau_vtx_rho_max        = iConfig.getParameter<int>("vtx_rho_max");
+  _Tau_vtx_rho_max        = iConfig.getParameter<int>("vtx_rho_max");//rho:rou
   _Tau_vtx_position_z_max = iConfig.getParameter<double>("vtx_position_z_max");
   _super_TNT      	  = iConfig.getParameter<bool>("super_TNT");
   _MiniAODv2      	  = iConfig.getParameter<bool>("MiniAODv2");
@@ -34,6 +34,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
   iEvent.getByToken(pfToken_, pfs);"packedPFCandidates"
   edm::ESHandle<TransientTrackBuilder> theB;
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
+  //?
   /////
   //   Require a good vertex 
   /////
@@ -50,8 +51,8 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
   const reco::Vertex &firstGoodVertex = vtx_h->front();
   //bool isgoodvtx = isGoodVertex(firstGoodVertex);
   //if(!isgoodvtx) return;
-  GlobalPoint thepv(firstGoodVertex.position().x(),firstGoodVertex.position().y(),firstGoodVertex.position().z());
-  //?what is GlobalPoint?
+  GlobalPoint thepv(firstGoodVertex.position().x(),firstGoodVertex.position().y(),firstGoodVertex.position().z());//278
+  //what is GlobalPoint?
   /////
   //   Get tau information 
   /////
@@ -85,6 +86,8 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
            (hadTauLeadChargedCand->eta() == pfCandidate.eta()) && 
            (hadTauLeadChargedCand->phi() == pfCandidate.phi())){ // the packed PF candidate and embedded lead candidate within the pat::Tau should be the same
           leadPackedCandidateExists = true; // if there is a match between the packed PF candidate and embedded lead candidate within the pat::Tau
+          //?why bother to do this step?
+          //because we cann't get track information directly from leadChargedCand?
           if(pfCandidate.bestTrack() != NULL){isBestTrackNonNull = true; leadTrack = pfCandidate.bestTrack();} // grab the associated CTF track (if it exists)
           //bestTrack:return a pointer to the track if present. otherwise, return a null pointer
         }
@@ -245,10 +248,12 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     //IP
     //default tau POG lifetime variables
     Tau_defaultDxy.push_back(tau->dxy());
+    //?dxy?
     Tau_defaultDxyError.push_back(tau->dxy_error());
     Tau_defaultDxySig.push_back(tau->dxy_Sig());
     Tau_leadChargedCandCharge.push_back(tau->leadChargedHadrCand().isNonnull() ? tau->leadChargedHadrCand()->charge() : -999);
-    pat::PackedCandidate const* packedLeadTauCand = dynamic_cast<pat::PackedCandidate const*>(tau->leadChargedHadrCand().get());
+    pat::PackedCandidate const* packedLeadTauCand = dynamic_cast<pat::PackedCandidate const*>(tau->leadChargedHadrCand().get());//dynamic_cast:Safely converts pointers and references to classes up, down, and sideways along the inheritance hierarchy.
+    //?what is packed?
     if(packedLeadTauCand->hasTrackDetails()){
      Tau_packedLeadTauCand_dxy.push_back(packedLeadTauCand->dxy());
      Tau_packedLeadTauCand_dz.push_back(packedLeadTauCand->dz());    
@@ -269,8 +274,10 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     Tau_default_PCAz_pv.push_back(tau->dxy_PCA().z());//?
     //tau lead track point of closest approach (PCA) to the beamspot and primary vertex
     //AJ vars
+    //
+    //???what are we doing here?
     if(beamSpotHandle.isValid() && isBestTrackNonNull && leadPackedCandidateExists){
-      TransientTrack tauTransTkPtr = theB->build(leadTrack);
+      TransientTrack tauTransTkPtr = theB->build(leadTrack);//"TransientTrackBuilder"
       beamSpot = *beamSpotHandle;//"offlineBeamSpot"
       math::XYZPoint point(beamSpot.x0(),beamSpot.y0(), beamSpot.z0());
       GlobalPoint thebs(beamSpot.x0(),beamSpot.y0(),beamSpot.z0());//point in global coordinate system
@@ -288,6 +295,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
       float pionSigma = pionMass*1e-6;
       float chi2 = 0.0;
       float ndf = 0.0;
+      //?what are we doing and where can we find instructions for this?
       KinematicParticleFactoryFromTransientTrack pFactory;
       RefCountedKinematicParticle tauParticle = pFactory.particle(tauTransTkPtr, pionMass, chi2, ndf, pionSigma);
       Tau_leadChargedCandTrackFitErrorMatrix_00.push_back(tauParticle->stateAtPoint(tauLeadTrack_pca_bs).kinematicParametersError().matrix()(0,0));
