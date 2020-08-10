@@ -15,7 +15,7 @@ JetSelector::JetSelector(std::string name, TTree* tree, bool debug, const pset& 
   rhopogHandle_ = ic.consumes<double>(edm::InputTag("fixedGridRhoFastjetAll"));
   //?
   //rhoJERHandle_ = ic.consumes<double>(edm::InputTag("fixedGridRhoAll"));
-  //?already do JEC in python script. why do it here agian?
+  //already do JEC in python script. why do it here agian?
   jecPayloadNamesAK4PFchsMC1_   = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsMC1");//= cms.FileInPath("BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/Summer16_07Aug2017_V11_MC_L1FastJet_AK4PFchs.txt")
   jecPayloadNamesAK4PFchsMC2_   = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsMC2");
   jecPayloadNamesAK4PFchsMC3_   = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsMC3");
@@ -99,6 +99,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
   int nEvent = iEvent.id().event();
   // random seed for stochastic method
   // ?what is this doing?
+  // for calculation of JER 
   std::uint32_t m_nomVar = 1;
   unsigned int runNum_uint = static_cast<unsigned int>(iEvent.id().run());
   unsigned int lumiNum_uint = static_cast<unsigned int>(iEvent.id().luminosityBlock());
@@ -148,7 +149,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
     Jet_isCaloJet.push_back(j.isCaloJet());
     if(_qglVar){
         edm::Ref<pat::JetCollection> jetRef(jets, ij);//ij is the number of jet that are < Jet_pt_min
-        //?what is ij doing here?
+        //what is ij doing here?
         Jet_qg.push_back((*qgHandle)[jetRef]);
         double axis1 = -1;
         double axis2 = -1;
@@ -181,6 +182,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
             const reco::CandidatePtr  &c1s=mu->sourceCandidatePtr(i1);//get the candidate pointer with index i
             for(unsigned int i2 = 0 ; i2 < j.numberOfSourceCandidatePtrs();i2++) {
                 const reco::CandidatePtr  &c2s=j.sourceCandidatePtr(i2);
+                //?why use sourceCandidatePtr?
                 if(c2s== c1s){
                     isMatch = true;
                     break;
@@ -281,7 +283,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
     Jet_vtx3DVal.push_back(-99);//j.userFloat("vtx3DVal"));
     Jet_vtx3DSig.push_back(-99);//j.userFloat("vtx3DSig"));/*}}}*/
     //Jet Energy Corrections and Uncertainties
-    double corrAK4PFchs     = 1;
+    double corrAK4PFchs     = 1;/*{{{*/
     double corrUpAK4PFchs   = 1;
     double corrDownAK4PFchs = 1;
     //==================================Factorised JES Unc.=========================================
@@ -370,22 +372,24 @@ void JetSelector::Fill(const edm::Event& iEvent){
     double corrUpAK4PFchs_FlavorPureCharm_up   = 1;
     double corrDownAK4PFchs_FlavorPureCharm_down = 1;
     double corrUpAK4PFchs_FlavorPureBottom_up   = 1;
-    double corrDownAK4PFchs_FlavorPureBottom_down = 1;
+    double corrDownAK4PFchs_FlavorPureBottom_down = 1;/*}}}*/
     //===========================================================================
-    
+   //https://twiki.cern.ch/twiki/bin/view/CMS/JECUncertaintySources 
     reco::Candidate::LorentzVector uncorrJetAK4PFchs = j.correctedP4(0);//p4 of the jet corrected up to the given level for the set of jet energy correction factors, which is currently in use, level 0.
     if(!_is_data){
       jecAK4PFchsMC_->setJetEta( uncorrJetAK4PFchs.eta()    );/*{{{*/
       jecAK4PFchsMC_->setJetPt ( uncorrJetAK4PFchs.pt()     );
       jecAK4PFchsMC_->setJetE  ( uncorrJetAK4PFchs.energy() );
       jecAK4PFchsMC_->setRho	( rho  );
+      //Set the necessary values, for every jet, inside the jet loop
+      //?how does this impact JEC correction?
       //?what is Pho
       jecAK4PFchsMC_->setNPV	( vertices->size()  );
       jecAK4PFchsMC_->setJetA  ( j.jetArea()	     );
       corrAK4PFchs = jecAK4PFchsMC_->getCorrection();
-      jecAK4PFchsMCUnc_->setJetEta( uncorrJetAK4PFchs.eta() );
+      jecAK4PFchsMCUnc_->setJetEta( uncorrJetAK4PFchs.eta() );//"BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/     Summer16_07Aug2017_V11_MC_UncertaintySources_AK4PFchs.txt"), total
       jecAK4PFchsMCUnc_->setJetPt( corrAK4PFchs * uncorrJetAK4PFchs.pt() );
-      corrUpAK4PFchs = corrAK4PFchs * (1 + fabs(jecAK4PFchsMCUnc_->getUncertainty(1)));
+      corrUpAK4PFchs = corrAK4PFchs * (1 + fabs(jecAK4PFchsMCUnc_->getUncertainty(1)));//getUncertainty(true); // up variation
       jecAK4PFchsMCUnc_->setJetEta( uncorrJetAK4PFchs.eta() );
       jecAK4PFchsMCUnc_->setJetPt( corrAK4PFchs * uncorrJetAK4PFchs.pt() );
       corrDownAK4PFchs = corrAK4PFchs * ( 1 - fabs(jecAK4PFchsMCUnc_->getUncertainty(-1)) );
@@ -977,9 +981,10 @@ void JetSelector::Fill(const edm::Event& iEvent){
 void JetSelector::JECInitialization(){
   //AK4chs - MC: Get the factorized jet corrector parameters. 
   //std::cout<< " JEC Initialize  " << std::endl;
-  std::vector<std::string> jecPayloadNamesAK4PFchsMC_;
+  std::vector<std::string> jecPayloadNamesAK4PFchsMC_;/*{{{*/
   jecPayloadNamesAK4PFchsMC_.push_back(jecPayloadNamesAK4PFchsMC1_.fullPath());//"BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/Summer16_07Aug2017_V11_MC_L1FastJet_AK4PFchs.txt"
   //?
+  //fullPath:Return a string that can be used to open the referenced file.
   jecPayloadNamesAK4PFchsMC_.push_back(jecPayloadNamesAK4PFchsMC2_.fullPath());
   jecPayloadNamesAK4PFchsMC_.push_back(jecPayloadNamesAK4PFchsMC3_.fullPath());
   std::vector<JetCorrectorParameters> vParAK4PFchsMC;//// Create the JetCorrectorParameter objects, the order does not matter.
@@ -987,16 +992,16 @@ void JetSelector::JECInitialization(){
 	  payloadEnd = jecPayloadNamesAK4PFchsMC_.end(), ipayload = payloadBegin; ipayload != payloadEnd; ++ipayload ) {
     JetCorrectorParameters pars(*ipayload);
     vParAK4PFchsMC.push_back(pars);
-  }
+  }////  Load the JetCorrectorParameter objects into a vector, IMPORTANT: THE ORDER MATTERS HERE !!!!
   //???
   //std::cout<< " JEC Initialize jecAK4PFchsMC_ " << std::endl;
   //?where can we find instructions for factorizedJetCorrector?
   jecAK4PFchsMC_    = boost::shared_ptr<FactorizedJetCorrector>  ( new FactorizedJetCorrector(vParAK4PFchsMC) );
+  //The shared_ptr class template stores a pointer to a dynamically allocated object, typically with a C++ new-expression. The object pointed to is guaranteed to be deleted when the last shared_ptr pointing to it is destroyed or reset.
   //jecAK4PFchsMCUnc_ = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadNamesAK4PFchsMCUnc_.fullPath()) );
-  jecAK4PFchsMCUnc_   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "Total"))));
+  jecAK4PFchsMCUnc_   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "Total"))));//"BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/Summer16_07Aug2017_V11_MC_UncertaintySources_AK4PFchs.txt"""
   //std::cout<< " JEC Initialize Start Components " << std::endl;
-  
-  jecAK4PFchsMCUnc_AbsoluteStat   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "AbsoluteStat"))));/*{{{*/
+  jecAK4PFchsMCUnc_AbsoluteStat   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "AbsoluteStat"))));
   jecAK4PFchsMCUnc_AbsoluteScale   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "AbsoluteScale"))));
   jecAK4PFchsMCUnc_AbsoluteFlavMap   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "AbsoluteFlavMap"))));
   jecAK4PFchsMCUnc_AbsoluteMPFBias   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "AbsoluteMPFBias"))));
@@ -1038,10 +1043,10 @@ void JetSelector::JECInitialization(){
   jecAK4PFchsMCUnc_FlavorPureGluon   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "FlavorPureGluon"))));
   jecAK4PFchsMCUnc_FlavorPureQuark   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "FlavorPureQuark"))));
   jecAK4PFchsMCUnc_FlavorPureCharm   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "FlavorPureCharm"))));
-  jecAK4PFchsMCUnc_FlavorPureBottom   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "FlavorPureBottom"))));/*}}}*/
+  jecAK4PFchsMCUnc_FlavorPureBottom   = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(*(new JetCorrectorParameters(jecPayloadNamesAK4PFchsMCUnc_.fullPath(), "FlavorPureBottom"))));
   
   //AK4chs - DATA: Get the factorized jet corrector parameters. 
-  std::vector<std::string> jecPayloadNamesAK4PFchsDATA_;/*{{{*/
+  std::vector<std::string> jecPayloadNamesAK4PFchsDATA_;
   jecPayloadNamesAK4PFchsDATA_.push_back(jecPayloadNamesAK4PFchsDATA1_.fullPath());
   jecPayloadNamesAK4PFchsDATA_.push_back(jecPayloadNamesAK4PFchsDATA2_.fullPath());
   jecPayloadNamesAK4PFchsDATA_.push_back(jecPayloadNamesAK4PFchsDATA3_.fullPath());
@@ -1080,8 +1085,8 @@ void JetSelector::JECInitialization(){
     vParAK4PFPuppiDATA.push_back(pars);
   }
   jecAK4PFPuppiDATA_    = boost::shared_ptr<FactorizedJetCorrector>  ( new FactorizedJetCorrector(vParAK4PFPuppiDATA) );
-  jecAK4PFPuppiDATAUnc_ = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadNamesAK4PFPuppiDATAUnc_.fullPath()) );/*}}}*/
-}
+  jecAK4PFPuppiDATAUnc_ = boost::shared_ptr<JetCorrectionUncertainty>( new JetCorrectionUncertainty(jecPayloadNamesAK4PFPuppiDATAUnc_.fullPath()) );
+}/*}}}*/
 void JetSelector::SetBranches(){
   if(debug_) std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;
   ////slimmedJets
@@ -1522,23 +1527,25 @@ void JetSelector::Getjer(pat::Jet jet, float JesSF, float rhoJER, bool AK4PFchs,
   double cFactorJERdown = 1.0;
   double cFactorJERup = 1.0;
   //https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution#JER_Scaling_factors_and_Unce_AN1
-  
+ //https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyResolution 
   //double recoJetPt = jet.pt();//(jet.correctedJet("Uncorrected").pt())*JesSF;
   double recoJetPt = (jet.correctedJet("Uncorrected").pt())*JesSF;
   JME::JetResolution resolution;
   JME::JetResolutionScaleFactor res_sf;
   if(AK4PFchs){
-    resolution = JME::JetResolution(jerAK4PFchs_);
-    res_sf = JME::JetResolutionScaleFactor(jerAK4PFchsSF_);
+      //Accessing factors from text files
+    resolution = JME::JetResolution(jerAK4PFchs_);//"BSMFramework/BSM3G_TNT_Maker/data/JER/Summer16_25nsV1_MC_PtResolution_AK4PFchs.txt"
+    res_sf = JME::JetResolutionScaleFactor(jerAK4PFchsSF_);//"BSMFramework/BSM3G_TNT_Maker/data/JER/Summer16_25nsV1_MC_SF_AK4PFchs.txt"
   } else {
     resolution = JME::JetResolution(jerAK4PFPuppi_);
     res_sf = JME::JetResolutionScaleFactor(jerAK4PFPuppiSF_);
   }
+  // First, using 'set' functions
   JME::JetParameters parameters;
   parameters.setJetPt(jet.pt());
   parameters.setJetEta(jet.eta());
   parameters.setRho(rhoJER);
-  float relpterr = resolution.getResolution(parameters);
+  float relpterr = resolution.getResolution(parameters);//// Now, get the resolution
   cFactorJER = res_sf.getScaleFactor(parameters);
   cFactorJERup = res_sf.getScaleFactor(parameters, Variation::UP);
   cFactorJERdown = res_sf.getScaleFactor(parameters, Variation::DOWN);

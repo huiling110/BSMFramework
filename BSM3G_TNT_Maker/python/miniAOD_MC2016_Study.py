@@ -64,6 +64,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 ##### JEC
 #update the JEC in the MiniAOD
 #reverts these corrections and applies the new ones, producing as output an new collection of pat::Jets which have the same content as the input jet, but new jet energy corrections applied. 
+#https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections?redirectedfrom=CMS.WorkBookJetEnergyCorrections  maybe outdated
 from PhysicsTools.PatAlgos.tools.jetTools import updateJetCollection
 updateJetCollection(
   process,
