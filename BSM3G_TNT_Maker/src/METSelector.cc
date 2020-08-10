@@ -77,7 +77,7 @@ void METSelector::Fill(const edm::Event& iEvent){
   }
   if(debug_) std::cout<<"got MET info"<<std::endl;
 }
-void METSelector::SetBranches(){
+void METSelector::SetBranches(){/*{{{*/
   if(debug_) std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;
   ////slimmedMETs
   //Kinematic  
@@ -113,11 +113,11 @@ void METSelector::SetBranches(){
     AddBranch(&Gen_puppi_Met,           "Gen_puppi_Met");
   }
   if(debug_) std::cout<<"set branches"<<std::endl;
-}
+}/*}}}*/
 void METSelector::Clear(){
   ////slimmedMETs
   //Kinematic  
-  Met_type1PF_pt            = -9999;
+  Met_type1PF_pt            = -9999;/*{{{*/
   Met_type1PF_px            = -9999;
   Met_type1PF_py            = -9999;
   Met_type1PF_pz            = -9999;
@@ -148,4 +148,4 @@ void METSelector::Clear(){
     //MC
     Gen_puppi_Met           = -9999;
   }
-}
+}/*}}}*/

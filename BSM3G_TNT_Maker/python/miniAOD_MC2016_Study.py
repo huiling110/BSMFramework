@@ -2,8 +2,6 @@
 # coding=utf-8
 
 
-
-
 import FWCore.ParameterSet.Config as cms
 import FWCore.ParameterSet.VarParsing as VarParsing
 import copy
@@ -83,9 +81,7 @@ updateJetCollection(
   ],
   postfix='NewDFTraining'# the final updated jet collection will be called updatedPatJets+labelName+postfix, with labelName and postfix 
 )
-
-
-jetsNameAK4="selectedUpdatedPatJetsNewDFTraining"
+jetsNameAK4="selectedUpdatedPatJetsNewDFTraining" #the name of the updated jets
 
 
 ##### L1 Prefire
@@ -111,14 +107,11 @@ setupEgammaPostRecoSeq(process,
         era='2016-Legacy') # '2018-Prompt', '2016-Legacy'
 
 
-
-
-
-
 #####
 ##   For tt+X
 #####
 # Setting input particle collections to be used by the tools
+#?what is this part doing?
 genParticleCollection = "prunedGenParticles"
 genJetCollection      = "slimmedGenJets"
 jetFlavourInfos       = "genJetFlavourInfos"
@@ -156,6 +149,10 @@ tauIdEmbedder.runTauID()
 
 
 ############### MET Re-correct ##################
+#https://twiki.cern.ch/twiki/bin/view/CMS/MissingETUncertaintyPrescription#PF_MET
+#If the JECs are updated, one would need to re-compute the type-1 MET for both PF and Puppi flavors.
+#For 10_2_X, X>=7: Use CMSSW out of the box.
+#?below is the instruction for 10_2_6.maybe wrong
 from PhysicsTools.PatUtils.tools.runMETCorrectionsAndUncertainties import runMetCorAndUncFromMiniAOD
 runMetCorAndUncFromMiniAOD (
         process,
