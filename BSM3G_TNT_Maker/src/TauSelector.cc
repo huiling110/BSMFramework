@@ -24,14 +24,14 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
   //   Recall collections
   /////
   edm::Handle<reco::VertexCollection> vtx_h;
-  iEvent.getByToken(vtx_h_, vtx_h);"offlineSlimmedPrimaryVertices")
+  iEvent.getByToken(vtx_h_, vtx_h);//"offlineSlimmedPrimaryVertices")
   reco::BeamSpot beamSpot;
   edm::Handle<reco::BeamSpot> beamSpotHandle;
   iEvent.getByToken(beamSpot_, beamSpotHandle);
   edm::Handle<edm::View<pat::Tau> > taus;
   iEvent.getByToken(taus_, taus);//"slimmedTausNewID"
   edm::Handle<pat::PackedCandidateCollection> pfs;
-  iEvent.getByToken(pfToken_, pfs);"packedPFCandidates"
+  iEvent.getByToken(pfToken_, pfs);//"packedPFCandidates"
   edm::ESHandle<TransientTrackBuilder> theB;
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",theB);
   //?
