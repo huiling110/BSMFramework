@@ -57,7 +57,7 @@ process.source = cms.Source("PoolSource",
   ),
   skipEvents = cms.untracked.uint32(0)
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 ##### JEC
 #update the JEC in the MiniAOD
@@ -97,13 +97,14 @@ process.prefiringweight = l1ECALPrefiringWeightProducer.clone(
 
 #####
 ##   ELECTRON ID and sclale smear SECTION
-#####
+#####https://twiki.cern.ch/twiki/bin/view/CMS/EgammaMiniAODV2#2018_Preliminary_Energy_Correcti
 from RecoEgamma.EgammaTools.EgammaPostRecoTools import setupEgammaPostRecoSeq
 setupEgammaPostRecoSeq(process, 
-        applyEnergyCorrections=False,
-        applyVIDOnCorrectedEgamma=False,
+#        applyEnergyCorrections=False,
+#        applyVIDOnCorrectedEgamma=False,
         runEnergyCorrections=False, # False for 2016/2018, as energy corrections are not yet availible for 2018; corrections by default are fine for 2016 so no need to re-run
         runVID=True, # if you are running on miniAOD v1 or Fall17V2 please enable it 
+        # for 2017v2saves CPU time by not needlessly re-running VID, if you want the Fall17V2 IDs, set this to True or remove (default is True)
         era='2016-Legacy') # '2018-Prompt', '2016-Legacy'
 
 
