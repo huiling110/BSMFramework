@@ -1,6 +1,7 @@
 #include "BSMFramework/BSM3G_TNT_Maker/interface/ElectronPatSelector.h"
 ElectronPatSelector::ElectronPatSelector(std::string name, TTree* tree, bool debug, const pset& iConfig, edm::ConsumesCollector && ic): 
   baseTree(name,tree,debug),
+    //?
   triggerBits_(ic.consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("bits"))),
   triggerObjects_(ic.consumes<pat::TriggerObjectStandAloneCollection>(iConfig.getParameter<edm::InputTag>("objects"))),
   ebRecHitsToken_(ic.consumes<edm::SortedCollection<EcalRecHit,edm::StrictWeakOrdering<EcalRecHit>>>(iConfig.getParameter<edm::InputTag>("ebRecHits")))
@@ -32,7 +33,8 @@ ElectronPatSelector::ElectronPatSelector(std::string name, TTree* tree, bool deb
 ElectronPatSelector::~ElectronPatSelector(){
   delete tree_;
 }
-KalmanVertexFitter vertexfitterele(true);
+KalmanVertexFitter vertexfitterele(true);// #include "RecoVertex/KalmanVertexFit/interface/KalmanVertexFitter.h"
+//?
 namespace{
   struct ByEta{
     bool operator()(const pat::PackedCandidate *c1, const pat::PackedCandidate *c2) const{
@@ -68,7 +70,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
   iEvent.getByToken(triggerBits_, triggerBits);
   edm::Handle<double> rhopogHandle;
   iEvent.getByToken(rhopogHandle_,rhopogHandle);
-  double rhopog = *rhopogHandle;
+  double rhopog = *rhopogHandle;// rho is the event-specific average pile-up energy density per unit area in the phi-eta plane 
   edm::ESHandle<TransientTrackBuilder> ttrkbuilder;
   iSetup.get<TransientTrackRecord>().get("TransientTrackBuilder",ttrkbuilder);
   iEvent.getByToken(ebRecHitsToken_, _ebRecHits);
@@ -76,7 +78,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
   //   Require a good vertex 
   /////
   //if(vtx_h->empty()) return; // skip the event if no PV found
-  const reco::Vertex &firstGoodVertex = vtx_h->front();  
+  const reco::Vertex &firstGoodVertex = vtx_h->front();  //"offlineSlimmedPrimaryVertices"
   //bool isgoodvtx = isGoodVertex(firstGoodVertex);
   //if(!isgoodvtx) return;
   /////
@@ -95,12 +97,16 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_py.push_back(el->py());
     patElectron_pz.push_back(el->pz());
     patElectron_p.push_back(el->p());
-    patElectron_Et.push_back(el->caloEnergy()*sin(el->p4().theta()));
+    patElectron_Et.push_back(el->caloEnergy()*sin(el->p4().theta()));//p4():four-momentum Lorentz vector
+    //?
     double EleSCeta = el->superCluster()->position().eta();
+    //?
     patElectron_SCeta.push_back(EleSCeta);
     bool inCrack  = 1.4442<fabs(EleSCeta) && fabs(EleSCeta)<1.5660;
+    //?where to find instructions for this?
     patElectron_inCrack.push_back(inCrack);
     //Corrections
+    //https://twiki.cern.ch/twiki/bin/view/CMS/EgammaMiniAODV2#2018_Preliminary_Energy_Correcti
     if(el->energy()!=0) patElectron_energySF.push_back(el->userFloat("ecalTrkEnergyPostCorr")/el->energy());
     else patElectron_energySF.push_back(1.0);
     patElectron_ecalEnergyErrPostCorr.push_back(el->userFloat("ecalEnergyErrPostCorr"));
@@ -124,16 +130,17 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_energySigmaPhiDown.push_back(el->userFloat("energySigmaPhiDown"));
     patElectron_energySigmaPhiUp.push_back(el->userFloat("energySigmaPhiUp"));
     patElectron_energySigmaRhoDown.push_back(el->userFloat("energySigmaRhoDown"));
-    patElectron_energySigmaRhoUp.push_back(el->userFloat("energySigmaRhoUp"));
+    patElectron_energySigmaRhoUp.push_back(el->userFloat("energySigmaRhoUp")); //?energy with the ecal energy smearing value shifted 1 sigma(rho) up
     patElectron_energySigmaUp.push_back(el->userFloat("energySigmaUp"));
     patElectron_energySigmaValue.push_back(el->userFloat("energySigmaValue"));
     patElectron_energySmearNrSigma.push_back(el->userFloat("energySmearNrSigma"));
     //Charge
     patElectron_charge.push_back(el->charge());
-    patElectron_isGsfCtfScPixChargeConsistent.push_back(el->isGsfCtfScPixChargeConsistent());
+    patElectron_isGsfCtfScPixChargeConsistent.push_back(el->isGsfCtfScPixChargeConsistent());//gsf track charge;ctf track charge
+    //?
     patElectron_isGsfScPixChargeConsistent.push_back(el->isGsfScPixChargeConsistent());
     //ID
-    float mvaval_nonIso  = el->userFloat("ElectronMVAEstimatorRun2Fall17NoIsoV2Values");
+    float mvaval_nonIso  = el->userFloat("ElectronMVAEstimatorRun2Fall17NoIsoV2Values");//Accessing MVA variables
     passVetoId_.push_back  ( el->electronID("cutBasedElectronID-Fall17-94X-V2-veto"));
     passLooseId_.push_back ( el->electronID("cutBasedElectronID-Fall17-94X-V2-loose"));
     passMediumId_.push_back( el->electronID("cutBasedElectronID-Fall17-94X-V2-medium"));
@@ -183,12 +190,14 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     passMvaHZZwpLooseId_.push_back( el->electronID("mvaEleID-Spring16-HZZ-V1-wpLoose") );
     patElectron_mvaValue_HZZ_.push_back(el->userFloat("ElectronMVAEstimatorRun2Spring16HZZV1Values"));
     patElectron_mvaCategory_HZZ_.push_back(el->userInt("ElectronMVAEstimatorRun2Spring16HZZV1Categories"));
-    passHEEPId_.push_back  (el->electronID("heepElectronID-HEEPV70"));   
+    passHEEPId_.push_back  (el->electronID("heepElectronID-HEEPV70"));   //In terms of cut based, there is also the HEEP (high energy) ID which aimed to be a simple straighforward ID that is safe for high energy electrons. 
     patElectron_pdgId.push_back(el->pdgId());
     patElectron_isEcalDriven.push_back(el->ecalDriven());
+    //?
     //Isolation
     //reco::GsfElectron::PflowIsolationVariables pfIso = el->pfIsolationVariables();
     //double SumChHadPt       = el->chargedHadronIsoR(0.4);
+    //https://twiki.cern.ch/twiki/bin/view/CMS/EgammaPFBasedIsolationRun2
     double SumChHadPt       = el->pfIsolationVariables().sumChargedHadronPt;
     double SumNeuHadEt      = el->pfIsolationVariables().sumNeutralHadronEt;
     double SumPhotonEt      = el->pfIsolationVariables().sumPhotonEt; 
@@ -200,12 +209,12 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     double SumNeutralCorrEt = std::max( 0.0, SumNeuHadEt+SumPhotonEt - 0.5*SumPU );
     double relIsoDeltaBeta = (SumChHadPt + SumNeutralCorrEt)/el->pt();
     patElectron_relIsoDeltaBeta.push_back(relIsoDeltaBeta);
-    double EffArea = get_effarea(el->superCluster()->position().eta(), true);
+    double EffArea = get_effarea(el->superCluster()->position().eta(), true);//the effective_area is, as the name suggests, the effective area specific to the given type of isolation
     double SumChHadPt04       = el->chargedHadronIso();
     double SumNeuHadEt04      = el->neutralHadronIso();
     double SumPhotonEt04      = el->photonIso(); 
     //double SumPU04            = el->puChargedHadronIso();
-    SumNeutralCorrEt = std::max( 0.0, SumNeuHadEt04+SumPhotonEt04 - rhopog*EffArea*16./9. );
+    SumNeutralCorrEt = std::max( 0.0, SumNeuHadEt04+SumPhotonEt04 - rhopog*EffArea*16./9. );//rhopog:"fixedGridRhoFastjetAll"
     double relIsoRhoEA = (SumChHadPt04 + SumNeutralCorrEt)/el->pt();
     patElectron_relIsoRhoEA.push_back(relIsoRhoEA);
     patElectron_dr03EcalRecHitSumEt.push_back(el->dr03EcalRecHitSumEt());
@@ -582,7 +591,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
   }
 }
 void ElectronPatSelector::SetBranches(){
-  if(debug_) std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;
+  if(debug_) std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;/*{{{*/
   //Kinematics     
   AddBranch(&patElectron_pt           ,"patElectron_pt");
   AddBranch(&patElectron_eta          ,"patElectron_eta");
@@ -806,9 +815,9 @@ void ElectronPatSelector::SetBranches(){
   }
   AddBranch(&patElectron_isMatchedToTrigger,"patElectron_isMatchedToTrigger");
   if(debug_) std::cout<<"set branches"<<std::endl;
-}
+}/*}}}*/
 void ElectronPatSelector::Clear(){
-  //Kinematics     
+  //Kinematics     /*{{{*/
   patElectron_pt.clear();
   patElectron_eta.clear();
   patElectron_phi.clear();
@@ -1030,7 +1039,7 @@ void ElectronPatSelector::Clear(){
     patElectron_gen_isDirectPromptTauDecayProductFinalState.clear();
   }
   patElectron_isMatchedToTrigger.clear();
-}
+}/*}}}*/
 bool ElectronPatSelector::isGoodVertex(const reco::Vertex& vtx){
   if(vtx.isFake())                                   return false;
   if(vtx.ndof()<_vtx_ndof_min)                       return false;
