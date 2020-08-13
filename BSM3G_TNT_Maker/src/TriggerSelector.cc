@@ -172,8 +172,12 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
       if(HLT_PFHT400_SixJet30_DoubleBTagCSV_p056_v<triggerBits->size()) HLT_PFHT400_SixJet30_DoubleBTagCSV_p056 = triggerBits->accept(HLT_PFHT400_SixJet30_DoubleBTagCSV_p056_v);
       uint HLT_PFHT450_SixJet40_BTagCSV_p056_v(trigNames.triggerIndex(("HLT_PFHT450_SixJet40_BTagCSV_p056_v"+string(buffer)).c_str()));
       if(HLT_PFHT450_SixJet40_BTagCSV_p056_v<triggerBits->size())HLT_PFHT450_SixJet40_BTagCSV_p056  = triggerBits->accept(HLT_PFHT450_SixJet40_BTagCSV_p056_v);
-//      uint _v(trigNames.triggerIndex(("_v"+string(buffer)).c_str()));
-//      if(_v<triggerBits->size())  = triggerBits->accept(_v);
+      uint HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v(trigNames.triggerIndex(("HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v"+string(buffer)).c_str()));
+      if(HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v<triggerBits->size()) HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg = triggerBits->accept(HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v);
+      uint HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v(trigNames.triggerIndex(("HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v"+string(buffer)).c_str()));
+      if(HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v<triggerBits->size()) HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg = triggerBits->accept(HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v);
+      //uint _v(trigNames.triggerIndex(("_v"+string(buffer)).c_str()));
+      //if(_v<triggerBits->size())  = triggerBits->accept(_v);
       /*}}}*/
     }
   }
@@ -251,6 +255,8 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
     HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300 = 1;
     HLT_PFHT400_SixJet30_DoubleBTagCSV_p056 = 1;
     HLT_PFHT450_SixJet40_BTagCSV_p056 = 1;
+    HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg = 1;
+    HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg = 1;
     /*}}}*/
   }
 }
@@ -330,6 +336,9 @@ void TriggerSelector::SetBranches(){
 //  AddBranch(&HLT_PFHT300_SixJet30_DoubleBTagCSV_p056				      ,"HLT_PFHT300_SixJet30_DoubleBTagCSV_p056");
   AddBranch(&HLT_PFHT450_SixJet40_BTagCSV_p056				      ,"HLT_PFHT450_SixJet40_BTagCSV_p056");
   AddBranch(&HLT_PFHT400_SixJet30_DoubleBTagCSV_p056				      ,"HLT_PFHT400_SixJet30_DoubleBTagCSV_p056");
+  AddBranch(&HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg				      ,"HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg");
+  AddBranch(&HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg				      ,"HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg");
+ // AddBranch(&				      ,"");
 
   if(debug_)    std::cout<<"set branches"<<std::endl;
 }/*}}}*/
@@ -406,6 +415,8 @@ void TriggerSelector::Clear(){
   HLT_DoubleEle8_CaloIdM_TrackIdM_Mass8_PFHT300 = -9999;
   HLT_PFHT400_SixJet30_DoubleBTagCSV_p056 = -9999;
   HLT_PFHT450_SixJet40_BTagCSV_p056 = -9999;
+  HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg = -9999;
+  HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg = -9999;
 }/*}}}*/
 
 void TriggerSelector::startTrigger(edm::EventSetup const& iSetup, edm::Run const & iRun){
