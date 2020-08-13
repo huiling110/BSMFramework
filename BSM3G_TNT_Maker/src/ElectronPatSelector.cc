@@ -207,14 +207,18 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_isoPhotons.push_back( SumPhotonEt );
     patElectron_isoPU.push_back( SumPU );
     double SumNeutralCorrEt = std::max( 0.0, SumNeuHadEt+SumPhotonEt - 0.5*SumPU );
-    double relIsoDeltaBeta = (SumChHadPt + SumNeutralCorrEt)/el->pt();
-    patElectron_relIsoDeltaBeta.push_back(relIsoDeltaBeta);
+    double relIsoDeltaBeta = (SumChHadPt + SumNeutralCorrEt)/el->pt();//Delta Beta corrections for pile up: PU = 0.5 * (sum pt of charged hadrons from PU)
+    patElectron_relIsoDeltaBeta.push_back(relIsoDeltaBeta);//relative combined isolation
     double EffArea = get_effarea(el->superCluster()->position().eta(), true);//the effective_area is, as the name suggests, the effective area specific to the given type of isolation
+    //?where to find this way of calculating effective arae?
+    //?what is superCluster?
     double SumChHadPt04       = el->chargedHadronIso();
     double SumNeuHadEt04      = el->neutralHadronIso();
     double SumPhotonEt04      = el->photonIso(); 
+    //?why diferent from 201 to 208?
     //double SumPU04            = el->puChargedHadronIso();
     SumNeutralCorrEt = std::max( 0.0, SumNeuHadEt04+SumPhotonEt04 - rhopog*EffArea*16./9. );//rhopog:"fixedGridRhoFastjetAll"
+    //???what is this 16/9?mini isolation ?
     double relIsoRhoEA = (SumChHadPt04 + SumNeutralCorrEt)/el->pt();
     patElectron_relIsoRhoEA.push_back(relIsoRhoEA);
     patElectron_dr03EcalRecHitSumEt.push_back(el->dr03EcalRecHitSumEt());
@@ -241,6 +245,8 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_ooEmooP.push_back(ooEmooP);
     passConversionVeto_.push_back(el->passConversionVeto());
     if(el->gsfTrack().isNonnull()){
+        //?what is gsfTrack
+        //override the reco::GsfElectron::gsfTrack method, to access the internal storage of the supercluster
       expectedMissingInnerHits.push_back(el->gsfTrack()->hitPattern().numberOfLostHits(reco::HitPattern::MISSING_INNER_HITS));
       patElectron_gsfTrack_normChi2.push_back(el->gsfTrack()->normalizedChi2());
       patElectron_gsfTrack_ndof.push_back(el->gsfTrack()->ndof());
@@ -259,8 +265,9 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
       patElectron_gsfTrack_vtx.push_back(el->gsfTrack()->vx());
       patElectron_gsfTrack_vty.push_back(el->gsfTrack()->vy());
       patElectron_gsfTrack_vtz.push_back(el->gsfTrack()->vz());
-      if(_AJVar){ 
-        if(beamSpotHandle.isValid() && el->closestCtfTrackRef().isNonnull()){//AJ vars (both pv and bs are in this if condition, tought for pv is not mandatory)
+      if(_AJVar){
+          //?what is this AJ mean?instructions where?
+          //if(beamSpotHandle.isValid() && el->closestCtfTrackRef().isNonnull()){//AJ vars (both pv and bs are in this if condition, tought for pv is not mandatory)
           beamSpot = *beamSpotHandle;
           math::XYZPoint point(beamSpot.x0(),beamSpot.y0(), beamSpot.z0());
           patElectron_gsfTrack_dz_bs.push_back(el->gsfTrack()->dz(point));
@@ -269,6 +276,8 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
           GlobalPoint thepv(firstGoodVertex.position().x(),firstGoodVertex.position().y(),firstGoodVertex.position().z());
           TrackRef eletr = el->closestCtfTrackRef(); 
           TransientTrack elecTransTkPtr = ttrkbuilder->build(eletr);
+          //?what is tramsientTrack?
+          //to call function trajectoryStateClosetToPoint()?
           GlobalPoint patElectron_pca_pv = elecTransTkPtr.trajectoryStateClosestToPoint(thepv).position();
           GlobalPoint patElectron_pca_bs = elecTransTkPtr.trajectoryStateClosestToPoint(thebs).position();
           patElectron_gsfTrack_PCAx_pv.push_back(patElectron_pca_pv.x());
@@ -283,6 +292,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
           float ndf  = 0.0;
           KinematicParticleFactoryFromTransientTrack pFactory;
           RefCountedKinematicParticle elecParticle = pFactory.particle(elecTransTkPtr, elecMass, chi2, ndf, elecSigma);
+          //?what is this doing?
           patElectron_gsfTrackFitErrorMatrix_00.push_back(elecParticle->stateAtPoint(patElectron_pca_bs).kinematicParametersError().matrix()(0,0));
           patElectron_gsfTrackFitErrorMatrix_01.push_back(elecParticle->stateAtPoint(patElectron_pca_bs).kinematicParametersError().matrix()(0,1));
           patElectron_gsfTrackFitErrorMatrix_02.push_back(elecParticle->stateAtPoint(patElectron_pca_bs).kinematicParametersError().matrix()(0,2));
@@ -335,7 +345,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     /////
     //   TTH variables
     ///// 
-    if(_tthlepVar){
+    if(_tthlepVar){/*{{{*/
       double miniIso      = 999;
       double miniIsoCh    = 999;
       double miniIsoNeu   = 999;
@@ -560,7 +570,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
       }
       patElectron_lepjetpvchi2.push_back(lepjetpvchi2);
       patElectron_lepjetnumno2trk.push_back(lepjetnumno2trk);
-    }//End if TTHLep
+    }//End if TTHLep/*}}}*/
     /////
     //   MC info
     /////
@@ -1145,6 +1155,7 @@ double ElectronPatSelector::get_effarea(double eta, bool isPFIso){
   if(_dataEra==2016){
       // different effarea for 2016 PFIso and 2016 MiniIso for historical reason
       // https://github.com/cms-sw/cmssw/blob/master/PhysicsTools/NanoAOD/python/electrons_cff.py#L114-L120 
+      // ????mention this where?
       if(isPFIso){
         if(abs(eta) < 1.0)        effarea = 0.1703;
         else if(abs(eta) < 1.479) effarea = 0.1715;
@@ -1163,6 +1174,7 @@ double ElectronPatSelector::get_effarea(double eta, bool isPFIso){
         else if(abs(eta) < 2.5)   effarea = 0.2687;
       }
   }else{
+      //https://github.com/cms-sw/cmssw/blob/CMSSW_10_2_X/RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_94X.txt
     if(abs(eta) < 1.0)        effarea = 0.1440;
     else if(abs(eta) < 1.479) effarea = 0.1562;
     else if(abs(eta) < 2.0)   effarea = 0.1032;

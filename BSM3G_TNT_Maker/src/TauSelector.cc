@@ -249,11 +249,12 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     //default tau POG lifetime variables
     Tau_defaultDxy.push_back(tau->dxy());
     //?dxy?
+    //impact parameter
     Tau_defaultDxyError.push_back(tau->dxy_error());
     Tau_defaultDxySig.push_back(tau->dxy_Sig());
     Tau_leadChargedCandCharge.push_back(tau->leadChargedHadrCand().isNonnull() ? tau->leadChargedHadrCand()->charge() : -999);
     pat::PackedCandidate const* packedLeadTauCand = dynamic_cast<pat::PackedCandidate const*>(tau->leadChargedHadrCand().get());//dynamic_cast:Safely converts pointers and references to classes up, down, and sideways along the inheritance hierarchy.
-    //?what is packed?
+    //what is packed?
     if(packedLeadTauCand->hasTrackDetails()){
      Tau_packedLeadTauCand_dxy.push_back(packedLeadTauCand->dxy());
      Tau_packedLeadTauCand_dz.push_back(packedLeadTauCand->dz());    
