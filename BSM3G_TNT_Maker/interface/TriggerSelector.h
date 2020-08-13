@@ -135,5 +135,18 @@ class TriggerSelector : public baseTree{
   int HLT_PFHT450_SixJet40_BTagCSV_p056;
   int HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg;
   int HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg;
+  int HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg;
+  int HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg;
+  int HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg;
+  int HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg;
+  int HLT_DoubleMediumChargedIsoPFTauHPS35_Trk1_eta2p1_Reg;
+  int HLT_Ele24_eta2p1_WPLoose_Gsf_LooseIsoPFTau20;
+  int HLT_Ele24_eta2p1_WPLoose_Gsf_LooseIsoPFTau20_SingleL1;
+  int HLT_Ele24_eta2p1_WPLoose_Gsf_LooseIsoPFTau30;
+  int HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1;
+  int HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTauHPS30_eta2p1_CrossL1;
+  int HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1;
+  int HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1;
+  int HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1;
 };
 #endif
