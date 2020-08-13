@@ -268,6 +268,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
       if(_AJVar){
           //?what is this AJ mean?instructions where?
           //if(beamSpotHandle.isValid() && el->closestCtfTrackRef().isNonnull()){//AJ vars (both pv and bs are in this if condition, tought for pv is not mandatory)
+        if(beamSpotHandle.isValid() && el->closestCtfTrackRef().isNonnull()){
           beamSpot = *beamSpotHandle;
           math::XYZPoint point(beamSpot.x0(),beamSpot.y0(), beamSpot.z0());
           patElectron_gsfTrack_dz_bs.push_back(el->gsfTrack()->dz(point));
