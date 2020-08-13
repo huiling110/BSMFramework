@@ -351,6 +351,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
       double miniIsoNeu   = 999;
       double miniIsoPUsub = 999;
       //get_eleminiIso_info(*pcc,rhopog,*el,miniIso,miniIsoCh,miniIsoNeu,miniIsoPUsub);
+      //?where to find instructions to calculate miniIsolation?
       get_eleminiIso(rhopog,*el,miniIso,miniIsoCh,miniIsoNeu,miniIsoPUsub);
       patElectron_miniIsoRel.push_back(miniIso/el->pt());
       patElectron_miniIsoCh.push_back(miniIsoCh);
@@ -411,7 +412,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
         nontrigelemva_vl = true;
       }
       patElectron_eleMVASpring15NonTrig25ns_VL.push_back(nontrigelemva_vl);
-      int pvass = pvassociation(el,*pcc);
+      int pvass = pvassociation(el,*pcc);//"packedCandidateCollection"
       patElectron_pvass.push_back(pvass);
       const math::XYZVector& lepton_momentum = el->momentum();
       const math::XYZVector axis(elejetx,elejety,elejetz);
@@ -423,6 +424,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
       double elewmass    = get_lepWmass(el,iEvent,lepjetidx);
       double eletopmass  = get_lepTopmass(el,iEvent,lepjetidx);
       double elewtopmass = get_lepWTopmass(el,iEvent,lepjetidx);
+      //???
       if(lepjetidx!=-1){
         const pat::Jet & lepjet = (*jets)[lepjetidx];
         patElectron_elejet_mass.push_back(lepjet.p4().M());
@@ -1186,7 +1188,7 @@ double ElectronPatSelector::get_effarea(double eta, bool isPFIso){
   return effarea;
 }
 void ElectronPatSelector::get_elejet_info(edm::View<pat::Electron>::const_iterator& ele, const edm::Event& iEvent, const edm::EventSetup& iSetup, double& elejet_l1corr, double& elejetislep,
-                       double& elejet_mindr, double& elejet_pt, double& eleptOVelejetpt,
+                       double& elejet_mindr, double& elejet_pt, double& eleptOVelejetpt,/*{{{*/
                        double& elejet_pfCombinedInclusiveSecondaryVertexV2BJetTags, double& elejet_pfDeepCSVBJetTags, double& elejet_pfDeepFlavourBJetTags,
                        double& elejet_pfJetProbabilityBJetTags, double& elejet_pfCombinedMVABJetTags, double& elejet_qgl,
                        double& jx, double& jy, double& jz, double& eleptrel,
@@ -1198,7 +1200,7 @@ void ElectronPatSelector::get_elejet_info(edm::View<pat::Electron>::const_iterat
   int currjetpos = 0;
   for(const pat::Jet &j : *jets){
     pat::Jet jet = j;
-    double dr = deltaR(ele->p4(),jet.p4());
+    double dr = deltaR(ele->p4(),jet.p4());// #include "DataFormats/Math/interface/deltaR.h"
     /*
     if(dr<elejet_mindr){
       elejet_mindr = dr;
@@ -1207,6 +1209,7 @@ void ElectronPatSelector::get_elejet_info(edm::View<pat::Electron>::const_iterat
     }
     */
     //std::cout<<iEvent.id().event()  <<" Electron pt "<<ele->p4().pt()<< " Jet pt " << jet.p4().pt() <<std::endl;
+    //?what is the point of using SourceCandidate?
     for(unsigned int i1 = 0 ; i1 < ele->numberOfSourceCandidatePtrs();i1++){
         const reco::CandidatePtr  &c1s=ele->sourceCandidatePtr(i1);
         for(unsigned int i2 = 0 ; i2 < jet.numberOfSourceCandidatePtrs();i2++) {
@@ -1262,7 +1265,9 @@ void ElectronPatSelector::get_elejet_info(edm::View<pat::Electron>::const_iterat
   TLorentzVector ele_lv = TLorentzVector(ele->px(),ele->py(),ele->pz(),ele->p4().E());
   TLorentzVector jet_lv = TLorentzVector(elejet.px(),elejet.py(),elejet.pz(),elejet.p4().E());
   eleptrel = ele_lv.Perp((jet_lv-ele_lv).Vect());
-}
+}/*}}}*/
+
+
 int ElectronPatSelector::pvassociation(edm::View<pat::Electron>::const_iterator& ele, const pat::PackedCandidateCollection& pcc){
   int pvass = -1;
   double mindr = 0.3;
@@ -1272,11 +1277,15 @@ int ElectronPatSelector::pvassociation(edm::View<pat::Electron>::const_iterator&
        && cpf.charge()!=0 && cpf.numberOfHits()>0 //Leptons are charged and built from tracks, also to be consistent with PV tracks  
     ){
       mindr = deltaR(ele->p4(),cpf.p4());
-      pvass = cpf.fromPV();
+      pvass = cpf.fromPV();//how the association to the PV
+      //?
     }
   }
   return pvass;
 }
+
+
+
 double ElectronPatSelector::relativeEta(const math::XYZVector& vector, const math::XYZVector& axis){
   double etarel = 15; //Take this as a default value and in the end use min(etarel,15)
   double mag = vector.r() * axis.r();
@@ -1308,6 +1317,7 @@ double ElectronPatSelector::get_lepWmass(edm::View<pat::Electron>::const_iterato
     TLorentzVector jet_lv = TLorentzVector(j.px(),j.py(),j.pz(),j.p4().E());
     double currmass = (lepjet+jet_lv).M();
     double currchi2 = pow((currmass-80.385)/25,2); 
+    //?what is this doing?
     if(currchi2<minchi2){
       minchi2 = currchi2;
       lepWmass = currmass;
