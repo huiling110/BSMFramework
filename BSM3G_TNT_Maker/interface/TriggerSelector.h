@@ -148,5 +148,6 @@ class TriggerSelector : public baseTree{
   int HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1;
   int HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1;
   int HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1;
+  int HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300;
 };
 #endif

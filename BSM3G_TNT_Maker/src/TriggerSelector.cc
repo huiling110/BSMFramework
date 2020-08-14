@@ -202,6 +202,10 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
       if(HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v<triggerBits->size()) HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1 = triggerBits->accept(HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1_v);
       uint HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1_v(trigNames.triggerIndex(("HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1_v"+string(buffer)).c_str()));
       if(HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1_v<triggerBits->size()) HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1 = triggerBits->accept(HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1_v);
+      uint HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300_v(trigNames.triggerIndex(("HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300_v"+string(buffer)).c_str()));
+      if(HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300_v<triggerBits->size()) HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300 = triggerBits->accept(HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300_v);
+//      uint _v(trigNames.triggerIndex(("_v"+string(buffer)).c_str()));
+//      if(_v<triggerBits->size())  = triggerBits->accept(_v);
 
 
 
@@ -297,6 +301,7 @@ void TriggerSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSet
     HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1 = 1;
     HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1 = 1;
     HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1 = 1;
+    HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300 = 1;
     /*}}}*/
   }
 }
@@ -391,6 +396,7 @@ void TriggerSelector::SetBranches(){
   AddBranch(&HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1                      ,"HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1");
   AddBranch(&HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1                      ,"HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1");
   AddBranch(&HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1                      ,"HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1");
+  AddBranch(&HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300                      ,"HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300");
 
   if(debug_)    std::cout<<"set branches"<<std::endl;
 }/*}}}*/
@@ -482,6 +488,7 @@ void TriggerSelector::Clear(){
   HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1 = -9999;
   HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1 = -9999;
   HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1 = -9999;
+  HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300 = -9999;
 }/*}}}*/
 
 void TriggerSelector::startTrigger(edm::EventSetup const& iSetup, edm::Run const & iRun){
