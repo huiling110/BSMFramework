@@ -9,16 +9,15 @@ It has been modified for RunII analysis by Binghuan Li (IHEP)
 This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 2018 miniAOD  Ntuple production:
 ####################################################
 
-
+#Instruction
+##step1
 cmsrel CMSSW_10_2_16
 cd CMSSW_10_2_16/src
 cmsenv
-
 git cms-init
-
-# set merge limit variable
 git config merge.renameLimit 999999
 
+##step2
 ## set up Egamma Tools
 ## https://twiki.cern.ch/twiki/bin/view/CMS/EgammaMiniAODV2#2018_Preliminary_Energy_Correcti 
 git cms-merge-topic cms-egamma:EgammaPostRecoTools #just adds in an extra file to have a setup function to make things easier
