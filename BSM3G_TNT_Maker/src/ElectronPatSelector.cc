@@ -1,7 +1,6 @@
 #include "BSMFramework/BSM3G_TNT_Maker/interface/ElectronPatSelector.h"
 ElectronPatSelector::ElectronPatSelector(std::string name, TTree* tree, bool debug, const pset& iConfig, edm::ConsumesCollector && ic): 
   baseTree(name,tree,debug),
-    //?
   triggerBits_(ic.consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("bits"))),
   triggerObjects_(ic.consumes<pat::TriggerObjectStandAloneCollection>(iConfig.getParameter<edm::InputTag>("objects"))),
   ebRecHitsToken_(ic.consumes<edm::SortedCollection<EcalRecHit,edm::StrictWeakOrdering<EcalRecHit>>>(iConfig.getParameter<edm::InputTag>("ebRecHits")))
@@ -98,9 +97,8 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_pz.push_back(el->pz());
     patElectron_p.push_back(el->p());
     patElectron_Et.push_back(el->caloEnergy()*sin(el->p4().theta()));//p4():four-momentum Lorentz vector
-    //?
     double EleSCeta = el->superCluster()->position().eta();
-    //?
+    //
     patElectron_SCeta.push_back(EleSCeta);
     bool inCrack  = 1.4442<fabs(EleSCeta) && fabs(EleSCeta)<1.5660;
     //?where to find instructions for this?
@@ -211,7 +209,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_relIsoDeltaBeta.push_back(relIsoDeltaBeta);//relative combined isolation
     double EffArea = get_effarea(el->superCluster()->position().eta(), true);//the effective_area is, as the name suggests, the effective area specific to the given type of isolation
     //?where to find this way of calculating effective arae?
-    //?what is superCluster?
+    //what is superCluster?
     double SumChHadPt04       = el->chargedHadronIso();
     double SumNeuHadEt04      = el->neutralHadronIso();
     double SumPhotonEt04      = el->photonIso(); 
@@ -245,7 +243,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_ooEmooP.push_back(ooEmooP);
     passConversionVeto_.push_back(el->passConversionVeto());
     if(el->gsfTrack().isNonnull()){
-        //?what is gsfTrack
+        //what is gsfTrack
         //override the reco::GsfElectron::gsfTrack method, to access the internal storage of the supercluster
       expectedMissingInnerHits.push_back(el->gsfTrack()->hitPattern().numberOfLostHits(reco::HitPattern::MISSING_INNER_HITS));
       patElectron_gsfTrack_normChi2.push_back(el->gsfTrack()->normalizedChi2());

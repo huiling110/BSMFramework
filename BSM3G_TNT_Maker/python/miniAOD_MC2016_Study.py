@@ -26,7 +26,8 @@ options.parseArguments()
 #####
 ##   Initial standard configs
 #####
-process = cms.Process("Demo")
+#process = cms.Process("Demo")
+process = cms.Process("BSM")
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 10000
 process.load('Configuration.Geometry.GeometryRecoDB_cff')
@@ -158,7 +159,7 @@ from PhysicsTools.PatUtils.tools.runMETCorrectionsAndUncertainties import runMet
 runMetCorAndUncFromMiniAOD (
         process,
         isData = False, # false for MC
-        fixEE2017 = False,
+        fixEE2017 = False,#reduce effect of high eta EE noise on the PF MET measurement in 2017 data
         fixEE2017Params = {'userawPt': True, 'ptThreshold':50.0, 'minEtaThreshold':2.65, 'maxEtaThreshold': 3.139} ,
         postfix = "ModifiedMET"
 )
@@ -193,7 +194,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
 #  fileName = cms.string("OutTree_Study.root")
-  fileName = cms.string("BSM_TTTTTau_Corrected2HLT_AddTauHLT1_ElectronUpdated.root")
+  fileName = cms.string("BSM_TTTTTau_Corrected2HLT_AddTauHLT_ElectronUpdated.root")
 )
 
 #####
