@@ -32,7 +32,7 @@ ElectronPatSelector::ElectronPatSelector(std::string name, TTree* tree, bool deb
 ElectronPatSelector::~ElectronPatSelector(){
   delete tree_;
 }
-KalmanVertexFitter vertexfitterele(true);// #include "RecoVertex/KalmanVertexFit/interface/KalmanVertexFitter.h"
+KalmanVertexFitter vertexfitterele(true);// #include "RecoVertex/KalmanVertexFit/interface/KalmanVertexFitter.h"//1630
 //?
 namespace{
   struct ByEta{
@@ -135,14 +135,13 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     //Charge
     patElectron_charge.push_back(el->charge());
     patElectron_isGsfCtfScPixChargeConsistent.push_back(el->isGsfCtfScPixChargeConsistent());//gsf track charge;ctf track charge
-    //?
     patElectron_isGsfScPixChargeConsistent.push_back(el->isGsfScPixChargeConsistent());
     //ID
     float mvaval_nonIso  = el->userFloat("ElectronMVAEstimatorRun2Fall17NoIsoV2Values");//Accessing MVA variables
-    passVetoId_.push_back  ( el->electronID("cutBasedElectronID-Fall17-94X-V2-veto"));
-    passLooseId_.push_back ( el->electronID("cutBasedElectronID-Fall17-94X-V2-loose"));
-    passMediumId_.push_back( el->electronID("cutBasedElectronID-Fall17-94X-V2-medium"));
-    passTightId_.push_back ( el->electronID("cutBasedElectronID-Fall17-94X-V2-tight"));
+   // passVetoId_.push_back  ( el->electronID("cutBasedElectronID-Fall17-94X-V2-veto"));
+   // passLooseId_.push_back ( el->electronID("cutBasedElectronID-Fall17-94X-V2-loose"));
+   // passMediumId_.push_back( el->electronID("cutBasedElectronID-Fall17-94X-V2-medium"));
+   // passTightId_.push_back ( el->electronID("cutBasedElectronID-Fall17-94X-V2-tight"));
     passMvaIsowp80Id_.push_back( el->electronID("mvaEleID-Fall17-iso-V2-wp80") );
     passMvanonIsowp80Id_.push_back( el->electronID("mvaEleID-Fall17-noIso-V2-wp80") );
     passMvaIsowp90Id_.push_back( el->electronID("mvaEleID-Fall17-iso-V2-wp90") );
@@ -153,9 +152,20 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_mvaCategory_nonIso_.push_back(el->userInt("ElectronMVAEstimatorRun2Fall17NoIsoV2Categories"));
     patElectron_mvaValue_Iso_.push_back(el->userFloat("ElectronMVAEstimatorRun2Fall17IsoV2Values"));
     patElectron_mvaCategory_Iso_.push_back(el->userInt("ElectronMVAEstimatorRun2Fall17IsoV2Categories"));
+    //
     patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80_.push_back(el->electronID("mvaEleID-Spring16-GeneralPurpose-V1-wp80"));
     patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90_.push_back(el->electronID("mvaEleID-Spring16-GeneralPurpose-V1-wp90"));
     patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1_.push_back(el->userFloat("ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values"));
+    patElectron_cutBasedElectronID_Fall17_94X_V2_loose_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V2-loose"));
+    patElectron_cutBasedElectronID_Fall17_94X_V2_medium_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V2-medium"));
+    patElectron_cutBasedElectronID_Fall17_94X_V2_tight_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V2-tight"));
+    patElectron_cutBasedElectronID_Fall17_94X_V2_veto_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V2-veto"));
+    patElectron_cutBasedElectronID_Fall17_94X_V1_loose_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-loose"));
+    patElectron_cutBasedElectronID_Fall17_94X_V1_medium_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-medium"));
+    patElectron_cutBasedElectronID_Fall17_94X_V1_tight_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-medium cutBasedElectronID-Fall17-94X-V1-tight"));
+    patElectron_cutBasedElectronID_Fall17_94X_V1_veto_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-veto"));
+//    .push_back(el->electronID(""));
+//    .push_back(el->electronID(""));
     /*
     if(_dataEra==2016){
         passVetoOldId_.push_back  ( el->electronID("cutBasedElectronID-Summer16-80X-V1-veto"));
@@ -650,10 +660,10 @@ void ElectronPatSelector::SetBranches(){
   AddBranch(&patElectron_isGsfCtfScPixChargeConsistent            ,"patElectron_isGsfCtfScPixChargeConsistent");
   AddBranch(&patElectron_isGsfScPixChargeConsistent               ,"patElectron_isGsfScPixChargeConsistent");
   //ID
-  AddBranch(&passVetoId_              ,"patElectron_isPassVeto");          
-  AddBranch(&passLooseId_             ,"patElectron_isPassLoose");
-  AddBranch(&passMediumId_            ,"patElectron_isPassMedium");
-  AddBranch(&passTightId_             ,"patElectron_isPassTight");
+//  AddBranch(&passVetoId_              ,"patElectron_isPassVeto");          
+//  AddBranch(&passLooseId_             ,"patElectron_isPassLoose");
+//  AddBranch(&passMediumId_            ,"patElectron_isPassMedium");
+//  AddBranch(&passTightId_             ,"patElectron_isPassTight");
   AddBranch(&passMvaIsowp80Id_           ,"patElectron_isPassMvaIsowp80");
   AddBranch(&passMvanonIsowp80Id_        ,"patElectron_isPassMvanonIsowp80");
   AddBranch(&passMvaIsowp90Id_       ,"patElectron_isPassMvaIsowp90");
@@ -667,6 +677,14 @@ void ElectronPatSelector::SetBranches(){
   AddBranch(&patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80_,"patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80");
   AddBranch(&patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90_,"patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90");
   AddBranch(&patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1_,"patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1");
+  AddBranch(&patElectron_cutBasedElectronID_Fall17_94X_V2_loose_,"patElectron_cutBasedElectronID_Fall17_94X_V2_loose");
+  AddBranch(&patElectron_cutBasedElectronID_Fall17_94X_V2_medium_,"patElectron_cutBasedElectronID_Fall17_94X_V2_medium");
+  AddBranch(&patElectron_cutBasedElectronID_Fall17_94X_V2_tight_,"patElectron_cutBasedElectronID_Fall17_94X_V2_tight");
+  AddBranch(&patElectron_cutBasedElectronID_Fall17_94X_V2_veto_,"patElectron_cutBasedElectronID_Fall17_94X_V2_veto");
+  AddBranch(&patElectron_cutBasedElectronID_Fall17_94X_V1_loose_,"patElectron_cutBasedElectronID_Fall17_94X_V1_loose");
+  AddBranch(&patElectron_cutBasedElectronID_Fall17_94X_V1_medium_,"patElectron_cutBasedElectronID_Fall17_94X_V1_medium");
+  AddBranch(&patElectron_cutBasedElectronID_Fall17_94X_V1_tight_,"patElectron_cutBasedElectronID_Fall17_94X_V1_tight");
+  AddBranch(&patElectron_cutBasedElectronID_Fall17_94X_V1_veto_,"patElectron_cutBasedElectronID_Fall17_94X_V1_veto");
 //  AddBranch(&,"");
   /*
   AddBranch(&passVetoOldId_              ,"patElectron_isPassOldVeto");          
@@ -879,10 +897,10 @@ void ElectronPatSelector::Clear(){
   patElectron_isGsfCtfScPixChargeConsistent.clear();
   patElectron_isGsfScPixChargeConsistent.clear();
   //ID
-  passVetoId_.clear();
-  passLooseId_.clear();
-  passMediumId_.clear();
-  passTightId_.clear();  
+//  passVetoId_.clear();
+//  passLooseId_.clear();
+//  passMediumId_.clear();
+//  passTightId_.clear();  
   passMvaIsowp80Id_.clear();
   passMvanonIsowp80Id_.clear();
   passMvaIsowp90Id_.clear();
@@ -896,6 +914,16 @@ void ElectronPatSelector::Clear(){
   patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80_.clear();
   patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90_.clear();
   patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1_.clear();
+  patElectron_cutBasedElectronID_Fall17_94X_V2_loose_.clear();
+  patElectron_cutBasedElectronID_Fall17_94X_V2_medium_.clear();
+  patElectron_cutBasedElectronID_Fall17_94X_V2_tight_.clear();
+  patElectron_cutBasedElectronID_Fall17_94X_V2_veto_.clear();
+  patElectron_cutBasedElectronID_Fall17_94X_V1_loose_.clear();
+  patElectron_cutBasedElectronID_Fall17_94X_V1_medium_.clear();
+  patElectron_cutBasedElectronID_Fall17_94X_V1_tight_.clear();
+  patElectron_cutBasedElectronID_Fall17_94X_V1_veto_.clear();
+//  .clear();
+//  .clear();
   /*
   passVetoOldId_.clear();
   passLooseOldId_.clear();

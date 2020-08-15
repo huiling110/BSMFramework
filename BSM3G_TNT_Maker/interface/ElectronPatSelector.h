@@ -146,6 +146,10 @@ class ElectronPatSelector : public  baseTree{
   vector<int> patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80_;
   vector<int> patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90_;
   vector<float> patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1_;
+  vector<int> patElectron_cutBasedElectronID_Fall17_94X_V2_loose_, patElectron_cutBasedElectronID_Fall17_94X_V2_medium_, patElectron_cutBasedElectronID_Fall17_94X_V2_tight_, patElectron_cutBasedElectronID_Fall17_94X_V2_veto_;
+  vector<int> patElectron_cutBasedElectronID_Fall17_94X_V1_loose_, patElectron_cutBasedElectronID_Fall17_94X_V1_medium_,  patElectron_cutBasedElectronID_Fall17_94X_V1_tight_, patElectron_cutBasedElectronID_Fall17_94X_V1_veto_;
+  //
+  //
   //Isolation
   vector<double> patElectron_isoChargedHadrons, patElectron_isoNeutralHadrons, patElectron_isoPhotons, patElectron_isoPU, patElectron_relIsoDeltaBeta, patElectron_relIsoRhoEA, patElectron_dr03EcalRecHitSumEt, patElectron_dr03HcalDepth1TowerSumEt, patElectron_isolPtTracks, patElectron_ecalPFClusterIso, patElectron_hcalPFClusterIso;
   //Shape, Track related variables, other prop
