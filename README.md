@@ -28,12 +28,12 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
   - scram b -j 8
         
 - set up MET corrections with EE nosie fix https://twiki.cern.ch/twiki/bin/view/CMS/MissingETUncertaintyPrescription#Instructions_for_9_4_X_X_9_for_2
-  - git cms-merge-topic cms-met:METFixEE2017_949_v2_backport_to_102X  
-  - scram b -j 8
+  - ~~git cms-merge-topic cms-met:METFixEE2017_949_v2_backport_to_102X  ~~
+  - ~~scram b -j 8~~
 
 - set up MetFilters https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2#How_to_run_ecal_BadCalibReducedM
-  - ~~git cms-addpkg RecoMET/METFilters~~
-  - ~~scram b~~
+  - git cms-addpkg RecoMET/METFilters
+  - scram b
 
 - set up DeepTau v2p1 https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuidePFTauID#Running_of_the_DNN_based_tau_ID
   - git cms-merge-topic -u cms-tau-pog:CMSSW_10_2_X_tau-pog_DeepTau2017v2p1_nanoAOD
