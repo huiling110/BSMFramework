@@ -153,6 +153,9 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_mvaCategory_nonIso_.push_back(el->userInt("ElectronMVAEstimatorRun2Fall17NoIsoV2Categories"));
     patElectron_mvaValue_Iso_.push_back(el->userFloat("ElectronMVAEstimatorRun2Fall17IsoV2Values"));
     patElectron_mvaCategory_Iso_.push_back(el->userInt("ElectronMVAEstimatorRun2Fall17IsoV2Categories"));
+    patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80_.push_back(el->electronID("mvaEleID-Spring16-GeneralPurpose-V1-wp80"));
+    patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90_.push_back(el->electronID("mvaEleID-Spring16-GeneralPurpose-V1-wp90"));
+    patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1_.push_back(el->userFloat("ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values"));
     /*
     if(_dataEra==2016){
         passVetoOldId_.push_back  ( el->electronID("cutBasedElectronID-Summer16-80X-V1-veto"));
@@ -661,6 +664,10 @@ void ElectronPatSelector::SetBranches(){
   AddBranch(&patElectron_mvaCategory_nonIso_ ,"patElectron_mvaCategory_nonIso");
   AddBranch(&patElectron_mvaValue_Iso_    ,"patElectron_mvaValue_Iso");
   AddBranch(&patElectron_mvaCategory_Iso_ ,"patElectron_mvaCategory_Iso");
+  AddBranch(&patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80_,"patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80");
+  AddBranch(&patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90_,"patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90");
+  AddBranch(&patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1_,"patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1");
+//  AddBranch(&,"");
   /*
   AddBranch(&passVetoOldId_              ,"patElectron_isPassOldVeto");          
   AddBranch(&passLooseOldId_             ,"patElectron_isPassOldLoose");
@@ -886,6 +893,9 @@ void ElectronPatSelector::Clear(){
   patElectron_mvaCategory_nonIso_.clear();
   patElectron_mvaValue_Iso_.clear();
   patElectron_mvaCategory_Iso_.clear();
+  patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80_.clear();
+  patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90_.clear();
+  patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1_.clear();
   /*
   passVetoOldId_.clear();
   passLooseOldId_.clear();
