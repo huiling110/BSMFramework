@@ -162,7 +162,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_cutBasedElectronID_Fall17_94X_V2_veto_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V2-veto"));
     patElectron_cutBasedElectronID_Fall17_94X_V1_loose_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-loose"));
     patElectron_cutBasedElectronID_Fall17_94X_V1_medium_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-medium"));
-    patElectron_cutBasedElectronID_Fall17_94X_V1_tight_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-medium cutBasedElectronID-Fall17-94X-V1-tight"));
+    patElectron_cutBasedElectronID_Fall17_94X_V1_tight_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-tight"));
     patElectron_cutBasedElectronID_Fall17_94X_V1_veto_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-veto"));
 //    .push_back(el->electronID(""));
 //    .push_back(el->electronID(""));
