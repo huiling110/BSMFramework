@@ -28,7 +28,7 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
   - scram b -j 8
         
 - set up MET corrections with EE nosie fix https://twiki.cern.ch/twiki/bin/view/CMS/MissingETUncertaintyPrescription#Instructions_for_9_4_X_X_9_for_2
-  - ~~git cms-merge-topic cms-met:METFixEE2017_949_v2_backport_to_102X  ~~
+  - ~~git cms-merge-topic cms-met:METFixEE2017_949_v2_backport_to_102X~~
   - ~~scram b -j 8~~
 
 - set up MetFilters https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2#How_to_run_ecal_BadCalibReducedM
