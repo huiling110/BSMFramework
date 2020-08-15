@@ -11,8 +11,8 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
 
 # Instruction
 ## step1
-- cmsrel CMSSW_10_2_16
-- cd CMSSW_10_2_16/src
+- cmsrel CMSSW_10_2_20_UL
+- cd CMSSW_10_2_20_UL/src
 - cmsenv
 - git cms-init
 - git config merge.renameLimit 999999
@@ -47,7 +47,7 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
 - set BSM Framework
   - git clone https://github.com/huiling110/BSMFramework.git (git clone git@github.com:huiling110/BSMFramework.git)
   - cd BSMFramework/
-  - git checkout CMSSW_10_2_16
+  - git checkout CMSSW_10_2_20_UL
   - cd ..
   - scram b -j 8
 
