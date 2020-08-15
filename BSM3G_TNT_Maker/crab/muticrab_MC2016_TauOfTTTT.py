@@ -299,8 +299,8 @@ tWLists = [
 
 # baseDir
 #baseDir = "/afs/cern.ch/work/b/binghuan/private/TTHLep_RunII/CMSSW_10_2_16/src/BSMFramework/"
-#baseDir = "/workfs/cms/huahuil/BSM/CMSSW_10_2_23/src/BSMFramework/"
-baseDir = "/workfs/cms/huahuil/BSM/CMSSW_10_2_20_UL/src/BSMFramework/"
+#baseDir = "/workfs/cms/huahuil/BSM/CMSSW_10_2_20_UL/src/BSMFramework/"
+baseDir = "/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/"
 
 #for d in range(0,len(datasetnames)):
 #for d in range(0,2):
@@ -346,7 +346,7 @@ for d in range(0,1):
     config.Data.unitsPerJob    = 2000 
 #    config.Data.outLFNDirBase = '/store/user/binghuan/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
-    config.Data.outputDatasetTag = datasetnames[d]+"AddHLT_AddTauHLT"
+    config.Data.outputDatasetTag = datasetnames[d]+"AddHLT_AddTauHLTEID"
 
 #    print 'multicrab.py: outLFNDirBase = /store/user/binghuan/'
     print 'multicrab.py: outLFNDirBase = /store/user/hhua/'
