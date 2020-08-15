@@ -9,15 +9,15 @@ It has been modified for RunII analysis by Binghuan Li (IHEP)
 This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 2018 miniAOD  Ntuple production:
 
 
-#Instruction
-##step1
+# Instruction
+## step1
 - cmsrel CMSSW_10_2_16
 - cd CMSSW_10_2_16/src
 - cmsenv
 - git cms-init
 - git config merge.renameLimit 999999
 
-##step2
+## step2
 - set up Egamma Tools https://twiki.cern.ch/twiki/bin/view/CMS/EgammaMiniAODV2#2018_Preliminary_Energy_Correcti 
   - git cms-merge-topic cms-egamma:EgammaPostRecoTools 
   - git cms-merge-topic cms-egamma:PhotonIDValueMapSpeedup1029 
@@ -43,7 +43,7 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
   - git cms-merge-topic 28098
   - scram b -j 4
 
-##step 3 
+## step 3 
 - set BSM Framework
   - git clone https://github.com/huiling110/BSMFramework.git (git clone git@github.com:huiling110/BSMFramework.git)
   - cd BSMFramework/
@@ -51,7 +51,7 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
   - cd ..
   - scram b -j 8
 
-##
+## step 4
 - To Run 
   - cd BSMFramework/BSM3G_TNT_Maker/python/
   - cmsRun miniAOD_MC(RD)2017(2016)(2018).py 
