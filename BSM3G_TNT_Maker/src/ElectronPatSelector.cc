@@ -195,7 +195,8 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     double relIsoDeltaBeta = (SumChHadPt + SumNeutralCorrEt)/el->pt();//Delta Beta corrections for pile up: PU = 0.5 * (sum pt of charged hadrons from PU)
     patElectron_relIsoDeltaBeta.push_back(relIsoDeltaBeta);//relative combined isolation
     double EffArea = get_effarea(el->superCluster()->position().eta(), true);//the effective_area is, as the name suggests, the effective area specific to the given type of isolation
-    //?where to find this way of calculating effective arae?
+    //where to find this way of calculating effective arae?
+    //it is not correct
     //what is superCluster?
     double SumChHadPt04       = el->chargedHadronIso();
     double SumNeuHadEt04      = el->neutralHadronIso();
@@ -203,9 +204,12 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     //?why diferent from 201 to 208?
     //double SumPU04            = el->puChargedHadronIso();
     SumNeutralCorrEt = std::max( 0.0, SumNeuHadEt04+SumPhotonEt04 - rhopog*EffArea*16./9. );//rhopog:"fixedGridRhoFastjetAll"
+    double SumNeutralCorrEt_EA = std::max( 0.0, SumNeuHadEt+SumPhotonEt - rhopog*EffArea );
     //???what is this 16/9?mini isolation ?
     double relIsoRhoEA = (SumChHadPt04 + SumNeutralCorrEt)/el->pt();
-    patElectron_relIsoRhoEA.push_back(relIsoRhoEA);
+    double relIsoRhoEA_Update = (SumChHadPt + SumNeutralCorrEt_EA)/el->pt();
+    patElectron_relIsoRhoEA.push_back(relIsoRhoEA);//not correct
+    patElectron_relIsoRhoEA_Update.push_back(relIsoRhoEA_Update);//the new one and correct one
     patElectron_dr03EcalRecHitSumEt.push_back(el->dr03EcalRecHitSumEt());
     patElectron_dr03HcalDepth1TowerSumEt.push_back(el->dr03HcalDepth1TowerSumEt());
     patElectron_isolPtTracks.push_back(el->dr03TkSumPt());
@@ -697,6 +701,7 @@ void ElectronPatSelector::SetBranches(){
   AddBranch(&patElectron_isoPU                    ,"patElectron_isoPU");
   AddBranch(&patElectron_relIsoDeltaBeta          ,"patElectron_relIsoDeltaBeta");
   AddBranch(&patElectron_relIsoRhoEA              ,"patElectron_relIsoRhoEA");
+  AddBranch(&patElectron_relIsoRhoEA_Update              ,"patElectron_relIsoRhoEA_Update");
   AddBranch(&patElectron_dr03EcalRecHitSumEt      ,"patElectron_dr03EcalRecHitSumEt");
   AddBranch(&patElectron_dr03HcalDepth1TowerSumEt ,"patElectron_dr03HcalDepth1TowerSumEt");
   AddBranch(&patElectron_isolPtTracks             ,"patElectron_isolPtTracks");
@@ -941,6 +946,7 @@ void ElectronPatSelector::Clear(){
   patElectron_isoPU.clear();
   patElectron_relIsoDeltaBeta.clear();
   patElectron_relIsoRhoEA.clear();
+  patElectron_relIsoRhoEA_Update.clear();
   patElectron_dr03EcalRecHitSumEt.clear();
   patElectron_dr03HcalDepth1TowerSumEt.clear();
   patElectron_isolPtTracks.clear();
@@ -1179,10 +1185,11 @@ double ElectronPatSelector::get_isosumraw(const std::vector<const pat::PackedCan
 double ElectronPatSelector::get_effarea(double eta, bool isPFIso){
   //https://github.com/cms-sw/cmssw/blob/CMSSW_10_4_X/RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_94X.txt
   double effarea = 0;
-  if(_dataEra==2016){
+/*  if(_dataEra==2016){
       // different effarea for 2016 PFIso and 2016 MiniIso for historical reason
       // https://github.com/cms-sw/cmssw/blob/master/PhysicsTools/NanoAOD/python/electrons_cff.py#L114-L120 
       // ????mention this where?
+      // https://github.com/cms-sw/cmssw/blob/CMSSW_10_2_X/RecoEgamma/ElectronIdentification/data/Summer16/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_80X.txt
       if(isPFIso){
         if(abs(eta) < 1.0)        effarea = 0.1703;
         else if(abs(eta) < 1.479) effarea = 0.1715;
@@ -1201,15 +1208,25 @@ double ElectronPatSelector::get_effarea(double eta, bool isPFIso){
         else if(abs(eta) < 2.5)   effarea = 0.2687;
       }
   }else{
+  */
       //https://github.com/cms-sw/cmssw/blob/CMSSW_10_2_X/RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_94X.txt
-    if(abs(eta) < 1.0)        effarea = 0.1440;
-    else if(abs(eta) < 1.479) effarea = 0.1562;
-    else if(abs(eta) < 2.0)   effarea = 0.1032;
-    else if(abs(eta) < 2.2)   effarea = 0.0859;
-    else if(abs(eta) < 2.3)   effarea = 0.1116;
-    else if(abs(eta) < 2.4)   effarea = 0.1321;
-    else if(abs(eta) < 2.5)   effarea = 0.1654;
-  }
+      if(isPFIso){
+        if(abs(eta) < 1.0)        effarea = 0.1440;
+        else if(abs(eta) < 1.479) effarea = 0.1562;
+        else if(abs(eta) < 2.0)   effarea = 0.1032;
+        else if(abs(eta) < 2.2)   effarea = 0.0859;
+        else if(abs(eta) < 2.3)   effarea = 0.1116;
+        else if(abs(eta) < 2.4)   effarea = 0.1321;
+        else if(abs(eta) < 2.5)   effarea = 0.1654;
+      }else{
+        if(abs(eta) < 1.0)        effarea = 0.1752;
+        else if(abs(eta) < 1.479) effarea = 0.1862;
+        else if(abs(eta) < 2.0)   effarea = 0.1411;
+        else if(abs(eta) < 2.2)   effarea = 0.1534;
+        else if(abs(eta) < 2.3)   effarea = 0.1903;
+        else if(abs(eta) < 2.4)   effarea = 0.2243;
+        else if(abs(eta) < 2.5)   effarea = 0.2687;
+     }
   return effarea;
 }
 void ElectronPatSelector::get_elejet_info(edm::View<pat::Electron>::const_iterator& ele, const edm::Event& iEvent, const edm::EventSetup& iSetup, double& elejet_l1corr, double& elejetislep,

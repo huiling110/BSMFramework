@@ -154,6 +154,7 @@ class ElectronPatSelector : public  baseTree{
   //
   //Isolation
   vector<double> patElectron_isoChargedHadrons, patElectron_isoNeutralHadrons, patElectron_isoPhotons, patElectron_isoPU, patElectron_relIsoDeltaBeta, patElectron_relIsoRhoEA, patElectron_dr03EcalRecHitSumEt, patElectron_dr03HcalDepth1TowerSumEt, patElectron_isolPtTracks, patElectron_ecalPFClusterIso, patElectron_hcalPFClusterIso;
+  vector<double> patElectron_relIsoRhoEA_Update;
   //Shape, Track related variables, other prop
   vector<double> patElectron_dEtaIn, patElectron_dPhiIn, 
                  patElectron_full5x5_sigmaIetaIeta, patElectron_full5x5_e2x5Max, patElectron_full5x5_e5x5, patElectron_full5x5_e1x5,
