@@ -11,6 +11,7 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
 
 # Instruction
 ## step1
+- export SCRAM_ARCH=slc7_amd64_gcc700
 - cmsrel CMSSW_10_2_20_UL
 - cd CMSSW_10_2_20_UL/src
 - cmsenv
@@ -54,13 +55,13 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
 ## step 4
 - To Run 
   - cd BSMFramework/BSM3G_TNT_Maker/python/
-  - cmsRun miniAOD_MC(RD)2017(2016)(2018).py 
+  - cmsRun miniAOD_MC2016_Study.py
 - crab
   - voms-proxy-init --voms cms
   - source /cvmfs/cms.cern.ch/crab3/crab.sh
   - source /cvmfs/cms.cern.ch/common/crab-setup.sh
   - cd BSMFramework/BSM3G_TNT_Maker/crab/
-  - python multicrab_MC(DATA)2016(2017)(2018).py
+  - python muticrab_MC2016_TauOfTTTT.py
 
 - Job Recover
   - <crab kill -d> to kill the job and make sure the jobs are in killed status before you move to next step
