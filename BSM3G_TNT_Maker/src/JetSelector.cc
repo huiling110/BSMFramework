@@ -151,8 +151,11 @@ void JetSelector::Fill(const edm::Event& iEvent){
         edm::Ref<pat::JetCollection> jetRef(jets, ij);//ij is the number of jet that are < Jet_pt_min
         //?not sure about jetRef?
         //what is ij doing here?
-        Jet_qgLikelihood.push_back((*qgHandle)[jetRef]);
-        
+        Jet_qgLikelihood.push_back((*qgHandle)[jetRef]);//edm::InputTag("QGTagger", "qgLikelihood")
+        Jet_axis2_fromQGtagger.push_back((*axis2Handle)[jetRef]);
+        Jet_mult_fromQGtagger.push_back((*multHandle)[jetRef]);
+        Jet_ptD_fromQGtager.push_back((*ptDHandle)[jetRef]);
+        //edm::InputTag("QGTagger", "mult")
         double axis1 = -1;
         double axis2 = -1;
         double ptD = -1;
@@ -165,6 +168,9 @@ void JetSelector::Fill(const edm::Event& iEvent){
         Jet_mult.push_back(mult);
     }else{
         Jet_qgLikelihood.push_back(-999);
+        Jet_axis2_fromQGtagger.push_back(-999);
+        Jet_mult_fromQGtagger.push_back(-999);
+        Jet_ptD_fromQGtager.push_back(-999);
         Jet_axis1.push_back(-999);
         Jet_axis2.push_back(-999);
         Jet_ptD.push_back(-999);
@@ -1126,6 +1132,9 @@ void JetSelector::SetBranches(){
   AddBranch(&Jet_isPFJet                                      ,"Jet_isPFJet");
   AddBranch(&Jet_isCaloJet                                    ,"Jet_isCaloJet");
   AddBranch(&Jet_qgLikelihood               ,"Jet_qgLikelihood");
+  AddBranch(&Jet_axis2_fromQGtagger               ,"Jet_axis2_fromQGtagger");
+  AddBranch(&Jet_mult_fromQGtagger              ,"Jet_mult_fromQGtagger");
+  AddBranch(&Jet_ptD_fromQGtager              ,"Jet_ptD_fromQGtager");
   AddBranch(&Jet_axis1            ,"Jet_axis1");
   AddBranch(&Jet_axis2            ,"Jet_axis2");
   AddBranch(&Jet_ptD              ,"Jet_ptD");
@@ -1343,6 +1352,9 @@ void JetSelector::Clear(){
   Jet_isPFJet.clear();
   Jet_isCaloJet.clear();
   Jet_qgLikelihood.clear();
+  Jet_axis2_fromQGtagger.clear();
+  Jet_mult_fromQGtagger.clear();
+  Jet_ptD_fromQGtager.clear();
   Jet_axis2.clear();
   Jet_axis1.clear();
   Jet_ptD.clear();
