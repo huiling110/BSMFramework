@@ -85,7 +85,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
   iEvent.getByToken(multToken_, multHandle);//edm::InputTag("QGTagger", "mult")
   edm::Handle<double> rhoHandle;
   iEvent.getByToken(rhopogHandle_,rhoHandle);//edm::InputTag("fixedGridRhoFastjetAll"))
-  //?what are these?
+  //what are these?
   double rho = *rhoHandle;
   //edm::Handle<double> rhoJERHandle;
   //iEvent.getByToken(rhoJERHandle_,rhoJERHandle);
