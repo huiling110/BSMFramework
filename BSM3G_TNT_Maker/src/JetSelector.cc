@@ -82,7 +82,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
   edm::Handle<edm::ValueMap<float>> ptDHandle;
   iEvent.getByToken(ptDToken_, ptDHandle);//"QGTagger", "ptD"
   edm::Handle<edm::ValueMap<int>> multHandle;
-  iEvent.getByToken(multToken_, multHandle);//edm::InputTag("QGTagger", "mult")
+  iEvent.getByToken(multToken_, multHandle);//edm::InputTag("QGTagger", "mult")//multHandle not used anywhere?
   edm::Handle<double> rhoHandle;
   iEvent.getByToken(rhopogHandle_,rhoHandle);//edm::InputTag("fixedGridRhoFastjetAll"))
   //what are these?
@@ -149,8 +149,10 @@ void JetSelector::Fill(const edm::Event& iEvent){
     Jet_isCaloJet.push_back(j.isCaloJet());
     if(_qglVar){
         edm::Ref<pat::JetCollection> jetRef(jets, ij);//ij is the number of jet that are < Jet_pt_min
+        //?not sure about jetRef?
         //what is ij doing here?
-        Jet_qg.push_back((*qgHandle)[jetRef]);
+        Jet_qgLikelihood.push_back((*qgHandle)[jetRef]);
+        
         double axis1 = -1;
         double axis2 = -1;
         double ptD = -1;
@@ -162,7 +164,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
         Jet_ptD.push_back(ptD);
         Jet_mult.push_back(mult);
     }else{
-        Jet_qg.push_back(-999);
+        Jet_qgLikelihood.push_back(-999);
         Jet_axis1.push_back(-999);
         Jet_axis2.push_back(-999);
         Jet_ptD.push_back(-999);
@@ -1123,7 +1125,7 @@ void JetSelector::SetBranches(){
   AddBranch(&Jet_pileupId                                     ,"Jet_pileupId");
   AddBranch(&Jet_isPFJet                                      ,"Jet_isPFJet");
   AddBranch(&Jet_isCaloJet                                    ,"Jet_isCaloJet");
-  AddBranch(&Jet_qg               ,"Jet_qg");
+  AddBranch(&Jet_qgLikelihood               ,"Jet_qgLikelihood");
   AddBranch(&Jet_axis1            ,"Jet_axis1");
   AddBranch(&Jet_axis2            ,"Jet_axis2");
   AddBranch(&Jet_ptD              ,"Jet_ptD");
@@ -1340,7 +1342,7 @@ void JetSelector::Clear(){
   Jet_pileupId.clear();
   Jet_isPFJet.clear();
   Jet_isCaloJet.clear();
-  Jet_qg.clear();
+  Jet_qgLikelihood.clear();
   Jet_axis2.clear();
   Jet_axis1.clear();
   Jet_ptD.clear();
