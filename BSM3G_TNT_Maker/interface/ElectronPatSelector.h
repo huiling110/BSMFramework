@@ -135,19 +135,26 @@ class ElectronPatSelector : public  baseTree{
   //Charge
   vector<double> patElectron_charge, patElectron_isGsfCtfScPixChargeConsistent, patElectron_isGsfScPixChargeConsistent;
   //ID
-  vector<int>  passVetoId_, passLooseId_, passMediumId_, passTightId_, passMvaIsowp80Id_, passMvanonIsowp80Id_, passMvaIsowp90Id_, passMvanonIsowp90Id_, passMvaIsowpLooseId_, passMvanonIsowpLooseId_;
-  vector<float> patElectron_mvaValue_nonIso_, patElectron_mvaCategory_nonIso_, patElectron_mvaValue_Iso_, patElectron_mvaCategory_Iso_; 
+  vector<int>  passVetoId_, passLooseId_, passMediumId_, passTightId_, patElectron_mvaEleID_Fall17_iso_V2_wp80_, patElectron_mvaEleID_Fall17_noIso_V2_wp80_, patElectron_mvaEleID_Fall17_iso_V2_wp90_, patElectron_mvaEleID_Fall17_noIso_V2_wp90_, patElectron_mvaEleID_Fall17_iso_V2_wpLoose_, patElectron_mvaEleID_Fall17_noIso_V2_wpLoose_;
+  vector<float> patElectron_ElectronMVAEstimatorRun2Fall17NoIsoV2Values_, patElectron_ElectronMVAEstimatorRun2Fall17NoIsoV2Categories_, patElectron_ElectronMVAEstimatorRun2Fall17IsoV2Values_,patElectron_ElectronMVAEstimatorRun2Fall17IsoV2Categories_; 
   //vector<int>  passVetoOldId_, passLooseOldId_, passMediumOldId_, passTightOldId_, passMvaIsowp80OldId_, passMvanonIsowp80OldId_, passMvaIsowp90OldId_, passMvanonIsowp90OldId_, passMvaIsowpLooseOldId_, passMvanonIsowpLooseOldId_;
   //vector<float> patElectron_OldmvaValue_nonIso_, patElectron_OldmvaCategory_nonIso_, patElectron_OldmvaValue_Iso_, patElectron_OldmvaCategory_Iso_; 
-  vector<int > passHEEPId_, patElectron_pdgId, patElectron_isEcalDriven, passMvaHZZwpLooseId_;
-  vector<float> patElectron_mvaValue_HZZ_, patElectron_mvaCategory_HZZ_;
+  vector<int > patElectron_heepElectronID_HEEPV70_, patElectron_pdgId, patElectron_isEcalDriven, passMvaHZZwpLooseId_;
+  vector<float> patElectron_ElectronMVAEstimatorRun2Spring16HZZV1Values_, patElectron_ElectronMVAEstimatorRun2Spring16HZZV1Categories_;
 //
 //
   vector<int> patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80_;
   vector<int> patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90_;
   vector<float> patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1_;
+  vector<int> patElectron_cutBasedElectronID_Fall17_94X_V2_loose_, patElectron_cutBasedElectronID_Fall17_94X_V2_medium_, patElectron_cutBasedElectronID_Fall17_94X_V2_tight_, patElectron_cutBasedElectronID_Fall17_94X_V2_veto_;
+  vector<int> patElectron_cutBasedElectronID_Fall17_94X_V1_loose_, patElectron_cutBasedElectronID_Fall17_94X_V1_medium_,  patElectron_cutBasedElectronID_Fall17_94X_V1_tight_, patElectron_cutBasedElectronID_Fall17_94X_V1_veto_;
+  vector<int> patElectron_cutBasedElectronID_Summer16_80X_V1_loose_,patElectron_cutBasedElectronID_Summer16_80X_V1_medium_, patElectron_cutBasedElectronID_Summer16_80X_V1_tight_, patElectron_cutBasedElectronID_Summer16_80X_V1_veto_;
+  vector<int> patElectron_mvaEleID_Fall17_iso_V1_wp80_, patElectron_mvaEleID_Fall17_iso_V1_wp90_, patElectron_mvaEleID_Spring16_HZZ_V1_wpLoose_, patElectron_mvaEleID_Fall17_iso_V1_wpLoose_;
+  //
+  //
   //Isolation
   vector<double> patElectron_isoChargedHadrons, patElectron_isoNeutralHadrons, patElectron_isoPhotons, patElectron_isoPU, patElectron_relIsoDeltaBeta, patElectron_relIsoRhoEA, patElectron_dr03EcalRecHitSumEt, patElectron_dr03HcalDepth1TowerSumEt, patElectron_isolPtTracks, patElectron_ecalPFClusterIso, patElectron_hcalPFClusterIso;
+  vector<double> patElectron_relIsoRhoEA_Update;
   //Shape, Track related variables, other prop
   vector<double> patElectron_dEtaIn, patElectron_dPhiIn, 
                  patElectron_full5x5_sigmaIetaIeta, patElectron_full5x5_e2x5Max, patElectron_full5x5_e5x5, patElectron_full5x5_e1x5,

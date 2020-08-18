@@ -165,6 +165,7 @@ runMetCorAndUncFromMiniAOD (
 )
 
 ############### MET filter ###############
+#???
 process.load('RecoMET.METFilters.ecalBadCalibFilter_cfi')
 baddetEcallist = cms.vuint32(
     [872439604,872422825,872420274,872423218,
@@ -193,7 +194,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 #####
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
-  fileName = cms.string("BSM_TTTTTau_Corrected2HLT_AddTauHLTAnd1HLT_AddEId_ElectronMetUpdated.root")
+  fileName = cms.string("BSM_TTTTTau_Corrected2HLT_AddTauHLTAnd1HLT_AddEIdIso_ElectronMetUpdated.root")
 )
 
 #####
