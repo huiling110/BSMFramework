@@ -5,7 +5,7 @@ Andres Florez (Los Andes), Alfredo Gurrola (Vanderbilt) and Amandeep Kalsi (Panj
 (See https://github.com/florez/NtupleMaker_740)
 
 It has been extended and further developed by Francesco Romeo (IHEP) and Aniello Spiezia (IHEP).
-It has been modified for RunII analysis by Binghuan Li (IHEP)
+It has been modified for RunII analysis by Binghuan Li (IHEP) and further modified by Huiling Hua(IHEP)
 This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 2018 miniAOD  Ntuple production:
 
 
