@@ -415,7 +415,7 @@ process.QGPoolDBESSource = cms.ESSource("PoolDBESSource",
 
 process.es_prefer_qg = cms.ESPrefer('PoolDBESSource','QGPoolDBESSource')'''
 #?
-#step1
+#step1 use training from GT #EDProducer
 process.load('RecoJets.JetProducers.QGTagger_cfi')
 #process.QGTagger.srcJets       = cms.InputTag('slimmedJets')
 process.QGTagger.srcJets       = cms.InputTag(jetsNameAK4)
