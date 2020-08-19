@@ -194,7 +194,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 #####
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
-  fileName = cms.string("BSM_TTTTTau_Corrected2HLT_AddTauHLTAnd1HLT_AddEIdIso_ElectronMetUpdated.root")
+  fileName = cms.string("BSM_TTTTTau_Corrected2HLT_AddTauHLTAnd1HLT_AddEIdIso_GqtaggerUpdated_ElectronMetUpdated.root")
 )
 
 #####
@@ -399,7 +399,7 @@ process.printGenParticleList = cms.EDAnalyzer("ParticleListDrawer",
 #https://github.com/cms-nanoAOD/cmssw/pull/271#
 #load db explicitly
 #step0 This step can be skipped if you use the training from the GT
-from CondCore.DBCommon.CondDBSetup_cfi import *
+''''from CondCore.DBCommon.CondDBSetup_cfi import *
 process.QGPoolDBESSource = cms.ESSource("PoolDBESSource",
       CondDBSetup,
       toGet = cms.VPSet(
@@ -413,15 +413,15 @@ process.QGPoolDBESSource = cms.ESSource("PoolDBESSource",
       connect = cms.string('sqlite:QGL_AK4chs_94X.db')
      )
 
-process.es_prefer_qg = cms.ESPrefer('PoolDBESSource','QGPoolDBESSource')
+process.es_prefer_qg = cms.ESPrefer('PoolDBESSource','QGPoolDBESSource')'''
 #?
-#step1
+#step1 use training from GT #EDProducer
 process.load('RecoJets.JetProducers.QGTagger_cfi')
 #process.QGTagger.srcJets       = cms.InputTag('slimmedJets')
 process.QGTagger.srcJets       = cms.InputTag(jetsNameAK4)
 #jetsNameAK4="selectedUpdatedPatJetsNewDFTraining"
 process.QGTagger.jetsLabel     = cms.string('QGL_AK4PFchs')
-#?what does this step in python config do?
+#what does this step in python config do?
 #In addition to the qgLikelihood, the QGTagger plugin will also produce the three veriables axis2, mult and ptD. 
 
 

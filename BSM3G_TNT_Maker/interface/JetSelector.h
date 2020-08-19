@@ -207,7 +207,7 @@ class JetSelector : public  baseTree{
   vector<double> Jet_pfDeepCSVBJetTags;
   vector<double> Jet_pfDeepFlavourProbuds, Jet_pfDeepFlavourProbb, Jet_pfDeepFlavourProbc, Jet_pfDeepFlavourProbbb, Jet_pfDeepFlavourProblepb, Jet_pfDeepFlavourProbg;
   vector<double> Jet_pfDeepFlavourBJetTags;
-  vector<double> Jet_qg, Jet_axis2, Jet_ptD, Jet_mult, Jet_axis1 ;  
+  vector<double> Jet_qgLikelihood, Jet_axis2, Jet_ptD, Jet_mult, Jet_axis1, Jet_axis2_fromQGtagger, Jet_mult_fromQGtagger, Jet_ptD_fromQGtager;  
   //Energy
   vector<double> Jet_neutralHadEnergyFraction, Jet_neutralEmEnergyFraction, Jet_chargedHadronEnergyFraction, Jet_chargedEmEnergyFraction, Jet_muonEnergyFraction, Jet_electronEnergy, Jet_photonEnergy, Jet_emEnergyFraction;
   //Other prop
