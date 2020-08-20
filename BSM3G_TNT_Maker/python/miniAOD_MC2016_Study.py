@@ -194,7 +194,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 #####
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
-  fileName = cms.string("BSM_TTTTTau_Corrected2HLT_AddTauHLTAnd1HLT_AddEIdIso_GqtaggerUpdated_ElectronMetUpdated.root")
+  fileName = cms.string("BSM_TTTTTau_Corrected2HLT_AddTauHLTAnd1HLT_AddEIdIsoToptagger_GqtaggerUpdated_ElectronMetUpdated.root")
 )
 
 #####
@@ -418,11 +418,141 @@ process.es_prefer_qg = cms.ESPrefer('PoolDBESSource','QGPoolDBESSource')'''
 #step1 use training from GT #EDProducer
 process.load('RecoJets.JetProducers.QGTagger_cfi')
 #process.QGTagger.srcJets       = cms.InputTag('slimmedJets')
-process.QGTagger.srcJets       = cms.InputTag(jetsNameAK4)
-#jetsNameAK4="selectedUpdatedPatJetsNewDFTraining"
+process.QGTagger.srcJets       = cms.InputTag(jetsNameAK4)#jetsNameAK4="selectedUpdatedPatJetsNewDFTraining"
 process.QGTagger.jetsLabel     = cms.string('QGL_AK4PFchs')
 #what does this step in python config do?
 #In addition to the qgLikelihood, the QGTagger plugin will also produce the three veriables axis2, mult and ptD. 
+
+#top tagger
+from PhysicsTools.PatAlgos.producersLayer1.electronProducer_cfi import patElectrons
+
+process.slimmedElectronsUpdated = cms.EDProducer("PATElectronUpdater",
+    src = cms.InputTag("slimmedElectrons"),
+    vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+    computeMiniIso = cms.bool(True),
+    pfCandsForMiniIso = cms.InputTag("packedPFCandidates"),
+    miniIsoParamsB = patElectrons.miniIsoParamsB, # so they're in sync
+    miniIsoParamsE = patElectrons.miniIsoParamsE, # so they're in sync
+)
+
+from PhysicsTools.SelectorUtils.tools.vid_id_tools import setupVIDSelection
+from RecoEgamma.ElectronIdentification.egmGsfElectronIDs_cff import egmGsfElectronIDs
+
+process.egmGsfElectronIDs = egmGsfElectronIDs
+process.egmGsfElectronIDs.physicsObjectIDs = cms.VPSet()
+process.egmGsfElectronIDs.physicsObjectSrc = cms.InputTag("slimmedElectronsUpdated")
+
+_electron_id_modules_WorkingPoints = cms.PSet(
+    modules = cms.vstring(
+        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Summer16_80X_V1_cff',
+        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronHLTPreselecition_Summer16_V1_cff',
+        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Spring15_25ns_V1_cff',
+    ),
+    WorkingPoints = cms.vstring(
+        "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto",
+        "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-loose",
+        "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-medium",
+        "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-tight",
+    )
+)
+
+process.bitmapVIDForEle = cms.EDProducer("EleVIDNestedWPBitmapProducer",
+    src = cms.InputTag("slimmedElectronsUpdated"),
+    WorkingPoints = _electron_id_modules_WorkingPoints.WorkingPoints
+)
+
+from math import ceil, log
+
+#this is magic ...
+for modname in _electron_id_modules_WorkingPoints.modules:
+    ids= __import__(modname, globals(), locals(), ['idName','cutFlow'])
+    for name in dir(ids):
+        _id = getattr(ids,name)
+        if hasattr(_id,'idName') and hasattr(_id,'cutFlow'):
+            setupVIDSelection(egmGsfElectronIDs,_id)
+
+process.isoForEle = cms.EDProducer("EleIsoValueMapProducer",
+    src = cms.InputTag("slimmedElectronsUpdated"),
+    relative = cms.bool(False),
+    rho_MiniIso = cms.InputTag("fixedGridRhoFastjetAll"),
+    rho_PFIso = cms.InputTag("fixedGridRhoFastjetAll"),
+    EAFile_MiniIso = cms.FileInPath("RecoEgamma/ElectronIdentification/data/Spring15/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_25ns.txt"),
+    EAFile_PFIso = cms.FileInPath("RecoEgamma/ElectronIdentification/data/Summer16/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_80X.txt"),
+)
+
+process.ptRatioRelForEle = cms.EDProducer("ElectronJetVarProducer",
+    srcJet = cms.InputTag("slimmedJets"),
+    srcLep = cms.InputTag("slimmedElectronsUpdated"),
+    srcVtx = cms.InputTag("offlineSlimmedPrimaryVertices"),
+)
+
+process.slimmedElectronsWithUserData = cms.EDProducer("PATElectronUserDataEmbedder",
+    src = cms.InputTag("slimmedElectronsUpdated"),
+    userFloats = cms.PSet(
+        miniIsoAll = cms.InputTag("isoForEle:miniIsoAll"),
+    ),
+    userInts = cms.PSet(
+        VIDNestedWPBitmap = cms.InputTag("bitmapVIDForEle"),
+    ),
+    userCands = cms.PSet(
+        jetForLepJetVar = cms.InputTag("ptRatioRelForEle:jetForLepJetVar") # warning: Ptr is null if no match is found
+    ),
+)
+###############################################################################################################################
+from PhysicsTools.PatAlgos.producersLayer1.muonProducer_cfi import patMuons
+
+# this below is used only in some eras
+process.slimmedMuonsUpdated = cms.EDProducer("PATMuonUpdater",
+    src = cms.InputTag("slimmedMuons"),
+    vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
+    computeMiniIso = cms.bool(True),
+    pfCandsForMiniIso = cms.InputTag("packedPFCandidates"),
+    miniIsoParams = patMuons.miniIsoParams, # so they're in sync
+    recomputeMuonBasicSelectors = cms.bool(True),
+)
+
+process.isoForMu = cms.EDProducer("MuonIsoValueMapProducer",
+    src = cms.InputTag("slimmedMuonsUpdated"),
+    relative = cms.bool(False),
+    rho_MiniIso = cms.InputTag("fixedGridRhoFastjetAll"),
+    EAFile_MiniIso = cms.FileInPath("PhysicsTools/NanoAOD/data/effAreaMuons_cone03_pfNeuHadronsAndPhotons_80X.txt"),
+)
+
+process.ptRatioRelForMu = cms.EDProducer("MuonJetVarProducer",
+    srcJet = cms.InputTag("slimmedJets"),
+    srcLep = cms.InputTag("slimmedMuonsUpdated"),
+    srcVtx = cms.InputTag("offlineSlimmedPrimaryVertices"),
+)
+
+process.slimmedMuonsWithUserData = cms.EDProducer("PATMuonUserDataEmbedder",
+     src = cms.InputTag("slimmedMuonsUpdated"),
+     userFloats = cms.PSet(
+        miniIsoAll = cms.InputTag("isoForMu:miniIsoAll"),
+     ),
+     userCands = cms.PSet(
+        jetForLepJetVar = cms.InputTag("ptRatioRelForMu:jetForLepJetVar") # warning: Ptr is null if no match is found
+     ),
+)
+process.slimmedJetsWithUserData = cms.EDProducer("PATJetUserDataEmbedder",
+#    src = cms.InputTag("slimmedJets"),
+    src = cms.InputTag(jetsNameAK4),
+    userFloats = cms.PSet(
+        qgptD   = cms.InputTag("QGTagger:ptD"),
+        qgAxis1 = cms.InputTag("QGTagger:axis1"),
+        qgAxis2 = cms.InputTag("QGTagger:axis2"),
+        ),
+    userInts = cms.PSet(
+        qgMult = cms.InputTag("QGTagger:mult")
+        ),
+)
+process.load("TopTagger.TopTagger.SHOTProducer_cfi")
+process.SHOTProducer.ak4JetSrc = cms.InputTag("slimmedJetsWithUserData")
+process.SHOTProducer.muonSrc = cms.InputTag('slimmedMuonsWithUserData')
+process.SHOTProducer.elecSrc = cms.InputTag('slimmedElectronsWithUserData')
+process.SHOTProducer.doLeptonCleaning = cms.bool(True)
+
+
+
 
 
 ## tasks ##
@@ -446,12 +576,13 @@ process.prefiringweight *
 #process.egmGsfElectronIDSequence *
 #process.egmPhotonIDSequence *
 #process.egammaScaleSmearAndVIDSeq *
+#Toptagger*
 process.egammaPostRecoSeq *
 process.fullPatMetSequenceModifiedMET *
 #process.puppiMETSequence *
 #process.fullPatMetSequencePuppi *
 process.QGTagger *
-process.rerunMvaIsolationSequence *
+#process.rerunMvaIsolationSequence *
 #process.NewTauIDsEmbedded*
 process.slimmedTausNewID*
 #process.selectedHadronsAndPartons*process.genJetFlavourInfos*process.matchGenCHadron*process.matchGenBHadron*
@@ -460,3 +591,5 @@ process.slimmedTausNewID*
 process.TNT,
 process.tsk
 )
+#unscheduled Some EDProducers and EDFilters which have not been explicitly placed on a Path or EndPath will be run the first time someone asks for their data
+#The filter decision of an EDFilter is ignored when it is run in unscheduled mode. You must put the EDFilter on a Path to make use of its filter decision.

@@ -14,6 +14,9 @@ JetSelector::JetSelector(std::string name, TTree* tree, bool debug, const pset& 
   multToken_    = ic.consumes<edm::ValueMap<int>>(edm::InputTag("QGTagger", "mult"));
   rhopogHandle_ = ic.consumes<double>(edm::InputTag("fixedGridRhoFastjetAll"));
   //
+  //
+  toptagger_ = ic.consumes<vector<TopObjLite>>(edm::InputTag("SHOTProducer"));
+//  toptagger_ = ic.consumes<TopObjLite>(edm::InputTag("SHOTProducer"));
   //rhoJERHandle_ = ic.consumes<double>(edm::InputTag("fixedGridRhoAll"));
   //already do JEC in python script. why do it here agian?
   jecPayloadNamesAK4PFchsMC1_   = iConfig.getParameter<edm::FileInPath>("jecPayloadNamesAK4PFchsMC1");//= cms.FileInPath("BSMFramework/BSM3G_TNT_Maker/data/JEC/MC/Summer16_07Aug2017_V11_MC/Summer16_07Aug2017_V11_MC_L1FastJet_AK4PFchs.txt")
@@ -85,6 +88,10 @@ void JetSelector::Fill(const edm::Event& iEvent){
   iEvent.getByToken(multToken_, multHandle);//edm::InputTag("QGTagger", "mult")//multHandle not used anywhere?
   edm::Handle<double> rhoHandle;
   iEvent.getByToken(rhopogHandle_,rhoHandle);//edm::InputTag("fixedGridRhoFastjetAll"))
+  //
+  edm::Handle<vector<TopObjLite>> toptagger;
+//  edm::Handle<TopObjLite> toptagger;
+  iEvent.getByToken(toptagger_,toptagger);
   //what are these?
   double rho = *rhoHandle;
   //edm::Handle<double> rhoJERHandle;
@@ -107,6 +114,12 @@ void JetSelector::Fill(const edm::Event& iEvent){
   unsigned int jet0eta = uint32_t((*jets).empty() ? 0 : (*jets)[0].eta() / 0.01);
   std::uint32_t seed = m_nomVar + jet0eta + (lumiNum_uint << 10) + (runNum_uint << 20) + evNum_uint;
   m_random_generator.seed(seed);
+  //
+  //
+//  for(TopObjLite top = toptagger->begin(); top != toptagger->end(); top++){
+  for( TopObjLite top : *toptagger){ 
+        TopTagger_type.push_back(top.getType());
+  }
  
   for(const pat::Jet &j : *jets){ //="selectedUpdatedPatJetsNewDFTraining"
     //Acceptance
@@ -1100,6 +1113,11 @@ void JetSelector::SetBranches(){
   if(debug_) std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;
   ////slimmedJets
   //Kinematics
+  //
+  //
+  AddBranch(&TopTagger_type , "TopTagger_type");
+  //
+  //
   AddBranch(&Jet_pt        ,"Jet_pt");/*{{{*/
   AddBranch(&Jet_eta       ,"Jet_eta");
   AddBranch(&Jet_phi       ,"Jet_phi");
@@ -1314,12 +1332,20 @@ void JetSelector::SetBranches(){
       AddBranch(&Jet_puppi_partonFlavour        ,"Jet_puppi_partonFlavour");
       AddBranch(&Jet_puppi_hadronFlavour        ,"Jet_puppi_hadronFlavour");
     }
+    //
+    //
+
   }
   if(debug_) std::cout<<"set branches"<<std::endl;/*}}}*/
 }
 void JetSelector::Clear(){
   ////slimmedJets
   //Kinematics
+  //
+  //
+  TopTagger_type.clear();
+  //
+  //
   Jet_pt.clear();/*{{{*/
   Jet_eta.clear();
   Jet_phi.clear();

@@ -62,6 +62,8 @@
 #include "FWCore/Framework/interface/ConsumesCollector.h"
 #include "baseTree.h"
 #include <random>
+#include "TopTagger/TopTagger/interface/TopObjLite.h"
+#include "TopTagger/TopTagger/interface/TopTagger.h"
 using namespace std;
 using namespace pat;
 using namespace edm;
@@ -96,6 +98,12 @@ class JetSelector : public  baseTree{
   edm::EDGetTokenT<edm::ValueMap<int> > multToken_;
   edm::EDGetTokenT<pat::JetCollection> puppijets_;
   edm::EDGetTokenT<double> rhopogHandle_;
+  //
+  //
+  edm::EDGetTokenT<vector<TopObjLite>> toptagger_;
+//  edm::EDGetTokenT<TopObjLite> toptagger_;
+  //
+  //
   //edm::EDGetTokenT<double> rhoJERHandle_;
   edm::FileInPath jecPayloadNamesAK4PFchsMC1_;
   edm::FileInPath jecPayloadNamesAK4PFchsMC2_;
@@ -200,6 +208,11 @@ class JetSelector : public  baseTree{
   /////
   ////slimmedJets
   //Kinematics
+  //
+  //
+  vector<int> TopTagger_type;
+  //
+  //
   vector<double> Jet_pt, Jet_eta, Jet_phi, Jet_energy, Jet_mass, Jet_px, Jet_py, Jet_pz, Jet_Uncorr_pt, Jet_L1corr_pt;
   //ID
   vector<double> Jet_pfCombinedInclusiveSecondaryVertexV2BJetTags, Jet_pfCombinedMVAV2BJetTags, Jet_pfJetProbabilityBJetTags, Jet_pfCombinedCvsLJetTags, Jet_pfCombinedCvsBJetTags, Jet_pileupId, Jet_isPFJet, Jet_isCaloJet;
