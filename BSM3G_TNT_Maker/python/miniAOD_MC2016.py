@@ -213,7 +213,7 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",
   fillBJetnessinfo      = cms.bool(False),
   fillBJetnessFVinfo    = cms.bool(False),
   fillBTagReweight      = cms.bool(False),
-  fillPileupReweight    = cms.bool(True),
+  fillPileupReweight    = cms.bool(False),
   fillMETinfo           = cms.bool(True),
   fillphotoninfo        = cms.bool(False), #F   
   # Choose format 
