@@ -25,6 +25,16 @@ if __name__ == '__main__':
  #####
  datasetnames  = [#{{{
 
+'Legacy16V2_TauBlockH',
+'Legacy16V2_TauBlockG',
+'Legacy16V2_TauBlockF',
+'Legacy16V2_TauBlockE',
+'Legacy16V2_TauBlockD',
+'Legacy16V2_TauBlockC',
+'Legacy16V2_TauBlockB',
+#'Legacy16V2_TauBlockB',
+
+'''
 'Legacy16V2_SEleBlockB',
 'Legacy16V2_SEleBlockC',
 'Legacy16V2_SEleBlockD',
@@ -60,12 +70,22 @@ if __name__ == '__main__':
 'Legacy16V2_MuEGBlockF',
 'Legacy16V2_MuEGBlockG',
 'Legacy16V2_MuEGBlockH',
-         
+   '''      
          #}}}
                  ]
 
  datasetinputs = [
 #{{{
+'/Tau/Run2016H-17Jul2018-v1/MINIAOD',
+'/Tau/Run2016G-17Jul2018-v1/MINIAOD',
+'/Tau/Run2016F-17Jul2018-v1/MINIAOD',
+'/Tau/Run2016E-17Jul2018-v1/MINIAOD',
+'/Tau/Run2016D-17Jul2018-v1/MINIAOD',
+'/Tau/Run2016C-17Jul2018-v1/MINIAOD',
+'/Tau/Run2016B-17Jul2018_ver2-v1/MINIAOD',
+#'/Tau/Run2016B-17Jul2018_ver1-v1/MINIAOD',
+#?the difference between ver1 and ver2?
+'''
  # SingleElectron dataset : AT LEAST 1 high-energy electron in the event.
  '/SingleElectron/Run2016B-17Jul2018_ver2-v1/MINIAOD',
  '/SingleElectron/Run2016C-17Jul2018-v1/MINIAOD',
@@ -106,8 +126,9 @@ if __name__ == '__main__':
  '/MuonEG/Run2016F-17Jul2018-v1/MINIAOD',
  '/MuonEG/Run2016G-17Jul2018-v1/MINIAOD',
  '/MuonEG/Run2016H-17Jul2018-v1/MINIAOD',
+'''
 #}}}
-                ]
+]
 
 # samples also used in tW or bstar
 # minimum lepton are set to 1 instead of 2 
@@ -118,8 +139,8 @@ if __name__ == '__main__':
 # baseDir
 #baseDir = "/afs/cern.ch/work/b/binghuan/private/TTHLep_RunII/CMSSW_10_2_16/src/BSMFramework/"
 baseDir = "/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/"
-
-JECBlockBCD = [
+#?need to know this part
+JECBlockBCD = [#{{{
 'BSMFramework/BSM3G_TNT_Maker/data/JEC/DATA/Summer16_07Aug2017BCD_V11_DATA/Summer16_07Aug2017BCD_V11_DATA_L1FastJet_AK4PFchs.txt',
 'BSMFramework/BSM3G_TNT_Maker/data/JEC/DATA/Summer16_07Aug2017BCD_V11_DATA/Summer16_07Aug2017BCD_V11_DATA_L2Relative_AK4PFchs.txt',
 'BSMFramework/BSM3G_TNT_Maker/data/JEC/DATA/Summer16_07Aug2017BCD_V11_DATA/Summer16_07Aug2017BCD_V11_DATA_L3Absolute_AK4PFchs.txt',
@@ -171,8 +192,8 @@ JECBlockGH = [
 'BSMFramework/BSM3G_TNT_Maker/data/JEC/DATA/Summer16_07Aug2017GH_V11_DATA/Summer16_07Aug2017GH_V11_DATA_L3Absolute_AK8PFchs.txt',
 'BSMFramework/BSM3G_TNT_Maker/data/JEC/DATA/Summer16_07Aug2017GH_V11_DATA/Summer16_07Aug2017GH_V11_DATA_L2L3Residual_AK8PFchs.txt',
 'BSMFramework/BSM3G_TNT_Maker/data/JEC/DATA/Summer16_07Aug2017GH_V11_DATA/Summer16_07Aug2017GH_V11_DATA_Uncertainty_AK8PFchs.txt',
-]
-
+]#}}}
+#?
 goodRunsLists = [
 (baseDir+'BSM3G_TNT_Maker/data/JSON/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'),
 ]
@@ -253,7 +274,7 @@ for d in range(0,len(datasetnames)):
     config.JobType.pluginName  = 'Analysis'
     # List of parameters to pass to CMSSW parameter-set configuration file:
 #    config.JobType.psetName    = baseDir+'BSM3G_TNT_Maker/python/miniAOD_MC2016.py'
-    config.JobType.psetName    = baseDir+'BSM3G_TNT_Maker/python/miniAOD_MC2016_Study.py'
+    config.JobType.psetName    = baseDir+'BSM3G_TNT_Maker/python/miniAOD_data2016_TauofTTTT.py'
     config.JobType.inputFiles = [(baseDir+'BSM3G_TNT_Maker/data/QG/QGL_AK4chs_94X.db')]
     config.JobType.sendExternalFolder = True
     config.JobType.maxMemoryMB = 2000 # Default == 2Gb : maximum guaranteed to run on all sites
