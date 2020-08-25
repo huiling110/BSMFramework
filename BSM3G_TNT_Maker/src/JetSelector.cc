@@ -15,7 +15,7 @@ JetSelector::JetSelector(std::string name, TTree* tree, bool debug, const pset& 
   rhopogHandle_ = ic.consumes<double>(edm::InputTag("fixedGridRhoFastjetAll"));
   //
   //
-  toptagger_ = ic.consumes<vector<TopObjLite>>(edm::InputTag("SHOTProducer"));
+  toptagger_ = ic.consumes<vector<TopObjLite>>(edm::InputTag("SHOTProducerforBSM"));
 //  toptagger_ = ic.consumes<TopObjLite>(edm::InputTag("SHOTProducer"));
   //rhoJERHandle_ = ic.consumes<double>(edm::InputTag("fixedGridRhoAll"));
   //already do JEC in python script. why do it here agian?
@@ -119,6 +119,7 @@ void JetSelector::Fill(const edm::Event& iEvent){
 //  for(TopObjLite top = toptagger->begin(); top != toptagger->end(); top++){
   for( TopObjLite top : *toptagger){ 
         TopTagger_type.push_back(top.getType());
+        TopTagger_discriminator.push_back(top.getDiscriminator());
   }
  
   for(const pat::Jet &j : *jets){ //="selectedUpdatedPatJetsNewDFTraining"
@@ -1116,6 +1117,7 @@ void JetSelector::SetBranches(){
   //
   //
   AddBranch(&TopTagger_type , "TopTagger_type");
+  AddBranch(&TopTagger_discriminator , "TopTagger_discriminator");
   //
   //
   AddBranch(&Jet_pt        ,"Jet_pt");/*{{{*/
@@ -1344,6 +1346,7 @@ void JetSelector::Clear(){
   //
   //
   TopTagger_type.clear();
+  TopTagger_discriminator.clear();
   //
   //
   Jet_pt.clear();/*{{{*/

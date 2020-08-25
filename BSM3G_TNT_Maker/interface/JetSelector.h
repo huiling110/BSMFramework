@@ -211,6 +211,7 @@ class JetSelector : public  baseTree{
   //
   //
   vector<int> TopTagger_type;
+  vector<float> TopTagger_discriminator;
   //
   //
   vector<double> Jet_pt, Jet_eta, Jet_phi, Jet_energy, Jet_mass, Jet_px, Jet_py, Jet_pz, Jet_Uncorr_pt, Jet_L1corr_pt;
