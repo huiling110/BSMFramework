@@ -191,10 +191,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 #####
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
-<<<<<<< HEAD
-=======
-  fileName = cms.string("test0901BSM_TTTTTau_AddHLT_Toptagger_EMetJetUpdated_2.root")
->>>>>>> add_TopTagger
+  fileName = cms.string("test0901BSM_TTTTTau_AddHLT_Toptagger_EMetJetUpdated_3.root")
 )
 
 #####
