@@ -135,12 +135,15 @@ class ElectronPatSelector : public  baseTree{
   //Charge
   vector<double> patElectron_charge, patElectron_isGsfCtfScPixChargeConsistent, patElectron_isGsfScPixChargeConsistent;
   //ID
-  vector<int>  passVetoId_, passLooseId_, passMediumId_, passTightId_, patElectron_mvaEleID_Fall17_iso_V2_wp80_, patElectron_mvaEleID_Fall17_noIso_V2_wp80_, patElectron_mvaEleID_Fall17_iso_V2_wp90_, patElectron_mvaEleID_Fall17_noIso_V2_wp90_, patElectron_mvaEleID_Fall17_iso_V2_wpLoose_, patElectron_mvaEleID_Fall17_noIso_V2_wpLoose_;
+  vector<int>  passVetoId_, passLooseId_, passMediumId_, passTightId_, patElectron_mvaEleID_Fall17_iso_V2_wp80_, patElectron_mvaEleID_Fall17_noIso_V2_wp80_, patElectron_mvaEleID_Fall17_iso_V2_wp90_, patElectron_mvaEleID_Fall17_noIso_V2_wp90_, patElectron_mvaEleID_Fall17_iso_V2_wpLoose_, patElectron_mvaEleID_Fall17_noIso_V2_wpLoose_, passMvaIsowp80Id_, passMvanonIsowp80Id_, passMvaIsowp90Id_, passMvanonIsowp90Id_, passMvaIsowpLooseId_, passMvanonIsowpLooseId_;//old 6
   vector<float> patElectron_ElectronMVAEstimatorRun2Fall17NoIsoV2Values_, patElectron_ElectronMVAEstimatorRun2Fall17NoIsoV2Categories_, patElectron_ElectronMVAEstimatorRun2Fall17IsoV2Values_,patElectron_ElectronMVAEstimatorRun2Fall17IsoV2Categories_; 
+  vector<float> patElectron_mvaValue_nonIso_, patElectron_mvaCategory_nonIso_, patElectron_mvaValue_Iso_, patElectron_mvaCategory_Iso_; //old 4
   //vector<int>  passVetoOldId_, passLooseOldId_, passMediumOldId_, passTightOldId_, passMvaIsowp80OldId_, passMvanonIsowp80OldId_, passMvaIsowp90OldId_, passMvanonIsowp90OldId_, passMvaIsowpLooseOldId_, passMvanonIsowpLooseOldId_;
   //vector<float> patElectron_OldmvaValue_nonIso_, patElectron_OldmvaCategory_nonIso_, patElectron_OldmvaValue_Iso_, patElectron_OldmvaCategory_Iso_; 
   vector<int > patElectron_heepElectronID_HEEPV70_, patElectron_pdgId, patElectron_isEcalDriven, passMvaHZZwpLooseId_;
   vector<float> patElectron_ElectronMVAEstimatorRun2Spring16HZZV1Values_, patElectron_ElectronMVAEstimatorRun2Spring16HZZV1Categories_;
+  vector<int > passHEEPId_ /*patElectron_pdgId, patElectron_isEcalDriven, passMvaHZZwpLooseId_*/;//old 4
+  vector<float> patElectron_mvaValue_HZZ_, patElectron_mvaCategory_HZZ_;//old 2
 //
 //
   vector<int> patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80_;
