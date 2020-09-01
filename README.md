@@ -51,7 +51,7 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
   - mkdir -p ${CMSSW_BASE}/src/TopTagger/TopTagger/data
   - source TopTagger/TopTagger/test/taggerSetup.sh
   - getTaggerCfg.sh -o -n -t DeepResolved_DeepCSV_GR_noDisc_Release_v1.0.0 -d $CMSSW_BASE/src/TopTagger/TopTagger/data
-  - getTaggerCfg.sh -t MVAAK8_Tight_noQGL_binaryCSV_v1.0.2
+ 
   
 ## step 4
 - set BSM Framework
