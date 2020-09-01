@@ -55,7 +55,7 @@ process.source = cms.Source("PoolSource",
   ),
   skipEvents = cms.untracked.uint32(0)
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
 
 ##### JEC
 #update the JEC in the MiniAOD
@@ -191,7 +191,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 #####
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
-  fileName = cms.string("testBSM_TTTTTau_Corrected2HLT_AddTauHLTAnd1HLT_AddEIdIso_GqtaggerUpdated_ElectronMetUpdated.root")
+  fileName = cms.string("testBSM_TTTTTau_AddTauHLT_AddEIdIso_GqtaggerUpdated_ElectronMetUpdated.root")
 )
 
 #####
