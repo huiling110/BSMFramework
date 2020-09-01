@@ -43,16 +43,27 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
 - set up JEC for 2018 https://github.com/cms-sw/cmssw/pull/28098
   - git cms-merge-topic 28098
   - scram b -j 4
-
-## step 3 
+## step 3
+- implement SUSY HOT toptagger https://twiki.cern.ch/twiki/bin/viewauth/CMS/SUSYHOTGroup
+  - git cms-merge-topic -u pastika:AddAxis1_1026
+  - git clone git@github.com:huiling110/TopTagger.git
+  - scram b -j4
+  - mkdir -p ${CMSSW_BASE}/src/TopTagger/TopTagger/data
+  - source TopTagger/TopTagger/test/taggerSetup.sh
+  - getTaggerCfg.sh -o -n -t DeepResolved_DeepCSV_GR_noDisc_Release_v1.0.0 -d $CMSSW_BASE/src/TopTagger/TopTagger/data
+  - getTaggerCfg.sh -t MVAAK8_Tight_noQGL_binaryCSV_v1.0.2
+  
+## step 4
 - set BSM Framework
   - git clone https://github.com/huiling110/BSMFramework.git (git clone git@github.com:huiling110/BSMFramework.git)
   - cd BSMFramework/
   - git checkout CMSSW_10_2_20_UL
   - cd ..
   - scram b -j 8
+  
 
-## step 4
+
+## step 5
 - To Run 
   - cd BSMFramework/BSM3G_TNT_Maker/python/
   - cmsRun miniAOD_MC2016_Study.py
