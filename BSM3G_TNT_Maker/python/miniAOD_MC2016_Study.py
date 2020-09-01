@@ -226,6 +226,7 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",#{{{
   fillBoostedJetinfo    = cms.bool(False),
  # fillBoostedJetinfo    = cms.bool(True),
   fillTopSubJetinfo     = cms.bool(False), #F
+#??
 #  fillTauJetnessinfo    = cms.bool(True),
   fillTauJetnessinfo    = cms.bool(False),
   fillBJetnessinfo      = cms.bool(False),
@@ -243,7 +244,7 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",#{{{
   debug_    = cms.bool(False),
   super_TNT = cms.bool(False),
   AJVar     = cms.bool(False),
-  tthlepVar = cms.bool(False),#FF#turn this to True to get electron miniIsolation and ele_jet and pvassocisation and IP information
+  tthlepVar = cms.bool(True),#FF#turn this to True to get electron miniIsolation and ele_jet and pvassocisation and IP information
   bjetnessselfilter = cms.bool(False),
   PuppiVar  = cms.bool(False),
   qglVar    = cms.bool(True),#FF

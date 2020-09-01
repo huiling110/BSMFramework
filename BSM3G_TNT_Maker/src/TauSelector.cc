@@ -116,6 +116,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     //Decay mode finding
     //Tau_decayModeFindingOldDMs.push_back(tau->tauID("decayModeFindingOldDMs"));
     Tau_decayModeFinding.push_back(tau->tauID("decayModeFinding"));//a branch
+    Tau_decayMode.push_back(tau->decayMode());
     //?pat::Tau::decayMode(),
     //?decay mode for ID "dR0p32017v2"?For MVA2017v2 decayModeFindingOldDMs is recommended.
     Tau_decayModeFindingNewDMs.push_back(tau->tauID("decayModeFindingNewDMs"));
@@ -248,7 +249,7 @@ void TauSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup){
     //IP
     //default tau POG lifetime variables
     Tau_defaultDxy.push_back(tau->dxy());
-    //?dxy?
+//    Tau_defaultDz.push_back(tau->dz());//dz()method does not exit for pat::tau
     //impact parameter
     Tau_defaultDxyError.push_back(tau->dxy_error());
     Tau_defaultDxySig.push_back(tau->dxy_Sig());
@@ -365,6 +366,7 @@ void TauSelector::SetBranches(){
   //Decay mode finding
   //AddBranch(&Tau_decayModeFindingOldDMs ,"Tau_decayModeFindingOldDMs");
   AddBranch(&Tau_decayModeFinding       ,"Tau_decayModeFinding");
+  AddBranch(&Tau_decayMode              ,"Tau_decayMode");
   AddBranch(&Tau_decayModeFindingNewDMs ,"Tau_decayModeFindingNewDMs");
   //Against Muon
   if(!_MiniAODv2){
@@ -489,6 +491,7 @@ void TauSelector::SetBranches(){
   AddBranch(&Tau_leadChargedCandValidHits ,"Tau_leadChargedCandValidHits");
   //IP
   AddBranch(&Tau_defaultDxy                            ,"Tau_defaultDxy");
+//  AddBranch(&Tau_defaultDz                            ,"Tau_defaultDz");
   AddBranch(&Tau_defaultDxyError                       ,"Tau_defaultDxyError");
   AddBranch(&Tau_defaultDxySig                         ,"Tau_defaultDxySig");
   AddBranch(&Tau_packedLeadTauCand_dxy                 ,"Tau_packedLeadTauCand_dxy");
@@ -547,6 +550,7 @@ void TauSelector::Clear(){/*{{{*/
   //Decay mode finding
   //Tau_decayModeFindingOldDMs.clear();
   Tau_decayModeFinding.clear();
+  Tau_decayMode.clear();
   Tau_decayModeFindingNewDMs.clear();
   //Against Muon
   if(!_MiniAODv2){
@@ -670,6 +674,7 @@ void TauSelector::Clear(){/*{{{*/
   Tau_leadChargedCandValidHits.clear();
   //IP
   Tau_defaultDxy.clear();
+//  Tau_defaultDz.clear();
   Tau_defaultDxyError.clear();
   Tau_defaultDxySig.clear();
   Tau_packedLeadTauCand_dxy.clear();

@@ -115,7 +115,7 @@ class TauSelector : public baseTree{
   //Charge
   vector<double> Tau_charge, Tau_leadChargedCandCharge;
   //Decay mode finding
-  vector<int> Tau_decayModeFinding, Tau_decayModeFindingOldDMs, Tau_decayModeFindingNewDMs; 
+  vector<int> Tau_decayModeFinding, Tau_decayMode, Tau_decayModeFindingOldDMs, Tau_decayModeFindingNewDMs; 
   //Against Muon
   vector<int> Tau_againstMuonLoose2, Tau_againstMuonTight2;
   vector<int> Tau_againstMuonLoose3, Tau_againstMuonTight3; 
@@ -155,7 +155,7 @@ class TauSelector : public baseTree{
   //Other prop and Track related variables
   vector<double> Tau_nProngs, Tau_leadChargedCandNdof, Tau_leadChargedCandChi2, Tau_leadChargedCandValidHits;
   //IP
-  vector<double> Tau_defaultDxy, Tau_defaultDxyError, Tau_defaultDxySig, Tau_packedLeadTauCand_dxy, Tau_packedLeadTauCand_dz, Tau_packedLeadTauCand_dxyError, Tau_packedLeadTauCand_dzError, Tau_defaultFlightLengthX, Tau_defaultFlightLengthY, Tau_defaultFlightLengthZ, Tau_defaultFlightLengthSig, Tau_default_PCAx_pv, Tau_default_PCAy_pv, Tau_default_PCAz_pv;
+  vector<double> Tau_defaultDxy,/*Tau_defaultDz,*/ Tau_defaultDxyError, Tau_defaultDxySig, Tau_packedLeadTauCand_dxy, Tau_packedLeadTauCand_dz, Tau_packedLeadTauCand_dxyError, Tau_packedLeadTauCand_dzError, Tau_defaultFlightLengthX, Tau_defaultFlightLengthY, Tau_defaultFlightLengthZ, Tau_defaultFlightLengthSig, Tau_default_PCAx_pv, Tau_default_PCAy_pv, Tau_default_PCAz_pv;
   vector<double> Tau_leadChargedCandDz_pv, Tau_leadChargedCandDxy_pv, Tau_leadChargedCandDz_bs, Tau_leadChargedCandDxy_bs, Tau_leadChargedCandDzError, Tau_leadChargedCandDxyError, Tau_leadChargedCandVtx, Tau_leadChargedCandVty, Tau_leadChargedCandVtz;
   vector<double> Tau_leadChargedCandTrack_PCAx_bs, Tau_leadChargedCandTrack_PCAy_bs, Tau_leadChargedCandTrack_PCAz_bs, Tau_leadChargedCandTrack_PCAx_pv, Tau_leadChargedCandTrack_PCAy_pv, Tau_leadChargedCandTrack_PCAz_pv, Tau_leadChargedCandTrackFitErrorMatrix_00, Tau_leadChargedCandTrackFitErrorMatrix_01, Tau_leadChargedCandTrackFitErrorMatrix_02, Tau_leadChargedCandTrackFitErrorMatrix_11, Tau_leadChargedCandTrackFitErrorMatrix_12, Tau_leadChargedCandTrackFitErrorMatrix_22;
 };
