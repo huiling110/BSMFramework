@@ -212,9 +212,13 @@ class JetSelector : public  baseTree{
   //
   vector<int> TopTagger_type;
   vector<float> TopTagger_discriminator;
+  vector<int> TopTagger_jet1Idx;
+  vector<int> TopTagger_jet2Idx;
+  vector<int> TopTagger_jet3Idx;
   //
   //
-  vector<double> Jet_pt, Jet_eta, Jet_phi, Jet_energy, Jet_mass, Jet_px, Jet_py, Jet_pz, Jet_Uncorr_pt, Jet_L1corr_pt;
+  vector<double> Jet_pt;
+  vector<double> Jet_eta, Jet_phi, Jet_energy, Jet_mass, Jet_px, Jet_py, Jet_pz, Jet_Uncorr_pt, Jet_L1corr_pt;
   //ID
   vector<double> Jet_pfCombinedInclusiveSecondaryVertexV2BJetTags, Jet_pfCombinedMVAV2BJetTags, Jet_pfJetProbabilityBJetTags, Jet_pfCombinedCvsLJetTags, Jet_pfCombinedCvsBJetTags, Jet_pileupId, Jet_isPFJet, Jet_isCaloJet;
   vector<double> Jet_pfDeepCSVProbudsg, Jet_pfDeepCSVProbb, Jet_pfDeepCSVProbc, Jet_pfDeepCSVProbbb, Jet_pfDeepCSVProbcc;

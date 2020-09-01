@@ -117,9 +117,13 @@ void JetSelector::Fill(const edm::Event& iEvent){
   //
   //
 //  for(TopObjLite top = toptagger->begin(); top != toptagger->end(); top++){
-  for( TopObjLite top : *toptagger){ 
+  for( const TopObjLite top : *toptagger){ 
         TopTagger_type.push_back(top.getType());
         TopTagger_discriminator.push_back(top.getDiscriminator());
+        TopTagger_jet1Idx.push_back(top.getJ1Idx());
+        //?what is this Idx?
+        TopTagger_jet2Idx.push_back(top.getJ2Idx());
+        TopTagger_jet3Idx.push_back(top.getJ3Idx());
   }
  
   for(const pat::Jet &j : *jets){ //="selectedUpdatedPatJetsNewDFTraining"
@@ -1118,6 +1122,9 @@ void JetSelector::SetBranches(){
   //
   AddBranch(&TopTagger_type , "TopTagger_type");
   AddBranch(&TopTagger_discriminator , "TopTagger_discriminator");
+  AddBranch(&TopTagger_jet1Idx , "TopTagger_jet1Idx");
+  AddBranch(&TopTagger_jet2Idx , "TopTagger_jet2Idx");
+  AddBranch(&TopTagger_jet3Idx , "TopTagger_jet3Idx");
   //
   //
   AddBranch(&Jet_pt        ,"Jet_pt");/*{{{*/
@@ -1347,6 +1354,9 @@ void JetSelector::Clear(){
   //
   TopTagger_type.clear();
   TopTagger_discriminator.clear();
+  TopTagger_jet1Idx.clear();
+  TopTagger_jet2Idx.clear();
+  TopTagger_jet3Idx.clear();
   //
   //
   Jet_pt.clear();/*{{{*/
