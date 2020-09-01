@@ -735,8 +735,7 @@ void ElectronPatSelector::SetBranches(){
   AddBranch(&patElectron_OldmvaValue_Iso_    ,"patElectron_OldmvaValue_Iso");
   AddBranch(&patElectron_OldmvaCategory_Iso_ ,"patElectron_OldmvaCategory_Iso");
   */
-/*1
-  AddBranch(&patElectron_heepElectronID_HEEPV70_              ,"patElectron_heepElectronID_HEEPV70");*/
+  AddBranch(&patElectron_heepElectronID_HEEPV70_              ,"patElectron_heepElectronID_HEEPV70");
   AddBranch(&patElectron_pdgId        ,"patElectron_pdgId");
   AddBranch(&patElectron_isEcalDriven ,"patElectron_isEcalDriven");
   AddBranch(&patElectron_ElectronMVAEstimatorRun2Spring16HZZV1Values_    ,"patElectron_ElectronMVAEstimatorRun2Spring16HZZV1Values");
