@@ -58,7 +58,7 @@ process.source = cms.Source("PoolSource",
   ),
   skipEvents = cms.untracked.uint32(0)
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(100) )
 
 ##### JEC
 #update the JEC in the MiniAOD
@@ -194,7 +194,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 #####
 process.TFileService = cms.Service("TFileService",
 #  fileName = cms.string("OutTree_2016.root")
-  fileName = cms.string("test0901BSM_TTTTTau_AddHLT_Toptagger_EMetJetUpdated.root")
+  fileName = cms.string("test0901BSM_TTTTTau_AddHLT_Toptagger_EMetJetUpdated_2.root")
 )
 
 #####
@@ -435,40 +435,6 @@ process.slimmedElectronsUpdated = cms.EDProducer("PATElectronUpdater",
     miniIsoParamsB = patElectrons.miniIsoParamsB, # so they're in sync
     miniIsoParamsE = patElectrons.miniIsoParamsE, # so they're in sync
 )
-'''
-from PhysicsTools.SelectorUtils.tools.vid_id_tools import setupVIDSelection
-from RecoEgamma.ElectronIdentification.egmGsfElectronIDs_cff import egmGsfElectronIDs
-process.egmGsfElectronIDs = egmGsfElectronIDs
-process.egmGsfElectronIDs.physicsObjectIDs = cms.VPSet()
-process.egmGsfElectronIDs.physicsObjectSrc = cms.InputTag("slimmedElectronsUpdated")
-
-_electron_id_modules_WorkingPoints = cms.PSet(
-    modules = cms.vstring(
-        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Summer16_80X_V1_cff',
-        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronHLTPreselecition_Summer16_V1_cff',
-        'RecoEgamma.ElectronIdentification.Identification.cutBasedElectronID_Spring15_25ns_V1_cff',
-    ),
-    WorkingPoints = cms.vstring(
-        "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-veto",
-        "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-loose",
-        "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-medium",
-        "egmGsfElectronIDs:cutBasedElectronID-Summer16-80X-V1-tight",
-    )
-)
-process.bitmapVIDForEle = cms.EDProducer("EleVIDNestedWPBitmapProducer",
-    src = cms.InputTag("slimmedElectronsUpdated"),
-    WorkingPoints = _electron_id_modules_WorkingPoints.WorkingPoints
-)
-
-from math import ceil, log
-#this is magic ...
-for modname in _electron_id_modules_WorkingPoints.modules:
-    ids= __import__(modname, globals(), locals(), ['idName','cutFlow'])
-    for name in dir(ids):
-        _id = getattr(ids,name)
-        if hasattr(_id,'idName') and hasattr(_id,'cutFlow'):
-            setupVIDSelection(egmGsfElectronIDs,_id)
-'''            
 process.isoForEle = cms.EDProducer("EleIsoValueMapProducer",
     src = cms.InputTag("slimmedElectronsUpdated"),
 #    src = cms.InputTag("slimmedElectrons"),
