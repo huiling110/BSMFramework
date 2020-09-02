@@ -177,11 +177,11 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp80_.push_back(el->electronID("mvaEleID-Spring16-GeneralPurpose-V1-wp80"));
     patElectron_mvaEleID_Spring16_GeneralPurpose_V1_wp90_.push_back(el->electronID("mvaEleID-Spring16-GeneralPurpose-V1-wp90"));
     patElectron_MVAValue_ElectronMVAEstimatorRun2Spring16GeneralPurposeV1_.push_back(el->userFloat("ElectronMVAEstimatorRun2Spring16GeneralPurposeV1Values"));
-/*    patElectron_cutBasedElectronID_Fall17_94X_V2_loose_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V2-loose"));
+    patElectron_cutBasedElectronID_Fall17_94X_V2_loose_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V2-loose"));
     patElectron_cutBasedElectronID_Fall17_94X_V2_medium_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V2-medium"));
     patElectron_cutBasedElectronID_Fall17_94X_V2_tight_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V2-tight"));
     patElectron_cutBasedElectronID_Fall17_94X_V2_veto_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V2-veto"));
-*/
+
     patElectron_cutBasedElectronID_Fall17_94X_V1_loose_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-loose"));
     patElectron_cutBasedElectronID_Fall17_94X_V1_medium_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-medium"));
     patElectron_cutBasedElectronID_Fall17_94X_V1_tight_.push_back(el->electronID("cutBasedElectronID-Fall17-94X-V1-tight"));

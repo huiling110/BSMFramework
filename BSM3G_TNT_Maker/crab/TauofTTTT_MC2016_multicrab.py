@@ -25,7 +25,7 @@ if __name__ == '__main__':
  #####
  datasetnames  = [#{{{
 # signal
-#'Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8',#S 
+'Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8',#S 
 #'Legacy16V2_TTTT_TuneCUETP8M2T4_PSweights_13TeV',#S
 #'Legacy16V2_TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8',#S 
 #'Legacy16V2_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8',# S 
@@ -33,7 +33,7 @@ if __name__ == '__main__':
 #'Legacy16V2_TTGamma_SingleLept_TuneEE5C_13TeV-madgraph-herwigpp',#S
 #'Legacy16V2_TTGamma_Dilept_TuneEE5C_13TeV-madgraph-herwigpp',#F
 #'Legacy16V2_TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8',#F
-'Legacy16V2_TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8',
+#'Legacy16V2_TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8',
 #'Legacy16V2_ttZJets_13TeV_madgraphMLM-pythia8',#F
 #'Legacy16V2_TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8',#########
 #'Legacy16V2_TTWJetsToQQ_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8',#F
@@ -102,7 +102,7 @@ if __name__ == '__main__':
  datasetinputs = [
 #{{{
 #signal
-#'/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #'/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #'/TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8_correctnPartonsInBorn/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #'/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
@@ -110,7 +110,7 @@ if __name__ == '__main__':
 #'/TTGamma_SingleLept_TuneEE5C_13TeV-madgraph-herwigpp/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #'/TTGamma_Dilept_TuneEE5C_13TeV-madgraph-herwigpp/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #'/TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM',
-'/TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+#'/TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
 #'/ttZJets_13TeV_madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #'/TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext2-v1/MINIAODSIM', 
 #'/TTWJetsToQQ_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
@@ -187,7 +187,8 @@ tWLists = [
 # baseDir
 #baseDir = "/afs/cern.ch/work/b/binghuan/private/TTHLep_RunII/CMSSW_10_2_16/src/BSMFramework/"
 #baseDir = "/workfs/cms/huahuil/BSM/CMSSW_10_2_20_UL/src/BSMFramework/"
-baseDir = "/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/"
+#baseDir = "/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/"
+baseDir = "/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/"
 
 for d in range(0,len(datasetnames)):
 #for d in range(0,1):
@@ -207,7 +208,8 @@ for d in range(0,len(datasetnames)):
     config.section_('General')
     config.General.requestName = datasetnames[d]#it is used by CRAB to create a project directory (named crab_<requestName>) where files corresponding to this particular task will be stored.
  #   config.General.workArea    = datasetnames[d]#The area (full or relative path) where to create the CRAB project directory
-    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_resulsts_8_22/'+datasetnames[d]#The area (full or relative path) where to create the CRAB project directory
+#    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_resulsts_8_22/'+datasetnames[d]#The area (full or relative path) where to create the CRAB project directory
+    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_results_0902/'
     config.General.transferLogs = True  #Whether or not to copy the jobs log files to the storage site
 
     config.section_('JobType')
@@ -216,7 +218,6 @@ for d in range(0,len(datasetnames)):
 #    config.JobType.psetName    = baseDir+'BSM3G_TNT_Maker/python/miniAOD_MC2016.py'
     config.JobType.psetName    = baseDir+'BSM3G_TNT_Maker/python/miniAOD_MC2016_Study.py'
     config.JobType.inputFiles = [(baseDir+'BSM3G_TNT_Maker/data/QG/QGL_AK4chs_94X.db')]
-    #?what is QGdoing?
     config.JobType.sendExternalFolder = True
     config.JobType.maxMemoryMB = 2000 # Default == 2Gb : maximum guaranteed to run on all sites
     #config.JobType.allowUndistributedCMSSW = True
@@ -233,7 +234,7 @@ for d in range(0,len(datasetnames)):
     config.Data.unitsPerJob    = 2000 
 #    config.Data.outLFNDirBase = '/store/user/binghuan/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
-    config.Data.outputDatasetTag = datasetnames[d]+"HLTAdded_EJetMetUpdated"
+    config.Data.outputDatasetTag = datasetnames[d]+"HLTToptaggerAdded_EJetMetUpdated_oldEIDBack"
 
 #    print 'multicrab.py: outLFNDirBase = /store/user/binghuan/'
     print 'multicrab.py: outLFNDirBase = /store/user/hhua/'
@@ -244,6 +245,6 @@ for d in range(0,len(datasetnames)):
     print 'multicrab.py: Submitting Jobs'
     #submit(config)
     p = Process(target=submit, args=(config,))
-    #?
     p.start()
     p.join()
+    #?

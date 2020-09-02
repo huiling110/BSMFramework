@@ -60,7 +60,6 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
   - git checkout CMSSW_10_2_20_UL
   - cd ..
   - scram b -j 8
-  
 
 
 ## step 5
@@ -72,7 +71,7 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
   - source /cvmfs/cms.cern.ch/crab3/crab.sh
   - source /cvmfs/cms.cern.ch/common/crab-setup.sh
   - cd BSMFramework/BSM3G_TNT_Maker/crab/
-  - python muticrab_MC2016_TauOfTTTT.py
+  - python TauofTTTT_MC2016_multicrab.py
 
 - Job Recover
   - <crab kill -d> to kill the job and make sure the jobs are in killed status before you move to next step
