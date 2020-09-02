@@ -159,10 +159,6 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     passHEEPId_.push_back  (el->electronID("heepElectronID-HEEPV70"));
 //old 
     float mvaval_nonIso  = el->userFloat("ElectronMVAEstimatorRun2Fall17NoIsoV2Values");//Accessing MVA variables
-   // passVetoId_.push_back  ( el->electronID("cutBasedElectronID-Fall17-94X-V2-veto"));
-   // passLooseId_.push_back ( el->electronID("cutBasedElectronID-Fall17-94X-V2-loose"));
-   // passMediumId_.push_back( el->electronID("cutBasedElectronID-Fall17-94X-V2-medium"));
-   // passTightId_.push_back ( el->electronID("cutBasedElectronID-Fall17-94X-V2-tight"));
     patElectron_mvaEleID_Fall17_iso_V2_wp80_.push_back( el->electronID("mvaEleID-Fall17-iso-V2-wp80") );
     patElectron_mvaEleID_Fall17_noIso_V2_wp80_.push_back( el->electronID("mvaEleID-Fall17-noIso-V2-wp80") );
     patElectron_mvaEleID_Fall17_iso_V2_wp90_.push_back( el->electronID("mvaEleID-Fall17-iso-V2-wp90") );
@@ -661,10 +657,6 @@ void ElectronPatSelector::SetBranches(){
   AddBranch(&patElectron_isGsfCtfScPixChargeConsistent            ,"patElectron_isGsfCtfScPixChargeConsistent");
   AddBranch(&patElectron_isGsfScPixChargeConsistent               ,"patElectron_isGsfScPixChargeConsistent");
   //ID
-//  AddBranch(&passVetoId_              ,"patElectron_isPassVeto");          
-//  AddBranch(&passLooseId_             ,"patElectron_isPassLoose");
-//  AddBranch(&passMediumId_            ,"patElectron_isPassMedium");
-//  AddBranch(&passTightId_             ,"patElectron_isPassTight");
 //old 18
   AddBranch(&passVetoId_              ,"patElectron_isPassVeto");          
   AddBranch(&passLooseId_             ,"patElectron_isPassLoose");
@@ -930,10 +922,6 @@ void ElectronPatSelector::Clear(){
   patElectron_isGsfCtfScPixChargeConsistent.clear();
   patElectron_isGsfScPixChargeConsistent.clear();
   //ID
-//  passVetoId_.clear();
-//  passLooseId_.clear();
-//  passMediumId_.clear();
-//  passTightId_.clear();  
 //old 18
   passVetoId_.clear();
   passLooseId_.clear();
