@@ -1,5 +1,11 @@
 import CRABClient
 if __name__ == '__main__':
+#change baseDir to your BSM code location
+#change config.General.workArea to where you want to put your crab output directory
+#change config.Data.outLFNDirBase to your T2 site
+#change the datasetnames and datasetinputs to sample you want to run
+#do not change anything else
+
  #####
  ##   Multicrab configuration
  #####
