@@ -58,6 +58,7 @@ This version of code is used for 2016 miniAOD v3 && 2017 miniAOD v2 and v1 & 201
   - git clone https://github.com/huiling110/BSMFramework.git (git clone git@github.com:huiling110/BSMFramework.git)
   - cd BSMFramework/
   - git checkout CMSSW_10_2_20_UL
+    -  git checkout tags/v2.0902 -b CMSSW_10_2_20_UL(use this command instead the above one to checkout a specific tag)
   - cd ..
   - scram b -j 8
 
