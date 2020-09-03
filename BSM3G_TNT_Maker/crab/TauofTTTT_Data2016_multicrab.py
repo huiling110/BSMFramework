@@ -1,5 +1,7 @@
 import CRABClient
 if __name__ == '__main__':
+#important parameters:
+#config.JobType.psetName
  #####
  ##   Multicrab configuration
  #####
@@ -34,45 +36,43 @@ if __name__ == '__main__':
 'Legacy16V2_TauBlockB',
 #'Legacy16V2_TauBlockB',
 
-'''
-'Legacy16V2_SEleBlockB',
-'Legacy16V2_SEleBlockC',
-'Legacy16V2_SEleBlockD',
-'Legacy16V2_SEleBlockE',
-'Legacy16V2_SEleBlockF',
-'Legacy16V2_SEleBlockG',
-'Legacy16V2_SEleBlockH',
-'Legacy16V2_SMuBlockB',
-'Legacy16V2_SMuBlockC',
-'Legacy16V2_SMuBlockD',
-'Legacy16V2_SMuBlockE',
-'Legacy16V2_SMuBlockF',
-'Legacy16V2_SMuBlockG',
-'Legacy16V2_SMuBlockH',
-'Legacy16V2_DblEGBlockB',
-'Legacy16V2_DblEGBlockC',
-'Legacy16V2_DblEGBlockD',
-'Legacy16V2_DblEGBlockE',
-'Legacy16V2_DblEGBlockF',
-'Legacy16V2_DblEGBlockG',
-'Legacy16V2_DblEGBlockH',
-'Legacy16V2_DblMuBlockB',
-'Legacy16V2_DblMuBlockC',
-'Legacy16V2_DblMuBlockD',
-'Legacy16V2_DblMuBlockE',
-'Legacy16V2_DblMuBlockF',
-'Legacy16V2_DblMuBlockG',
-'Legacy16V2_DblMuBlockH',
-'Legacy16V2_MuEGBlockB',
-'Legacy16V2_MuEGBlockC',
-'Legacy16V2_MuEGBlockD',
-'Legacy16V2_MuEGBlockE',
-'Legacy16V2_MuEGBlockF',
-'Legacy16V2_MuEGBlockG',
-'Legacy16V2_MuEGBlockH',
-   '''      
+#'Legacy16V2_SEleBlockB',
+#'Legacy16V2_SEleBlockC',
+#'Legacy16V2_SEleBlockD',
+#'Legacy16V2_SEleBlockE',
+#'Legacy16V2_SEleBlockF',
+#'Legacy16V2_SEleBlockG',
+#'Legacy16V2_SEleBlockH',
+#'Legacy16V2_SMuBlockB',
+#'Legacy16V2_SMuBlockC',
+#'Legacy16V2_SMuBlockD',
+#'Legacy16V2_SMuBlockE',
+#'Legacy16V2_SMuBlockF',
+#'Legacy16V2_SMuBlockG',
+#'Legacy16V2_SMuBlockH',
+#'Legacy16V2_DblEGBlockB',
+#'Legacy16V2_DblEGBlockC',
+#'Legacy16V2_DblEGBlockD',
+#'Legacy16V2_DblEGBlockE',
+#'Legacy16V2_DblEGBlockF',
+#'Legacy16V2_DblEGBlockG',
+#'Legacy16V2_DblEGBlockH',
+#'Legacy16V2_DblMuBlockB',
+#'Legacy16V2_DblMuBlockC',
+#'Legacy16V2_DblMuBlockD',
+#'Legacy16V2_DblMuBlockE',
+#'Legacy16V2_DblMuBlockF',
+#'Legacy16V2_DblMuBlockG',
+#'Legacy16V2_DblMuBlockH',
+#'Legacy16V2_MuEGBlockB',
+#'Legacy16V2_MuEGBlockC',
+#'Legacy16V2_MuEGBlockD',
+#'Legacy16V2_MuEGBlockE',
+#'Legacy16V2_MuEGBlockF',
+#'Legacy16V2_MuEGBlockG',
+#'Legacy16V2_MuEGBlockH',
          #}}}
-                 ]
+]
 
  datasetinputs = [
 #{{{
@@ -85,48 +85,47 @@ if __name__ == '__main__':
 '/Tau/Run2016B-17Jul2018_ver2-v1/MINIAOD',
 #'/Tau/Run2016B-17Jul2018_ver1-v1/MINIAOD',
 #?the difference between ver1 and ver2?
-'''
+
  # SingleElectron dataset : AT LEAST 1 high-energy electron in the event.
- '/SingleElectron/Run2016B-17Jul2018_ver2-v1/MINIAOD',
- '/SingleElectron/Run2016C-17Jul2018-v1/MINIAOD',
- '/SingleElectron/Run2016D-17Jul2018-v1/MINIAOD',
- '/SingleElectron/Run2016E-17Jul2018-v1/MINIAOD',
- '/SingleElectron/Run2016F-17Jul2018-v1/MINIAOD',
- '/SingleElectron/Run2016G-17Jul2018-v1/MINIAOD',
- '/SingleElectron/Run2016H-17Jul2018-v1/MINIAOD',
- # SingleMuon dataset : AT LEAST 1 high-energy muon in the event.
- '/SingleMuon/Run2016B-17Jul2018_ver2-v1/MINIAOD',
- '/SingleMuon/Run2016C-17Jul2018-v1/MINIAOD',
- '/SingleMuon/Run2016D-17Jul2018-v1/MINIAOD',
- '/SingleMuon/Run2016E-17Jul2018-v1/MINIAOD',
- '/SingleMuon/Run2016F-17Jul2018-v1/MINIAOD',
- '/SingleMuon/Run2016G-17Jul2018-v1/MINIAOD',
- '/SingleMuon/Run2016H-17Jul2018-v1/MINIAOD',
- # DoubleEG dataset : AT LEAST 2 high-energy electron in the event.
- '/DoubleEG/Run2016B-17Jul2018_ver2-v1/MINIAOD',
- '/DoubleEG/Run2016C-17Jul2018-v1/MINIAOD',
- '/DoubleEG/Run2016D-17Jul2018-v1/MINIAOD',
- '/DoubleEG/Run2016E-17Jul2018-v1/MINIAOD',
- '/DoubleEG/Run2016F-17Jul2018-v1/MINIAOD',
- '/DoubleEG/Run2016G-17Jul2018-v1/MINIAOD',
- '/DoubleEG/Run2016H-17Jul2018-v1/MINIAOD',
- # DoubleMuon dataset : AT LEAST 2 high-energy muon in the event.
- '/DoubleMuon/Run2016B-17Jul2018_ver2-v1/MINIAOD',
- '/DoubleMuon/Run2016C-17Jul2018-v1/MINIAOD',
- '/DoubleMuon/Run2016D-17Jul2018-v1/MINIAOD',
- '/DoubleMuon/Run2016E-17Jul2018-v1/MINIAOD',
- '/DoubleMuon/Run2016F-17Jul2018-v1/MINIAOD',
- '/DoubleMuon/Run2016G-17Jul2018-v1/MINIAOD',
- '/DoubleMuon/Run2016H-17Jul2018-v1/MINIAOD',
- # MuonEG dataset : AT LEAST 1 high-energy electron and 1 high-energy muon in the event.
- '/MuonEG/Run2016B-17Jul2018_ver2-v1/MINIAOD',
- '/MuonEG/Run2016C-17Jul2018-v1/MINIAOD',
- '/MuonEG/Run2016D-17Jul2018-v1/MINIAOD',
- '/MuonEG/Run2016E-17Jul2018-v2/MINIAOD',
- '/MuonEG/Run2016F-17Jul2018-v1/MINIAOD',
- '/MuonEG/Run2016G-17Jul2018-v1/MINIAOD',
- '/MuonEG/Run2016H-17Jul2018-v1/MINIAOD',
-'''
+# '/SingleElectron/Run2016B-17Jul2018_ver2-v1/MINIAOD',
+# '/SingleElectron/Run2016C-17Jul2018-v1/MINIAOD',
+# '/SingleElectron/Run2016D-17Jul2018-v1/MINIAOD',
+# '/SingleElectron/Run2016E-17Jul2018-v1/MINIAOD',
+# '/SingleElectron/Run2016F-17Jul2018-v1/MINIAOD',
+# '/SingleElectron/Run2016G-17Jul2018-v1/MINIAOD',
+# '/SingleElectron/Run2016H-17Jul2018-v1/MINIAOD',
+# # SingleMuon dataset : AT LEAST 1 high-energy muon in the event.
+# '/SingleMuon/Run2016B-17Jul2018_ver2-v1/MINIAOD',
+# '/SingleMuon/Run2016C-17Jul2018-v1/MINIAOD',
+# '/SingleMuon/Run2016D-17Jul2018-v1/MINIAOD',
+# '/SingleMuon/Run2016E-17Jul2018-v1/MINIAOD',
+# '/SingleMuon/Run2016F-17Jul2018-v1/MINIAOD',
+# '/SingleMuon/Run2016G-17Jul2018-v1/MINIAOD',
+# '/SingleMuon/Run2016H-17Jul2018-v1/MINIAOD',
+# # DoubleEG dataset : AT LEAST 2 high-energy electron in the event.
+# '/DoubleEG/Run2016B-17Jul2018_ver2-v1/MINIAOD',
+# '/DoubleEG/Run2016C-17Jul2018-v1/MINIAOD',
+# '/DoubleEG/Run2016D-17Jul2018-v1/MINIAOD',
+# '/DoubleEG/Run2016E-17Jul2018-v1/MINIAOD',
+# '/DoubleEG/Run2016F-17Jul2018-v1/MINIAOD',
+# '/DoubleEG/Run2016G-17Jul2018-v1/MINIAOD',
+# '/DoubleEG/Run2016H-17Jul2018-v1/MINIAOD',
+# # DoubleMuon dataset : AT LEAST 2 high-energy muon in the event.
+# '/DoubleMuon/Run2016B-17Jul2018_ver2-v1/MINIAOD',
+# '/DoubleMuon/Run2016C-17Jul2018-v1/MINIAOD',
+# '/DoubleMuon/Run2016D-17Jul2018-v1/MINIAOD',
+# '/DoubleMuon/Run2016E-17Jul2018-v1/MINIAOD',
+# '/DoubleMuon/Run2016F-17Jul2018-v1/MINIAOD',
+# '/DoubleMuon/Run2016G-17Jul2018-v1/MINIAOD',
+# '/DoubleMuon/Run2016H-17Jul2018-v1/MINIAOD',
+# # MuonEG dataset : AT LEAST 1 high-energy electron and 1 high-energy muon in the event.
+# '/MuonEG/Run2016B-17Jul2018_ver2-v1/MINIAOD',
+# '/MuonEG/Run2016C-17Jul2018-v1/MINIAOD',
+# '/MuonEG/Run2016D-17Jul2018-v1/MINIAOD',
+# '/MuonEG/Run2016E-17Jul2018-v2/MINIAOD',
+# '/MuonEG/Run2016F-17Jul2018-v1/MINIAOD',
+# '/MuonEG/Run2016G-17Jul2018-v1/MINIAOD',
+# '/MuonEG/Run2016H-17Jul2018-v1/MINIAOD',
 #}}}
 ]
 
@@ -138,7 +137,9 @@ if __name__ == '__main__':
 
 # baseDir
 #baseDir = "/afs/cern.ch/work/b/binghuan/private/TTHLep_RunII/CMSSW_10_2_16/src/BSMFramework/"
-baseDir = "/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/"
+#baseDir = "/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/"
+baseDir = "/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/"
+
 #?need to know this part
 JECBlockBCD = [#{{{
 'BSMFramework/BSM3G_TNT_Maker/data/JEC/DATA/Summer16_07Aug2017BCD_V11_DATA/Summer16_07Aug2017BCD_V11_DATA_L1FastJet_AK4PFchs.txt',
@@ -267,14 +268,13 @@ for d in range(0,len(datasetnames)):
     config.section_('General')
     config.General.requestName = datasetnames[d]#it is used by CRAB to create a project directory (named crab_<requestName>) where files corresponding to this particular task will be stored.
  #   config.General.workArea    = datasetnames[d]#The area (full or relative path) where to create the CRAB project directory
-    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_resulsts_8_23/'+datasetnames[d]#The area (full or relative path) where to create the CRAB project directory
+    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_results_0902/'
     config.General.transferLogs = True  #Whether or not to copy the jobs log files to the storage site
 
     config.section_('JobType')
     config.JobType.pluginName  = 'Analysis'
     # List of parameters to pass to CMSSW parameter-set configuration file:
-#    config.JobType.psetName    = baseDir+'BSM3G_TNT_Maker/python/miniAOD_MC2016.py'
-    config.JobType.psetName    = baseDir+'BSM3G_TNT_Maker/python/miniAOD_data2016_TauofTTTT.py'
+    config.JobType.psetName    = baseDir+'BSM3G_TNT_Maker/python/miniAOD_MC2016_Study.py'
     config.JobType.inputFiles = [(baseDir+'BSM3G_TNT_Maker/data/QG/QGL_AK4chs_94X.db')]
     config.JobType.sendExternalFolder = True
     config.JobType.maxMemoryMB = 2000 # Default == 2Gb : maximum guaranteed to run on all sites
@@ -311,7 +311,8 @@ for d in range(0,len(datasetnames)):
     config.Data.lumiMask       = tempJSON
 #    config.Data.outLFNDirBase = '/store/user/binghuan/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
-    config.Data.outputDatasetTag = datasetnames[d]+"HLTAdded_EJetMetUpdated"
+#    config.Data.outputDatasetTag = datasetnames[d]+"HLTAdded_EJetMetUpdated"
+    config.Data.outputDatasetTag = datasetnames[d]+"HLTToptaggerAdded_EJetMetUpdated_oldEIDBack"    
 
 #    print 'multicrab.py: outLFNDirBase = /store/user/binghuan/'
     print 'multicrab.py: outLFNDirBase = /store/user/hhua/'
