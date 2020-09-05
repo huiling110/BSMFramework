@@ -1,7 +1,15 @@
 # BSM Output Ntuples Docmentation
+## Gobal tag
+* DATA
+  * 94X_dataRun2_v10
+* MC
+  * 102X_mcRun2_asymptotic_v8
+
 ## Electron
 * new branch
     * patElectron_relIsoRhoEA_Update
+      * please use this branch for the effictve area correction of PF isolation. 
+      * The original one patElectron_relIsoRhoEA is not correct, I changed both the calculation and EA version.
     * 18 old electron ID(listed below) in  the output ntuple and the corresponding new names are also kept. They have the same content. Choose either that is of you convenience.  
 
 old branches | new branches
