@@ -6,6 +6,8 @@
   * 102X_mcRun2_asymptotic_v8
 
 ## Electron
+* selection 
+  * pt > 5, |eta|<50
 * new branch
     * patElectron_relIsoRhoEA_Update
       * please use this branch for the effictve area correction of PF isolation. 
@@ -45,6 +47,7 @@ patElectron_isPassHEEPId | patElectron_heepElectronID_HEEPV70
   
 ## JET
 * selection
+  * pt > 15
  
 * updatation
   * update GQ tagger
