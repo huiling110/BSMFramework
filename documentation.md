@@ -41,6 +41,7 @@ patElectron_isPassHEEPId | patElectron_heepElectronID_HEEPV70
   * tau are DeepTauv2p1
 * new branches
   * Tau_decayMode
+    * this one is missing in the old version
   
 ## JET
 * selection
@@ -64,7 +65,22 @@ patElectron_isPassHEEPId | patElectron_heepElectronID_HEEPV70
 * selection
   * no selection on HLT applied
 * new branches
-  *  
+  * HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg;
+   HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg;
+   HLT_DoubleMediumChargedIsoPFTau35_Trk1_eta2p1_Reg;
+   HLT_DoubleTightChargedIsoPFTau35_Trk1_TightID_eta2p1_Reg;
+   HLT_DoubleMediumChargedIsoPFTau40_Trk1_TightID_eta2p1_Reg;
+   HLT_DoubleTightChargedIsoPFTau40_Trk1_eta2p1_Reg;
+   HLT_DoubleMediumChargedIsoPFTauHPS35_Trk1_eta2p1_Reg;
+  HLT_Ele24_eta2p1_WPLoose_Gsf_LooseIsoPFTau20;
+   HLT_Ele24_eta2p1_WPLoose_Gsf_LooseIsoPFTau20_SingleL1;
+   HLT_Ele24_eta2p1_WPLoose_Gsf_LooseIsoPFTau30;
+  HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTau30_eta2p1_CrossL1;
+  HLT_Ele24_eta2p1_WPTight_Gsf_LooseChargedIsoPFTauHPS30_eta2p1_CrossL1;
+ HLT_IsoMu19_eta2p1_LooseIsoPFTau20_SingleL1;
+  HLT_IsoMu20_eta2p1_LooseChargedIsoPFTau27_eta2p1_CrossL1;
+  HLT_IsoMu20_eta2p1_LooseChargedIsoPFTauHPS27_eta2p1_CrossL1;
+   HLT_Mu8_Ele8_CaloIdM_TrackIdM_Mass8_PFHT300;
 
 
 
