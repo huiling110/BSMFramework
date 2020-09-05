@@ -41,6 +41,31 @@ patElectron_isPassHEEPId | patElectron_heepElectronID_HEEPV70
   * tau are DeepTauv2p1
 * new branches
   * Tau_decayMode
+  
+## JET
+* selection
+* updatation
+  * update GQ tagger
+    * the old Jet_axis1, Jet_ptD, Jet_mult are caculated manually
+       * kept in ntuple anyway 
+       * Jet_qg is replaced by Jet_qgLikelihood
+    * Jet_axis2_fromQGtagger, Jet_mult_fromQGtagger, Jet_ptD_fromQGtager,Jet_qgLikelihood
+       * these new branches are results from QGTagger.
+       * use these rather than the old ones 
+  * toptagger implementation 
+    *  TopTagger_jet1Idx, TopTagger_jet2Idx, TopTagger_jet3Idx, TopTagger_type, TopTagger_discriminator
+      * these new branches are resuts from toptagger
+      * I modified the ED produceer in SUSY tagger to work on the newest output from miniAOD, which mean we take inputs of objects after the POG recommendation procedure.
+      
+  
+
+
+## HLT
+* selection
+  * no selection on HLT applied
+* new branches
+  *  
+
 
 
 
