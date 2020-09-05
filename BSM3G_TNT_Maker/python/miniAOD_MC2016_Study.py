@@ -188,7 +188,7 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 ##   Output file
 #####
 process.TFileService = cms.Service("TFileService",
-    fileName = cms.string("TauOfTTTT_Toptagger_oldEID.root")
+    fileName = cms.string("data_TauOfTTTT_Toptagger_oldEID.root")
 #  fileName = cms.string("test0901BSM_TTTTTau_AddHLT_Toptagger_EMetJetUpdated_oldEIDBack_v1.root")
 )
 
