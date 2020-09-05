@@ -61,6 +61,9 @@ patElectron_isPassHEEPId | patElectron_heepElectronID_HEEPV70
     *  TopTagger_jet1Idx, TopTagger_jet2Idx, TopTagger_jet3Idx, TopTagger_type, TopTagger_discriminator
       * these new branches are resuts from toptagger
       * I modified the ED produceer in SUSY tagger to work on the newest output from miniAOD, which mean we take inputs of objects after the POG recommendation procedure.
+  * JEC 
+    * implementation procedure updated according to newest recommendation https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyCorrections?redirectedfrom=CMS.WorkBookJetEnergyCorrections
+     * L1FastJet, L2Relative, L3Absolute
       
 # MET 
 * selection 
