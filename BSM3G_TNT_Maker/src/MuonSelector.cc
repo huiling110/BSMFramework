@@ -17,6 +17,7 @@
 #include "RecoBTag/BTagTools/interface/SignedTransverseImpactParameter.h"
 #include "TMath.h"
 KalmanVertexFitter vertexfittermu(true);
+//?what is this doing?
 using namespace std;
 using namespace pat;
 using namespace edm;
@@ -44,7 +45,7 @@ MuonSelector::MuonSelector(std::string name, TTree* tree, bool debug, const pset
   beamSpot_           = ic.consumes<reco::BeamSpot>(iConfig.getParameter<edm::InputTag>("beamSpot"));
   muon_h_             = ic.consumes<edm::View<pat::Muon> >(iConfig.getParameter<edm::InputTag>("muons"));
   //jets_               = ic.consumes<pat::JetCollection >(iConfig.getParameter<edm::InputTag>("jets"));
-  jets_               = ic.consumes<pat::JetCollection >(iConfig.getParameter<edm::InputTag>("lepjets"));
+  jets_               = ic.consumes<pat::JetCollection >(iConfig.getParameter<edm::InputTag>("lepjets"));//jetsNameAK4="selectedUpdatedPatJetsNewDFTraining"
   jetsToken           = ic.consumes<edm::View<pat::Jet>>(iConfig.getParameter<edm::InputTag>("jets"));
   pfToken_            = ic.consumes<pat::PackedCandidateCollection>(edm::InputTag("packedPFCandidates"));
   qgToken_            = ic.consumes<edm::ValueMap<float>>(edm::InputTag("QGTagger", "qgLikelihood"));
@@ -149,9 +150,15 @@ void MuonSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       Muon_ptErr_bt.push_back(-999);
       Muon_pTErrOVpT_bt.push_back(-999);
     }
-    reco::TrackRef tunePBestTrack = mu->tunePMuonBestTrack();
+    reco::TrackRef tunePBestTrack = mu->tunePMuonBestTrack();//Track selected to be the best measurement of the muon parameters (from muon information alone)
     if(tunePBestTrack.isNonnull()) Muon_pt_tunePbt.push_back(tunePBestTrack->pt());
     else                           Muon_pt_tunePbt.push_back(-999);
+    if(tunePBestTrack.isNonnull()){
+      reco::Muon::MuonTrackType tunePBestTrackType = mu->tunePMuonBestTrackType();
+      Muon_tunePBestTrackType.push_back(tunePBestTrackType);
+    }else{
+      Muon_tunePBestTrackType.push_back(-999);
+    }
     //Charge
     Muon_charge.push_back(mu->charge());
     //ID
@@ -166,6 +173,7 @@ void MuonSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     //Muon_TrigLoose.push_back(mu->passed(reco::Muon::TriggerIdLoose));
     Muon_TrigLoose.push_back(-999); // robust HLT Trigger, valid since 10X
     Muon_POGisGood.push_back(muon::isGoodMuon(*mu, muon::TMOneStationTight));
+    //?not consider if it is data?
     Muon_pdgId.push_back(mu->pdgId());
     Muon_simPdgId.push_back(mu->simPdgId());
     Muon_simMotherPdgId.push_back(mu->simMotherPdgId());
@@ -173,13 +181,15 @@ void MuonSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     Muon_pf.push_back(mu->isPFMuon());   
     Muon_isGlobal.push_back(mu->isGlobalMuon());   
     Muon_isTrackerMuon.push_back(mu->isTrackerMuon());
-    if(tunePBestTrack.isNonnull()){
+/*    if(tunePBestTrack.isNonnull()){
       reco::Muon::MuonTrackType tunePBestTrackType = mu->tunePMuonBestTrackType();
       Muon_tunePBestTrackType.push_back(tunePBestTrackType);
     }else{
       Muon_tunePBestTrackType.push_back(-999);
-    }
+    }*/
     //Isolation
+    //some Isolation results already avalable.https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideMuonIdRun2#Medium
+    //?should add them
     double SumChHadPt  = mu->pfIsolationR04().sumChargedHadronPt;
     double SumNeuHadEt = mu->pfIsolationR04().sumNeutralHadronEt;
     double SumPhotonEt = mu->pfIsolationR04().sumPhotonEt;
@@ -326,7 +336,9 @@ void MuonSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       double miniIsoNeu   = 999;
       double miniIsoPUsub = 999;
       //get_muminiIso_info(*pcc,rho,*mu,miniIso,miniIsoCh,miniIsoNeu,miniIsoPUsub);
+      //?Four working points are provided in the standard selectors, which are calculated using effective area corrections.
       get_muminiIso(rho,*mu,miniIso,miniIsoCh,miniIsoNeu,miniIsoPUsub);
+      //?the comfusion is how to do PUsub in miniISO?
       Muon_miniIsoRel.push_back(miniIso/mu->pt());
       Muon_miniIsoCh.push_back(miniIsoCh);
       Muon_miniIsoNeu.push_back(miniIsoNeu);
@@ -571,7 +583,7 @@ void MuonSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 void MuonSelector::SetBranches(){
   if(debug_)    std::cout<<"setting branches: calling AddBranch of baseTree"<<std::endl;
   //Kinematics
-  AddBranch(&Muon_pt                ,"Muon_pt");
+  AddBranch(&Muon_pt                ,"Muon_pt");/*{{{*/
   AddBranch(&Muon_eta               ,"Muon_eta");
   AddBranch(&Muon_phi               ,"Muon_phi");
   AddBranch(&Muon_energy            ,"Muon_energy");
@@ -758,10 +770,10 @@ void MuonSelector::SetBranches(){
   }
   AddBranch(&Muon_isMatchedToTrigger,"Muon_isMatchedToTrigger");
   if(debug_) std::cout<<"set branches"<<std::endl;
-}
+}/*}}}*/
 void MuonSelector::Clear(){
   //Kinematics  
-  Muon_pt.clear();
+  Muon_pt.clear();/*{{{*/
   Muon_eta.clear();
   Muon_phi.clear();
   Muon_energy.clear();
@@ -954,21 +966,24 @@ bool MuonSelector::isGoodVertex(const reco::Vertex& vtx){
   if(vtx.position().Rho()>_vtx_rho_max)              return false;
   if(fabs(vtx.position().Z()) > _vtx_position_z_max) return false;
   return true;
-}
+}/*}}}*/
 
 void MuonSelector::get_muminiIso(double rho, const pat::Muon& cand, double& miniIso, double& miniIsoCh, double& miniIsoNeu, double& miniIsoPUsub){
+    //?where to find this way of calculationg miniIso?
   // new miniIso calculation
   auto iso = cand.miniPFIsolation();
   auto chg = iso.chargedHadronIso();
   auto neu = iso.neutralHadronIso();
   auto pho = iso.photonIso();
   double ea    = get_effarea(cand.eta());
-  float R = 10.0/std::min(std::max(cand.pt(), 50.0),200.0);
+  float R = 10.0/std::min(std::max(cand.pt(), 50.0),200.0);//because for miniISO R is changing with pt
   ea *= std::pow(R/0.3,2);
+  //?why do this?
   miniIsoCh = chg;
   miniIsoNeu = neu;
   miniIsoPUsub = std::max(0.0,neu+pho-(rho)*ea);
   miniIso = miniIsoCh + miniIsoPUsub;
+//where is pt?//dealt with later in the main code.
 }
 
 void MuonSelector::get_muminiIso_info(const pat::PackedCandidateCollection& pcc, double rho, const pat::Muon& cand, double& miniIso, double& miniIsoCh, double& miniIsoNeu, double& miniIsoPUsub){
