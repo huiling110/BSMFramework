@@ -38,7 +38,7 @@ if __name__ == '__main__':
 #'Legacy16V2_TTJets_TuneCUETP8M2T4_13TeV-amcatnloFXFX-pythia8', #S 
 #'Legacy16V2_TTGamma_SingleLept_TuneEE5C_13TeV-madgraph-herwigpp',#S
 #'Legacy16V2_TTGamma_Dilept_TuneEE5C_13TeV-madgraph-herwigpp',#F
-#'Legacy16V2_TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8',#F
+#'Legacy16V2_TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8_ext1',#F
 #'Legacy16V2_TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8',
 #'Legacy16V2_ttZJets_13TeV_madgraphMLM-pythia8',#F
 #'Legacy16V2_TTWJetsToLNu_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8',#########
@@ -56,7 +56,8 @@ if __name__ == '__main__':
 #'Legacy16V2_WWTo2L2Nu_DoubleScattering_13TeV-pythia8',#F
 #'Legacy16V2_WpWpJJ_EWK-QCD_TuneCUETP8M1_13TeV-madgraph-pythia8',#F
 #'Legacy16V2_ZZ_TuneCUETP8M1_13TeV-pythia8',#F
-'Legacy16V2_ZZTo2Tau2Nu_1Jets_ZZOnShell_13TeV-amcatnloFXFX-madspin-pythia8',#F
+#'Legacy16V2_ZZTo2Tau2Nu_2Jets_ZZOnShell_13TeV-amcatnloFXFX-madspin-pythia8',
+#'Legacy16V2_ZZTo2Tau2Nu_1Jets_ZZOnShell_13TeV-amcatnloFXFX-madspin-pythia8',#F
 #'Legacy16V2_ZZTo2Tau2Nu_0Jets_ZZOnShell_13TeV-amcatnloFXFX-madspin-pythia8',#F
 
 ##below is for Zhanngyu to run
@@ -102,6 +103,29 @@ if __name__ == '__main__':
 #'Legacy16V2_TTTW_TuneCUETP8M2T4_13TeV-madgraph-pythia8',
 #'Legacy16V2_TTZH_TuneCUETP8M2T4_13TeV-madgraph-pythia8',
 #'Legacy16V2_TTHH_TuneCUETP8M2T4_13TeV-madgraph-pythia8',
+
+#add later 200909
+'Legacy16V2_ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8',
+'Legacy16V2_ttH_4f_ctcvcp_TuneCP5_13TeV_madgraph_pythia8',
+'Legacy16V2_ttHJetTobb_M125_13TeV_amcatnloFXFX_madspin_pythia8',
+'Legacy16V2_VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8',
+'Legacy16V2_ZHToTauTau_M125_13TeV_powheg_pythia8',
+'Legacy16V2_ZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8',
+'Legacy16V2_GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8',
+'Legacy16V2_GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8',
+'Legacy16V2_GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8',
+'Legacy16V2_GluGluHToMuMu_M-125_TuneCP5_PSweights_13TeV_powheg_pythia8',
+'Legacy16V2_GluGluHToTauTau_M125_13TeV_powheg_pythia8',
+'Legacy16V2_GluGluHToWWTo2L2Nu_M125_13TeV_powheg_JHUgen_pythia8',
+'Legacy16V2_GluGluHToWWToLNuQQ_M125_13TeV_powheg_JHUGenV628_pythia8',
+'Legacy16V2_VBFHToWWTo2L2Nu_M125_13TeV_powheg_JHUgenv628_pythia8',
+'Legacy16V2_VBFHToTauTau_M125_13TeV_powheg_pythia8',
+'Legacy16V2_VBFHToMuMu_M-125_TuneCP5_PSweights_13TeV_powheg_pythia8',
+'Legacy16V2_VBFHToGG_M125_13TeV_amcatnlo_pythia8_v2',
+'Legacy16V2_VBFHToBB_M-125_13TeV_powheg_pythia8_weightfix',
+'Legacy16V2_VBF_HToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8',
+'Legacy16V2_THW_ctcvcp_HIncl_M125_TuneCP5_13TeV-madgraph-pythia8',
+'Legacy16V2_THQ_ctcvcp_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1',
 #}}}
 ]
 
@@ -132,8 +156,9 @@ if __name__ == '__main__':
 #'/WW_TuneCUETP8M1_13TeV-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM',
 #'/WWTo2L2Nu_DoubleScattering_13TeV-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
 #'/WpWpJJ_EWK-QCD_TuneCUETP8M1_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
-#'/ZZ_TuneCUETP8M1_13TeV-pythia8/RunIISummer16MiniAODv3-PU/ZZTo2Tau2Nu_2Jets_ZZOnShell_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
-'/ZZTo2Tau2Nu_1Jets_ZZOnShell_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+#'/ZZ_TuneCUETP8M1_13TeV-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v2/MINIAODSIM',
+#'/ZZTo2Tau2Nu_2Jets_ZZOnShell_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+#'/ZZTo2Tau2Nu_1Jets_ZZOnShell_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
 #'/ZZTo2Tau2Nu_0Jets_ZZOnShell_13TeV-amcatnloFXFX-madspin-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #
 ###below for Zhanngyu to run
@@ -181,6 +206,29 @@ if __name__ == '__main__':
 #'/TTZH_TuneCUETP8M2T4_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/MINIAODSIM',
 #'/TTHH_TuneCUETP8M2T4_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/MINIAODSIM',
 
+#add later
+'/ttHTobb_M125_TuneCUETP8M2_ttHtranche3_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+'/ttH_4f_ctcvcp_TuneCP5_13TeV_madgraph_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/ttHJetTobb_M125_13TeV_amcatnloFXFX_madspin_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext3-v2/MINIAODSIM',
+'/VHToNonbb_M125_13TeV_amcatnloFXFX_madspin_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+'/ZHToTauTau_M125_13TeV_powheg_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+'/ZH_HToBB_ZToLL_M125_13TeV_powheg_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+'/GluGluHToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/GluGluHToBB_M125_13TeV_amcatnloFXFX_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/MINIAODSIM',
+'/GluGluHToGG_M125_13TeV_amcatnloFXFX_pythia8/RunIISummer16MiniAODv3-BS2016_BSandPUSummer16_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/GluGluHToMuMu_M-125_TuneCP5_PSweights_13TeV_powheg_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/GluGluHToTauTau_M125_13TeV_powheg_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/GluGluHToWWTo2L2Nu_M125_13TeV_powheg_JHUgen_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+'/GluGluHToWWToLNuQQ_M125_13TeV_powheg_JHUGenV628_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3_ext1-v1/MINIAODSIM',
+'/VBFHToWWTo2L2Nu_M125_13TeV_powheg_JHUgenv628_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+'/VBFHToTauTau_M125_13TeV_powheg_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+'/VBFHToMuMu_M-125_TuneCP5_PSweights_13TeV_powheg_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/VBFHToGG_M125_13TeV_amcatnlo_pythia8_v2/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/VBFHToBB_M-125_13TeV_powheg_pythia8_weightfix/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/VBF_HToZZTo4L_M125_13TeV_powheg2_JHUgenV6_pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+'/THW_ctcvcp_HIncl_M125_TuneCP5_13TeV-madgraph-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/THQ_ctcvcp_Hincl_13TeV-madgraph-pythia8_TuneCUETP8M1/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
+
 #}}}
 ]
 
@@ -225,6 +273,7 @@ for d in range(0,len(datasetnames)):
     config.JobType.inputFiles = [(baseDir+'BSM3G_TNT_Maker/data/QG/QGL_AK4chs_94X.db')]
     config.JobType.sendExternalFolder = True
     config.JobType.maxMemoryMB = 2000 # Default == 2Gb : maximum guaranteed to run on all sites
+#    config.JobType.maxMemoryMB = 200 # try a lower value to see if works with 50660 . not working:w
     #config.JobType.allowUndistributedCMSSW = True
     ofParam = 'ofName=' + datasetnames[d]
     config.JobType.pyCfgParams = [nameLepFilt,
@@ -233,11 +282,11 @@ for d in range(0,len(datasetnames)):
     config.Data.allowNonValidInputDataset = True
     config.Data.inputDataset   = datasetinputs[d]
     config.Data.inputDBS       = 'global'
-  #  config.Data.splitting      = 'FileBased'
-    config.Data.splitting      = 'Automatic'
-   # config.Data.totalUnits     = 40000 #With 'FileBased' splitting tells how many files to analyse
-    config.Data.unitsPerJob    = 2000 
-#    config.Data.outLFNDirBase = '/store/user/binghuan/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
+    config.Data.splitting      = 'FileBased'
+#    config.Data.splitting      = 'Automatic'
+    config.Data.totalUnits     = 40000 #With 'FileBased' splitting tells how many files to analyse
+#    config.Data.unitsPerJob    = 2000
+    config.Data.unitsPerJob    = 200 #changed to 
     config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outputDatasetTag = datasetnames[d]+"HLTToptaggerAdded_EJetMetUpdated_oldEIDBack"
 
