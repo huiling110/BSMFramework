@@ -263,7 +263,7 @@ for d in range(0,len(datasetnames)):
     config.General.requestName = datasetnames[d]#it is used by CRAB to create a project directory (named crab_<requestName>) where files corresponding to this particular task will be stored.
  #   config.General.workArea    = datasetnames[d]#The area (full or relative path) where to create the CRAB project directory
 #    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_resulsts_8_22/'+datasetnames[d]#The area (full or relative path) where to create the CRAB project directory
-    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_results_0902/'
+    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_results_0902/'  #do not write to workfs anymore because the output log file could be more than 2G
     config.General.transferLogs = True  #Whether or not to copy the jobs log files to the storage site
 
     config.section_('JobType')
