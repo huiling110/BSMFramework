@@ -27,13 +27,13 @@ if __name__ == '__main__':
  #####
  datasetnames  = [#{{{
 
-'Legacy16V2_TauBlockH',
-'Legacy16V2_TauBlockG',
+#'Legacy16V2_TauBlockH',
+#'Legacy16V2_TauBlockG',
 'Legacy16V2_TauBlockF',
-'Legacy16V2_TauBlockE',
-'Legacy16V2_TauBlockD',
-'Legacy16V2_TauBlockC',
-'Legacy16V2_TauBlockB',
+#'Legacy16V2_TauBlockE',
+#'Legacy16V2_TauBlockD',
+#'Legacy16V2_TauBlockC',
+#'Legacy16V2_TauBlockB',
 #'Legacy16V2_TauBlockB',
 
 #'Legacy16V2_SEleBlockB',
@@ -76,13 +76,13 @@ if __name__ == '__main__':
 
  datasetinputs = [
 #{{{
-'/Tau/Run2016H-17Jul2018-v1/MINIAOD',
-'/Tau/Run2016G-17Jul2018-v1/MINIAOD',
+#'/Tau/Run2016H-17Jul2018-v1/MINIAOD',
+#'/Tau/Run2016G-17Jul2018-v1/MINIAOD',
 '/Tau/Run2016F-17Jul2018-v1/MINIAOD',
-'/Tau/Run2016E-17Jul2018-v1/MINIAOD',
-'/Tau/Run2016D-17Jul2018-v1/MINIAOD',
-'/Tau/Run2016C-17Jul2018-v1/MINIAOD',
-'/Tau/Run2016B-17Jul2018_ver2-v1/MINIAOD',
+#'/Tau/Run2016E-17Jul2018-v1/MINIAOD',
+#'/Tau/Run2016D-17Jul2018-v1/MINIAOD',
+#'/Tau/Run2016C-17Jul2018-v1/MINIAOD',
+#'/Tau/Run2016B-17Jul2018_ver2-v1/MINIAOD',
 #'/Tau/Run2016B-17Jul2018_ver1-v1/MINIAOD',
 #?the difference between ver1 and ver2?
 
@@ -268,7 +268,7 @@ for d in range(0,len(datasetnames)):
     config.section_('General')
     config.General.requestName = datasetnames[d]#it is used by CRAB to create a project directory (named crab_<requestName>) where files corresponding to this particular task will be stored.
  #   config.General.workArea    = datasetnames[d]#The area (full or relative path) where to create the CRAB project directory
-    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_results_0902/'
+    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_results_0928/'
     config.General.transferLogs = True  #Whether or not to copy the jobs log files to the storage site
 
     config.section_('JobType')
@@ -313,7 +313,7 @@ for d in range(0,len(datasetnames)):
 #    config.Data.outLFNDirBase = '/store/user/binghuan/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
 #    config.Data.outputDatasetTag = datasetnames[d]+"HLTAdded_EJetMetUpdated"
-    config.Data.outputDatasetTag = datasetnames[d]+"HLTToptaggerAdded_EJetMetUpdated_oldEIDBack"    
+    config.Data.outputDatasetTag = datasetnames[d]+"HLTToptaggerAdded_EJetMetUpdated_oldEIDBack_v2"    
 
 #    print 'multicrab.py: outLFNDirBase = /store/user/binghuan/'
     print 'multicrab.py: outLFNDirBase = /store/user/hhua/'

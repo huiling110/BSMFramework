@@ -266,6 +266,7 @@ void ElectronPatSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& 
     //IP
     if(el->gsfTrack().isNonnull()){
       patElectron_gsfTrack_dz_pv.push_back(el->gsfTrack()->dz(firstGoodVertex.position()));
+      //?can't we get dz directly?
       patElectron_gsfTrack_dxy_pv.push_back(el->gsfTrack()->dxy(firstGoodVertex.position()));
       patElectron_d0.push_back((-1) * el->gsfTrack()->dxy(firstGoodVertex.position()));
       patElectron_dzError.push_back(el->gsfTrack()->dzError());
@@ -1513,6 +1514,8 @@ double ElectronPatSelector::get_lepWTopmass(edm::View<pat::Electron>::const_iter
   }
   return lepWTopmass;
 };
+
+//???
 void ElectronPatSelector::IP3D2D(TransientTrack ttrk, const reco::Vertex& vtx, GlobalVector gv, double& IP3D_val,double& IP3D_err,double& IP3D_sig, double& sIP3D_val,double& sIP3D_err,double& sIP3D_sig, double& IP2D_val,double& IP2D_err,double& IP2D_sig, double& sIP2D_val,double& sIP2D_err,double& sIP2D_sig){
  pair<bool, Measurement1D> currIP;
  //3D
