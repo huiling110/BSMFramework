@@ -139,6 +139,12 @@ if __name__ == '__main__':
 #  'Legacy16V2_QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8',
 
 
+
+'Legacy16V2_TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
+'Legacy16V2_TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
+'Legacy16V2_TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8',
+'Legacy16V2_TTJets_TuneCP5_PSweights_13TeV-amcatnloFXFX-pythia8',
+
 #}}}
 ]
 
@@ -254,7 +260,14 @@ if __name__ == '__main__':
 #  '/QCD_HT1000to1500_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
 #  '/QCD_HT1500to2000_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
 #  '/QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
-#
+
+'/TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/TTJets_TuneCP5_PSweights_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+
+
+
 #}}}
 ]
 
@@ -305,11 +318,11 @@ for d in range(0,len(datasetnames)):
     config.Data.allowNonValidInputDataset = True
     config.Data.inputDataset   = datasetinputs[d]
     config.Data.inputDBS       = 'global'
-    config.Data.splitting      = 'FileBased'
-    #  config.Data.splitting      = 'Automatic'
-    config.Data.totalUnits     = 40000 #With 'FileBased' splitting tells how many files to analyse
-#    config.Data.unitsPerJob    = 2000
-    config.Data.unitsPerJob    = 200 #changed to 
+    #  config.Data.splitting      = 'FileBased'
+    config.Data.splitting      = 'Automatic'
+    #  config.Data.totalUnits     = 40000 #With 'FileBased' splitting tells how many files to analyse
+  config.Data.unitsPerJob    = 2000
+    #  config.Data.unitsPerJob    = 200 #changed to
     config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outputDatasetTag = datasetnames[d]+"HLTToptaggerAdded_EJetMetUpdated_oldEIDBack"
 
