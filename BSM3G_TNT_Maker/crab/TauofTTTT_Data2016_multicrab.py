@@ -29,12 +29,22 @@ if __name__ == '__main__':
 
 #'Legacy16V2_TauBlockH',
 #'Legacy16V2_TauBlockG',
-'Legacy16V2_TauBlockF',
+#  'Legacy16V2_TauBlockF',
 #'Legacy16V2_TauBlockE',
 #'Legacy16V2_TauBlockD',
 #'Legacy16V2_TauBlockC',
 #'Legacy16V2_TauBlockB',
 #'Legacy16V2_TauBlockB',
+
+'Legacy16V2_v1_JetHTBlockB',
+'Legacy16V2_v2_JetHTBlockB',
+'Legacy16V2_JetHTBlockC',
+'Legacy16V2_JetHTBlockD',
+'Legacy16V2_JetHTBlockE',
+'Legacy16V2_JetHTBlockF',
+'Legacy16V2_JetHTBlockG',
+'Legacy16V2_JetHTBlockH',
+
 
 #'Legacy16V2_SEleBlockB',
 #'Legacy16V2_SEleBlockC',
@@ -78,13 +88,23 @@ if __name__ == '__main__':
 #{{{
 #'/Tau/Run2016H-17Jul2018-v1/MINIAOD',
 #'/Tau/Run2016G-17Jul2018-v1/MINIAOD',
-'/Tau/Run2016F-17Jul2018-v1/MINIAOD',
+#  '/Tau/Run2016F-17Jul2018-v1/MINIAOD',
 #'/Tau/Run2016E-17Jul2018-v1/MINIAOD',
 #'/Tau/Run2016D-17Jul2018-v1/MINIAOD',
 #'/Tau/Run2016C-17Jul2018-v1/MINIAOD',
 #'/Tau/Run2016B-17Jul2018_ver2-v1/MINIAOD',
 #'/Tau/Run2016B-17Jul2018_ver1-v1/MINIAOD',
 #?the difference between ver1 and ver2?
+
+'/JetHT/Run2016B-17Jul2018_ver1-v1/MINIAOD',
+'/JetHT/Run2016B-17Jul2018_ver2-v2/MINIAOD',
+'/JetHT/Run2016C-17Jul2018-v1/MINIAOD',
+'/JetHT/Run2016D-17Jul2018-v1/MINIAOD',
+'/JetHT/Run2016E-17Jul2018-v1/MINIAOD',
+'/JetHT/Run2016F-17Jul2018-v1/MINIAOD',
+'/JetHT/Run2016G-17Jul2018-v1/MINIAOD',
+'/JetHT/Run2016H-17Jul2018-v1/MINIAOD',
+
 
  # SingleElectron dataset : AT LEAST 1 high-energy electron in the event.
 # '/SingleElectron/Run2016B-17Jul2018_ver2-v1/MINIAOD',
@@ -136,8 +156,6 @@ if __name__ == '__main__':
 #nothing in twLists?
 
 # baseDir
-#baseDir = "/afs/cern.ch/work/b/binghuan/private/TTHLep_RunII/CMSSW_10_2_16/src/BSMFramework/"
-#baseDir = "/workfs/cms/huahuil/BSM_UpdateVersion/CMSSW_10_2_20_UL/src/BSMFramework/"
 baseDir = "/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/"
 
 #?need to know this part
@@ -268,13 +286,12 @@ for d in range(0,len(datasetnames)):
     config.section_('General')
     config.General.requestName = datasetnames[d]#it is used by CRAB to create a project directory (named crab_<requestName>) where files corresponding to this particular task will be stored.
  #   config.General.workArea    = datasetnames[d]#The area (full or relative path) where to create the CRAB project directory
-    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_results_0928/'
+    config.General.workArea    = '/workfs/cms/huahuil/BSM_UpdateVersion/add_toptagger/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/crab_results_210107'
     config.General.transferLogs = True  #Whether or not to copy the jobs log files to the storage site
 
     config.section_('JobType')
     config.JobType.pluginName  = 'Analysis'
     # List of parameters to pass to CMSSW parameter-set configuration file:
-#    config.JobType.psetName    = baseDir+'BSM3G_TNT_Maker/python/miniAOD_MC2016_Study.py'
     config.JobType.psetName    = baseDir+'BSM3G_TNT_Maker/python/miniAOD_data2016_TauofTTTT.py'
     config.JobType.inputFiles = [(baseDir+'BSM3G_TNT_Maker/data/QG/QGL_AK4chs_94X.db')]
     config.JobType.sendExternalFolder = True
@@ -315,7 +332,6 @@ for d in range(0,len(datasetnames)):
 #    config.Data.outputDatasetTag = datasetnames[d]+"HLTAdded_EJetMetUpdated"
     config.Data.outputDatasetTag = datasetnames[d]+"HLTToptaggerAdded_EJetMetUpdated_oldEIDBack_v2"    
 
-#    print 'multicrab.py: outLFNDirBase = /store/user/binghuan/'
     print 'multicrab.py: outLFNDirBase = /store/user/hhua/'
     #config.Data.publication = True
 
