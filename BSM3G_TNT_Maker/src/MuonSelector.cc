@@ -153,12 +153,12 @@ void MuonSelector::Fill(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     reco::TrackRef tunePBestTrack = mu->tunePMuonBestTrack();//Track selected to be the best measurement of the muon parameters (from muon information alone)
     if(tunePBestTrack.isNonnull()) Muon_pt_tunePbt.push_back(tunePBestTrack->pt());
     else                           Muon_pt_tunePbt.push_back(-999);
-    if(tunePBestTrack.isNonnull()){
-      reco::Muon::MuonTrackType tunePBestTrackType = mu->tunePMuonBestTrackType();
-      Muon_tunePBestTrackType.push_back(tunePBestTrackType);
-    }else{
-      Muon_tunePBestTrackType.push_back(-999);
-    }
+    // if(tunePBestTrack.isNonnull()){
+      // reco::Muon::MuonTrackType tunePBestTrackType = mu->tunePMuonBestTrackType();
+      // Muon_tunePBestTrackType.push_back(tunePBestTrackType);
+    // }else{
+      // Muon_tunePBestTrackType.push_back(-999);
+    // }
     //Charge
     Muon_charge.push_back(mu->charge());
     //ID
