@@ -49,7 +49,8 @@ process.source = cms.Source("PoolSource",
   fileNames = cms.untracked.vstring(
     #'/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v1/230000/F61E4EE9-127E-E911-8FF5-549F3525CD78.root',
   #  don't know why the above 2 files can not be open.
-   '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/20000/CACFB972-44F1-E811-98CF-001E67A3E8CC.root',
+   #  '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M1_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v2/20000/CACFB972-44F1-E811-98CF-001E67A3E8CC.root',
+   '/store/mc/RunIISummer16MiniAODv3/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/MINIAODSIM/PUMoriond17_94X_mcRun2_asymptotic_v3-v1/100000/0411821D-BBC3-E811-98BA-0CC47A57CBBC.root',
   ),
   skipEvents = cms.untracked.uint32(0)
 )
@@ -160,7 +161,7 @@ runMetCorAndUncFromMiniAOD (
 )
 
 ############### MET filter ###############
-#???
+#https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2
 process.load('RecoMET.METFilters.ecalBadCalibFilter_cfi')
 baddetEcallist = cms.vuint32(
     [872439604,872422825,872420274,872423218,
