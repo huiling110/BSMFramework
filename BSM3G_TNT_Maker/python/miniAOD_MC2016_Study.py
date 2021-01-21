@@ -54,7 +54,7 @@ process.source = cms.Source("PoolSource",
   ),
   skipEvents = cms.untracked.uint32(0)
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50) )
 
 ##### JEC
 #update the JEC in the MiniAOD
@@ -191,8 +191,8 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 process.TFileService = cms.Service("TFileService",
     #  fileName = cms.string("TauOfTTTT_Toptagger_oldEID.root")
 #  fileName = cms.string("test0901BSM_TTTTTau_AddHLT_Toptagger_EMetJetUpdated_oldEIDBack_v1.root")
-    #  fileName = cms.string("test_more.root")
-    fileName = cms.string("test_5000.root")
+    #  fileName = cms.string("test_5000.root")
+    fileName = cms.string("smalltest.root")
 )
 
 #####
@@ -254,7 +254,7 @@ process.TNT = cms.EDAnalyzer("BSM3G_TNT_Maker",#{{{
   bits                = cms.InputTag("TriggerResults","","HLT"),
   prescales           = cms.InputTag("patTrigger"),
   objects             = cms.InputTag("selectedPatTrigger"),  
-  vertices            = cms.InputTag("offlineSlimmedPrimaryVertices"),
+  vertices            = cms.InputTag("offlineSlimmedPrimaryVertices"),#offlineSlimmedPrimaryVertices 
   beamSpot            = cms.InputTag("offlineBeamSpot"),
   muons               = cms.InputTag("slimmedMuons"),
   patElectrons        = cms.InputTag("slimmedElectrons"),
