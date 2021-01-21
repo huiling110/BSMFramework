@@ -128,14 +128,14 @@ process.matchGenCHadron = matchGenCHadron.clone(genParticles = genParticleCollec
 
 #####Tau#####
 
-'''
-from BSMFramework.BSM3G_TNT_Maker.runTauIdMVA import *
-na = TauIDEmbedder(process, cms,
-        debug=True,
-        toKeep = ["dR0p32017v2","deepTau2017v2"] # pick the one you need: ["2017v1", "2017v2", "newDM2017v2", "dR0p32017v2", "2016v1", "newDM2016v1"]
-        )
-na.runTauID()
-'''
+#  '''
+#  from BSMFramework.BSM3G_TNT_Maker.runTauIdMVA import *
+#  na = TauIDEmbedder(process, cms,
+        #  debug=True,
+        #  toKeep = ["dR0p32017v2","deepTau2017v2"] # pick the one you need: ["2017v1", "2017v2", "newDM2017v2", "dR0p32017v2", "2016v1", "newDM2016v1"]
+        #  )
+#  na.runTauID()
+#  '''
 #re-running DeepTauv2p1 on MiniAOD https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuidePFTauID#Running_of_the_DeepTauIDs_ver_20
 updatedTauName = "slimmedTausNewID" #name of pat::Tau collection with new tau-Ids
 import RecoTauTag.RecoTau.tools.runTauIdMVA as tauIdConfig
@@ -191,7 +191,8 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 process.TFileService = cms.Service("TFileService",
     #  fileName = cms.string("TauOfTTTT_Toptagger_oldEID.root")
 #  fileName = cms.string("test0901BSM_TTTTTau_AddHLT_Toptagger_EMetJetUpdated_oldEIDBack_v1.root")
-    fileName = cms.string("test_more.root")
+    #  fileName = cms.string("test_more.root")
+    fileName = cms.string("test_5000.root")
 )
 
 #####
