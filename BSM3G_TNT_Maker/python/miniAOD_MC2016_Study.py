@@ -54,7 +54,7 @@ process.source = cms.Source("PoolSource",
   ),
   skipEvents = cms.untracked.uint32(0)
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1000) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(10000) )
 
 ##### JEC
 #update the JEC in the MiniAOD
@@ -189,8 +189,9 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 ##   Output file
 #####
 process.TFileService = cms.Service("TFileService",
-    fileName = cms.string("TauOfTTTT_Toptagger_oldEID.root")
+    #  fileName = cms.string("TauOfTTTT_Toptagger_oldEID.root")
 #  fileName = cms.string("test0901BSM_TTTTTau_AddHLT_Toptagger_EMetJetUpdated_oldEIDBack_v1.root")
+    fileName = cms.string("test_more.root")
 )
 
 #####
@@ -397,21 +398,21 @@ process.printGenParticleList = cms.EDAnalyzer("ParticleListDrawer",
 #https://github.com/cms-nanoAOD/cmssw/pull/271#
 #load db explicitly
 #step0 This step can be skipped if you use the training from the GT
-''''from CondCore.DBCommon.CondDBSetup_cfi import *
-process.QGPoolDBESSource = cms.ESSource("PoolDBESSource",
-      CondDBSetup,
-      toGet = cms.VPSet(
-         cms.PSet(
-         record = cms.string('QGLikelihoodRcd'),
-         tag    = cms.string('QGLikelihoodObject_v1_AK4'),
-         label  = cms.untracked.string('QGL_AK4PFchs')
-         #inconsitence in AK4PFchs and AK4，which are type
-         ),
-      ),
-      connect = cms.string('sqlite:QGL_AK4chs_94X.db')
-     )
-
-process.es_prefer_qg = cms.ESPrefer('PoolDBESSource','QGPoolDBESSource')'''
+#  from CondCore.DBCommon.CondDBSetup_cfi import *
+#  process.QGPoolDBESSource = cms.ESSource("PoolDBESSource",
+      #  CondDBSetup,
+      #  toGet = cms.VPSet(
+         #  cms.PSet(
+         #  record = cms.string('QGLikelihoodRcd'),
+         #  tag    = cms.string('QGLikelihoodObject_v1_AK4'),
+         #  label  = cms.untracked.string('QGL_AK4PFchs')
+         #  inconsitence in AK4PFchs and AK4，which are type
+         #  ),
+      #  ),
+      #  connect = cms.string('sqlite:QGL_AK4chs_94X.db')
+     #  )
+#  
+#  process.es_prefer_qg = cms.ESPrefer('PoolDBESSource','QGPoolDBESSource')
 #?
 #step1 use training from GT #EDProducer
 process.load('RecoJets.JetProducers.QGTagger_cfi')
