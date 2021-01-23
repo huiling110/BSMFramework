@@ -2,7 +2,7 @@
 GenParticleSelector::GenParticleSelector(std::string name, TTree* tree, bool debug, const pset& iConfig, edm::ConsumesCollector && ic):
   baseTree(name,tree,debug)
 {
-  prunedGenToken_ = ic.consumes<edm::View<reco::GenParticle> >(iConfig.getParameter<edm::InputTag>("pruned"));
+  prunedGenToken_ = ic.consumes<edm::View<reco::GenParticle> >(iConfig.getParameter<edm::InputTag>("pruned"));//prunedGenParticles
   _tthlepVar = iConfig.getParameter<bool>("tthlepVar");
   if(debug) std::cout<<"in GenParticleSelector constructor"<<std::endl;
   if(debug) std::cout<<"in pileup constructor: calling SetBrances()"<<std::endl;
