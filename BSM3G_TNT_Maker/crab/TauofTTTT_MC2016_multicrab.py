@@ -31,7 +31,7 @@ if __name__ == '__main__':
  #####
  datasetnames  = [#{{{
 # signal
-'Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8',#S
+#  'Legacy16V2_TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8',#S
 #'Legacy16V2_TTTT_TuneCUETP8M2T4_PSweights_13TeV',#S
 #'Legacy16V2_TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8',#S 
 #'Legacy16V2_TT_TuneCUETP8M2T4_13TeV-powheg-pythia8',# S 
@@ -141,7 +141,7 @@ if __name__ == '__main__':
 
 
 #  'Legacy16V2_TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8',
-#  'Legacy16V2_TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
+'Legacy16V2_TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8',
 #  'Legacy16V2_TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8',
 #  'Legacy16V2_TTJets_TuneCP5_PSweights_13TeV-amcatnloFXFX-pythia8',
 
@@ -151,7 +151,7 @@ if __name__ == '__main__':
  datasetinputs = [
 #{{{
 #signal
-'/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+#  '/TTTT_TuneCUETP8M2T4_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #'/TTTT_TuneCUETP8M2T4_PSweights_13TeV-amcatnlo-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #'/TTTT_TuneCP5_PSweights_13TeV-amcatnlo-pythia8_correctnPartonsInBorn/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #'/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
@@ -262,7 +262,7 @@ if __name__ == '__main__':
 #  '/QCD_HT2000toInf_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v2/MINIAODSIM',
 
 #  '/TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
-#  '/TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
+'/TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #  '/TTTo2L2Nu_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 #  '/TTJets_TuneCP5_PSweights_13TeV-amcatnloFXFX-pythia8/RunIISummer16MiniAODv3-PUMoriond17_94X_mcRun2_asymptotic_v3-v1/MINIAODSIM',
 
@@ -297,7 +297,7 @@ for d in range(0,len(datasetnames)):
     
     config.section_('General')
     config.General.requestName = datasetnames[d]#it is used by CRAB to create a project directory (named crab_<requestName>) where files corresponding to this particular task will be stored.
-    config.General.workArea    = '/afs/cern.ch/work/h/hhua/BSM/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/testJobForTTTT/'  #do not write to workfs anymore because the output log file could be more than 2G
+    config.General.workArea    = '/afs/cern.ch/work/h/hhua/BSM/CMSSW_10_2_20_UL/src/BSMFramework/BSM3G_TNT_Maker/crab/v2_checkforv2/'  #do not write to workfs anymore because the output log file could be more than 2G
     config.General.transferLogs = True  #Whether or not to copy the jobs log files to the storage site
 
     config.section_('JobType')
@@ -320,6 +320,7 @@ for d in range(0,len(datasetnames)):
     #  config.Data.totalUnits     = 40000 #With 'FileBased' splitting tells how many files to analyse
     config.Data.unitsPerJob    = 2000
     #  config.Data.unitsPerJob    = 200 #changed to
+    #  config.Data.outLFNDirBase = '/store/user/hhua/v2_checkforv2/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outputDatasetTag = datasetnames[d]+"v2_checkforv2"
 
