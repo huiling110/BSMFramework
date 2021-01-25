@@ -320,8 +320,8 @@ for d in range(0,len(datasetnames)):
     #  config.Data.totalUnits     = 40000 #With 'FileBased' splitting tells how many files to analyse
     config.Data.unitsPerJob    = 2000
     #  config.Data.unitsPerJob    = 200 #changed to
-    #  config.Data.outLFNDirBase = '/store/user/hhua/v2_checkforv2/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
-    config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
+    config.Data.outLFNDirBase = '/store/user/hhua/v2_checkforv2'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
+    #  config.Data.outLFNDirBase = '/store/user/hhua/'# First part of LFN for output files (must be /store/user/<username>/ or /store/group/<username>/  )
     config.Data.outputDatasetTag = datasetnames[d]+"v2_checkforv2"
 
 #    print 'multicrab.py: outLFNDirBase = /store/user/binghuan/'
