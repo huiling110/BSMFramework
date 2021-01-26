@@ -104,6 +104,7 @@ class BSM3G_TNT_Maker : public edm::EDAnalyzer {
   /////
   TFile* file;
   TTree* evtree_;
+  TH1D* genWeight_;
   int eventnum;
   int eventnumnegative;
   int nPUVertices;

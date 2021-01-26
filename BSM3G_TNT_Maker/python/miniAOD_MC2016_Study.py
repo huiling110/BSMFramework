@@ -54,7 +54,7 @@ process.source = cms.Source("PoolSource",
   ),
   skipEvents = cms.untracked.uint32(0)
 )
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(50) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(3000) )
 
 ##### JEC
 #update the JEC in the MiniAOD
@@ -191,8 +191,8 @@ process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
 process.TFileService = cms.Service("TFileService",
     #  fileName = cms.string("TauOfTTTT_Toptagger_oldEID.root")
 #  fileName = cms.string("test0901BSM_TTTTTau_AddHLT_Toptagger_EMetJetUpdated_oldEIDBack_v1.root")
-    #  fileName = cms.string("test_5000.root")
-    fileName = cms.string("smalltest.root")
+    #  fileName = cms.string("smalltest.root")
+    fileName = cms.string("v3.root")
 )
 
 #####

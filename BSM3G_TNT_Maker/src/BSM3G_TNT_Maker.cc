@@ -57,6 +57,9 @@ BSM3G_TNT_Maker::BSM3G_TNT_Maker(const edm::ParameterSet& iConfig):
   evtree_->Branch("eventnumnegative",&eventnumnegative,"eventnumnegative/I");
   evtree_->Branch("nPUVertices",&nPUVertices,"nPUVertices/I");
   evtree_->Branch("TrueInteractions",&TrueInteractions,"TrueInteractions/D");
+  genWeight_ = fs->make<TH1D>("GenEventWeight","GenEventWeight",1,-0.5,0.5);
+
+
   tree_   = fs->make<TTree>("BOOM","BOOM");
   if(_fillgeninfo)           genselector        = new GenParticleSelector("miniAOD", tree_, debug_, iConfig, consumesCollector());
   //?where is the declaration of genselector?
@@ -113,6 +116,9 @@ void BSM3G_TNT_Maker::analyze(const edm::Event& iEvent, const edm::EventSetup& i
       iEvent.getByToken(genEvtInfo_,genEvtInfo);//25
       //iEvent.getByLabel("generator",genEvtInfo);
       eventnumnegative = (genEvtInfo->weight())/abs(genEvtInfo->weight());
+      genWeight_->Fill(0.0,genEvtInfo->weight());
+
+
       //?
       Handle<std::vector< PileupSummaryInfo > >  PUInfo;
       iEvent.getByToken(PUInfo_, PUInfo); //24  PUInfo_    = consumesCollector().consumes<std::vector< PileupSummaryInfo> >(edm::InputTag("slimmedAddPileupInfo"));
